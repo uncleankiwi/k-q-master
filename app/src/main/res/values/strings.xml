@@ -15,4 +15,11 @@
     <string name="RegisterQuestion">Register?</string>
 
     <!-- onboarding frag -->
+    <string name="Register">Register</string>
+    <string name="Required_field">* required field</string>
+    <string name="First_name">First name</string>
+    <string name="Last_name">Last name</string>
+    <string name="Email">Email</string>
+    <string name="Cancel">Cancel</string>
+
 </resources>

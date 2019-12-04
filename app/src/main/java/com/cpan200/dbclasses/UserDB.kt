@@ -19,12 +19,14 @@ class UserDB(
         const val COL_2 = "password"
         const val COL_3 = "status"
         const val COL_4 = "email"
+        const val COL_5 = "firstname"
+        const val COL_6 = "lastname"
         const val COL_N1 = "quiz"
         const val COL_N2 = "attempts"
 
     }
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL("CREATE TABLE $TABLE_NAME ($COL_ID INTEGER PRIMARY KEY, $COL_1 TEXT, $COL_2 TEXT, $COL_3 TEXT, $COL_4 TEXT)")
+        db?.execSQL("CREATE TABLE $TABLE_NAME ($COL_ID INTEGER PRIMARY KEY, $COL_1 TEXT, $COL_2 TEXT, $COL_3 TEXT, $COL_4 TEXT, $COL_5 TEXT, $COL_6 TEXT)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {

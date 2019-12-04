@@ -7,6 +7,8 @@ open class User {
     open var status: UserStatus? = null
 
     var email: String? = null
+    var firstName: String? = null
+    var lastName: String? = null
     val quizScores: MutableList<Double>? = null
     val quizAttempts: MutableList<Int>? = null
 
