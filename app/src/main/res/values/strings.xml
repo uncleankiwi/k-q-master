@@ -1,6 +1,18 @@
 <resources>
     <string name="app_name">Final project</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- <string name=""></string> -->
+    <!-- -->
+
+    <!-- LOGIN -->
+    <!-- login frag -->
+    <string name="App_logo">App logo</string>
+    <string name="Quiz_app">Quiz app</string>
+
+    <string name="Sign_in">Sign in</string>
+    <string name="Username">Username</string>
+    <string name="Password">Password</string>
+    <string name="RegisterQuestion">Register?</string>
+
+    <!-- onboarding frag -->
 </resources>
