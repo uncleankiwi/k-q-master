@@ -1,4 +1,7 @@
 package com.cpan200.classes
 
-class Attempt {
+class Attempt(
+    val studentId: Int,
+    val answers: MutableList<Int?>){
+
 }
