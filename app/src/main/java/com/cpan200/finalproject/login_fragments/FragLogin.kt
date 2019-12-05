@@ -34,9 +34,8 @@ class FragLogin : Fragment() {
 				fragOnboarding = FragOnboarding()
 				Log.i("test123", "init frag onboarding")
 			}
-
-			transaction.replace(R.id.LoginContainer, fragOnboarding!!, "FragOnboarding")
-			transaction.addToBackStack("FragOnboarding")
+			transaction.replace(R.id.LoginContainer, fragOnboarding, "FragOnboarding")
+			transaction.addToBackStack(null)
 			transaction.commit()
 
 			Log.i("test123", fragmentManager!!.fragments.count().toString())

@@ -23,18 +23,7 @@ class FragOnboarding : Fragment() {
 
 		val valBtnRegCancel = view.findViewById<Button>(R.id.btnReg_Cancel)
 		valBtnRegCancel.setOnClickListener {
-			//show login fragment whether it exists already or not
-			val transaction = fragmentManager!!.beginTransaction()
-			var fragOnboarding: Fragment? = fragmentManager!!.findFragmentByTag("FragOnboarding")
-			if (fragOnboarding == null) {
-				fragOnboarding = FragOnboarding()
-				Log.i("test123", "init frag onboarding")
-			}
-
-			transaction.replace(R.id.LoginContainer, FragLogin(), "FragLogin")
-			transaction.addToBackStack("FragLogin")
-			transaction.commit()
-			Log.i("test123", fragmentManager!!.fragments.count().toString())
+			activity?.onBackPressed()
 		}
 		return view
 	}

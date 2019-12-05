@@ -25,24 +25,13 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-//    fun showOnboarding() {
-//        Log.i("test123", "button start")
-//        transaction.add(R.id.LoginContainer, FragOnboarding())
-//        Log.i("test123", "button end")
-//        transaction.addToBackStack("LoginFragment")
-//        Log.i("test123", "back stack end")
-//        transaction.commit()
-//        Log.i("test123", "commit end")
+//    override fun onBackPressed() {
+//        super.onBackPressed()
+//        //go back from onboarding fragment to login if onboarding is shown
+//        val transaction = supportFragmentManager.beginTransaction()
+//        this.
 //
 //    }
-//
-//
-//    fun closeOnboarding(){
-//        Log.i("test123", "in reg button")
-//        transaction.replace(R.id.LoginContainer, FragLogin())
-//        transaction.addToBackStack(null)
-//        transaction.commit()
-//        Log.i("test123", "after reg button")
-//    }
+
 
 }
