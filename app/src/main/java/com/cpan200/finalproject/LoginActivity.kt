@@ -1,13 +1,8 @@
 package com.cpan200.finalproject
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import com.cpan200.finalproject.login_fragments.FragLogin
-import com.cpan200.finalproject.login_fragments.FragOnboarding
-import kotlinx.android.synthetic.main.fragment_login.*
-
 
 
 class LoginActivity : AppCompatActivity() {
@@ -25,13 +20,6 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-//    override fun onBackPressed() {
-//        super.onBackPressed()
-//        //go back from onboarding fragment to login if onboarding is shown
-//        val transaction = supportFragmentManager.beginTransaction()
-//        this.
-//
-//    }
 
 
 }
