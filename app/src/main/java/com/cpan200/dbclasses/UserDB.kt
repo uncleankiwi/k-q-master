@@ -1,8 +1,10 @@
 package com.cpan200.dbclasses
 
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.cpan200.classes.User
 
 class UserDB(
     context: Context?,
@@ -33,4 +35,11 @@ class UserDB(
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(db)
     }
+fun tryLogin(username: String, password: String): Cursor?{
+    val db = this.readableDatabase
+    return db.rawQuery("SELECT $TABLE_NAME WHERE $COL_1 = \"$username\" AND $COL_2 = \"$password\"", null)
+
+}
+
+
 }
