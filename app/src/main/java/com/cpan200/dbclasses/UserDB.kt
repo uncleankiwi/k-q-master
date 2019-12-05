@@ -17,18 +17,25 @@ class UserDB(
         private const val filename = "Users.db"
         const val TABLE_NAME = "users"
         const val COL_ID = "_id"
-        const val COL_1 = "username"
-        const val COL_2 = "password"
-        const val COL_3 = "status"
-        const val COL_4 = "email"
-        const val COL_5 = "firstname"
-        const val COL_6 = "lastname"
-        const val COL_N1 = "quiz"
-        const val COL_N2 = "attempts"
+        const val COL_USERNAME = "username"
+        const val COL_PASSWORD = "password"
+        const val COL_STATUS = "status"
+        const val COL_EMAIL = "email"
+        const val COL_FIRSTNAME = "firstname"
+        const val COL_LASTNAME = "lastname"
+        const val COL_QUIZN = "quiz"
+        const val COL_ATTEMPTN = "attempts"
 
     }
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL("CREATE TABLE $TABLE_NAME ($COL_ID INTEGER PRIMARY KEY, $COL_1 TEXT, $COL_2 TEXT, $COL_3 TEXT, $COL_4 TEXT, $COL_5 TEXT, $COL_6 TEXT)")
+        db?.execSQL("CREATE TABLE $TABLE_NAME (" +
+                "$COL_ID INTEGER PRIMARY KEY, " +
+                "$COL_USERNAME TEXT, " +
+                "$COL_PASSWORD TEXT, " +
+                "$COL_STATUS TEXT, " +
+                "$COL_EMAIL TEXT, " +
+                "$COL_FIRSTNAME TEXT, " +
+                "$COL_LASTNAME TEXT)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
@@ -37,7 +44,7 @@ class UserDB(
     }
 fun tryLogin(username: String, password: String): Cursor?{
     val db = this.readableDatabase
-    return db.rawQuery("SELECT $TABLE_NAME WHERE $COL_1 = \"$username\" AND $COL_2 = \"$password\"", null)
+    return db.rawQuery("SELECT $TABLE_NAME WHERE $COL_USERNAME = \"$username\" AND $COL_PASSWORD = \"$password\"", null)
 
 }
 

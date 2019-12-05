@@ -40,15 +40,8 @@ class FragLogin : Fragment() {
 
 		val valBtnLoginLogin = view.findViewById<Button>(R.id.btnLogin_Login)
 		valBtnLoginLogin.setOnClickListener {
-			if (editLogin_Username.text == null || editLogin_Username.text.toString() == ""){
-				App.showToast(activity!!, "Please enter a username")
-			}
-			else if (editLogin_Password.text == null || editLogin_Password.text.toString() == ""){
-				App.showToast(activity!!, "Please enter your password")
-			}
-			else {
+			App.login(activity!!, editLogin_Username.text.toString(), editLogin_Password.text.toString())
 
-			}
 		}
 
 		return view
