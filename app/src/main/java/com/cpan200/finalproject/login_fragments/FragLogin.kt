@@ -3,13 +3,12 @@ package com.cpan200.finalproject.login_fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.Fragment
 import com.cpan200.finalproject.R
-import kotlinx.android.synthetic.main.activity_login.*
 
 /**
  * A simple [Fragment] subclass.
@@ -17,31 +16,34 @@ import kotlinx.android.synthetic.main.activity_login.*
 class FragLogin : Fragment() {
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(com.cpan200.finalproject.R.layout.fragment_login, container, false)
+	override fun onCreateView(
+		inflater: LayoutInflater, container: ViewGroup?,
+		savedInstanceState: Bundle?
+	): View? {
+		val view = inflater.inflate(R.layout.fragment_login, container, false)
 
-        //test
-        val transaction = activity!!.supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.LoginContainer, FragOnboarding(), "FragOnboarding")
-        transaction.addToBackStack("FragLogin").commit()
+		val valBtnLoginRegister = view.findViewById<Button>(R.id.btnLogin_Register)
+		Log.i("test123", fragmentManager!!.fragments.count().toString())
 
-        val valBtnLoginRegister = view.findViewById<Button>(com.cpan200.finalproject.R.id.btnLogin_Register)
-        valBtnLoginRegister.setOnClickListener {
-            //            val fragment = activity!!.supportFragmentManager.findFragmentByTag("FragLogin")
-//            if (fragment != null) {
-//                Log.i("test123", "asdasdasd")
-//                activity!!.supportFragmentManager.beginTransaction().remove(fragment).commit()
-        //}
-          //  activity!!.supportFragmentManager.popBackStack()
+		valBtnLoginRegister.setOnClickListener {
 
+			//show onboarding fragment whether it exists already or not
+			val transaction = fragmentManager!!.beginTransaction()
+			var fragOnboarding: Fragment? = fragmentManager!!.findFragmentByTag("FragOnboarding")
+			if (fragOnboarding == null) {
+				fragOnboarding = FragOnboarding()
+				Log.i("test123", "init frag onboarding")
+			}
 
+			transaction.replace(R.id.LoginContainer, fragOnboarding!!, "FragOnboarding")
+			transaction.addToBackStack("FragOnboarding")
+			transaction.commit()
 
-        }
-        return view
-    }
+			Log.i("test123", fragmentManager!!.fragments.count().toString())
+
+		}
+		return view
+	}
 
 
 

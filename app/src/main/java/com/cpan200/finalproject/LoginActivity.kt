@@ -19,7 +19,7 @@ class LoginActivity : AppCompatActivity() {
         //when starting the app, show login fragment
         if (savedInstanceState == null){
             supportFragmentManager.beginTransaction()
-                .add(R.id.LoginContainer, FragOnboarding(), "FragLogin")
+                .add(R.id.LoginContainer, FragLogin(), "FragLogin")
                 .commit()
         }
 
