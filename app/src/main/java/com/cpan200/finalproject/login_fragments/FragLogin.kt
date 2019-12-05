@@ -1,6 +1,7 @@
 package com.cpan200.finalproject.login_fragments
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.cpan200.classes.App
+import com.cpan200.classes.User
+import com.cpan200.finalproject.AdminActivity
 import com.cpan200.finalproject.R
+import com.cpan200.finalproject.StudentActivity
 import kotlinx.android.synthetic.main.fragment_login.*
 
 /**
@@ -41,6 +45,19 @@ class FragLogin : Fragment() {
 		val valBtnLoginLogin = view.findViewById<Button>(R.id.btnLogin_Login)
 		valBtnLoginLogin.setOnClickListener {
 			App.login(activity!!, editLogin_Username.text.toString(), editLogin_Password.text.toString())
+
+			if (App.isLoggedIn) {
+				if (App.currentUser!!.status == User.UserStatus.ADMIN || App.currentUser!!.status == User.UserStatus.SUPERUSER) {
+					//user logged in is admin. open admin activity
+					startActivity(Intent(activity!!, AdminActivity::class.java))
+				}
+				else if (App.currentUser!!.status == User.UserStatus.STUDENT){
+					//user logged in is a student. open student activity
+					startActivity(Intent(activity!!, StudentActivity::class.java))
+				}
+				activity!!.finish()
+
+			}
 
 		}
 
