@@ -69,18 +69,21 @@ class UserDB(
         //returns number of rows including deleted rows. uses primary key.
         val db = this.writableDatabase
         val cursor: Cursor? = db.rawQuery("SELECT MAX($COL_ID) FROM $TABLE_NAME", null)
-        when (cursor!!.count){
-            0 -> return 0
-            else ->{
-                Log.i("test123", "counting rows")
-                cursor.moveToNext()
-                val n: Int = cursor.getInt(1)
+        if (cursor == null || cursor.count == 0){
+            Log.i("test123", "null or 0 count")
+            return 0
+        }
+        else {
+            if (cursor.moveToFirst()){
+                Log.i("test123", "trying to fetch max")
+                val n: Int = cursor.getInt(0)
                 cursor.close()
-                Log.i("test123", "rows: $n")
+                Log.i("test123", "fetched $n")
                 return n
             }
         }
-
+        Log.i("test123", "code escaped")
+        return 0
     }
 
 
