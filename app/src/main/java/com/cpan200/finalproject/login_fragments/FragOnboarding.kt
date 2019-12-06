@@ -35,9 +35,6 @@ class FragOnboarding : Fragment() {
 				editReg_Lastname.text.toString())
 
 
-
-
-
 		}
 		return view
 	}

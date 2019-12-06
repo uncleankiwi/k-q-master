@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import com.cpan200.classes.User
 
 class UserDB(
@@ -68,14 +69,18 @@ class UserDB(
         //returns number of rows including deleted rows. uses primary key.
         val db = this.writableDatabase
         val cursor: Cursor? = db.rawQuery("SELECT MAX($COL_ID) FROM $TABLE_NAME", null)
-        if (cursor!!.count == 0){
-            return 0
+        when (cursor!!.count){
+            0 -> return 0
+            else ->{
+                Log.i("test123", "counting rows")
+                cursor.moveToNext()
+                val n: Int = cursor.getInt(1)
+                cursor.close()
+                Log.i("test123", "rows: $n")
+                return n
+            }
         }
-        else {
-            cursor.moveToFirst()
-            return cursor.getInt(cursor.getColumnIndex(COL_ID))
-        }
-        cursor.close()
+
     }
 
 
