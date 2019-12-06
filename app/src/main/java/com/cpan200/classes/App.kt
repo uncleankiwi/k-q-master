@@ -1,12 +1,8 @@
 package com.cpan200.classes
 
 import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.widget.Toast
 import com.cpan200.dbclasses.UserDB
-import com.cpan200.finalproject.AdminActivity
-import com.cpan200.finalproject.StudentActivity
 
 class App {
 	companion object {
@@ -15,17 +11,17 @@ class App {
 
 		fun login(context: Context, tryUsername: String?, tryPassword: String?) {
 			//check if username and password entered
-			if (tryUsername == null || tryUsername == "") {
+			if (tryUsername == null || tryUsername.trim() == "") {
 				showToast(context, "Please enter a username")
 				return
-			} else if (tryPassword == null || tryPassword == "") {
+			} else if (tryPassword == null || tryPassword.trim() == "") {
 				showToast(context, "Please enter your password")
 				return
 			} else {
 
 				//checking if username and password is correct
 				val userDB = UserDB(context, null)
-				val cursor = userDB.tryLogin(tryUsername, tryPassword)
+				val cursor = userDB.tryLogin(tryUsername.trim(), tryPassword.trim())
 
 				when (cursor?.count) {
 					0 -> {
@@ -73,7 +69,52 @@ class App {
 			//move user back to login activity
 			//todo
 
+		}
 
+		fun createUser(context: Context, username: String?, password: String?,
+					   email: String?, firstName: String?, lastName: String?){
+			if (username == null || username.trim() == "") {
+				showToast(context, "Please enter a username")
+				return
+			}
+			else if (password == null || password.trim() == ""){
+				showToast(context, "Please enter a password")
+				return
+			}
+			else {
+				val userDB = UserDB(context, null)
+				val usernameE = username.trim()
+				val passwordE: String = password.trim()
+				var emailE: String? = email?.trim()
+				if (emailE == "") emailE = null
+				var firstNameE: String? = email?.trim()
+				if (firstNameE == "") firstNameE = null
+				var lastNameE: String? = lastName?.trim()
+				if (lastNameE == "") lastNameE = null
+
+				//make a student
+				var statusE: String = User.UserStatus.STUDENT.toString()
+				if (userDB.rows() == 0){
+					//...unless this is the first user ever created
+					//in which case make a SUPERUSER
+					statusE = User.UserStatus.SUPERUSER.toString()
+				}
+
+				userDB.addRow(usernameE, passwordE, statusE, emailE, firstNameE, lastNameE)
+
+			}
+		}
+
+		fun deleteUser(){
+			//todo
+		}
+
+		fun changeUserStatus(){
+			//todo
+		}
+
+		fun changeOwnParticulars(){
+			//todo
 		}
 
 		fun showToast(context: Context, msg: String, length: Int = Toast.LENGTH_LONG) {
