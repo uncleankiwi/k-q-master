@@ -3,6 +3,7 @@ package com.cpan200.classes
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.widget.Toast
 import com.cpan200.dbclasses.UserDB
 import com.cpan200.finalproject.AdminActivity
@@ -15,13 +16,19 @@ class App {
 		private var isLoggedIn: Boolean = false
 		private var currentUser: User? = null
 
-		fun login(context: Context, tryUsername: String?, tryPassword: String?) {
+		private const val APP_KEY: String = "App"
+		private const val USERNAME_KEY: String = "username"
+		private const val PASSWORD_KEY: String = "password"
+
+		fun login(context: Context, tryUsername: String?, tryPassword: String?, verbose: Boolean = true) {
 			//check if username and password entered
 			if (tryUsername == null || tryUsername.trim() == "") {
-				showToast(context, "Please enter a username")
+				if (verbose)
+					showToast(context, "Please enter a username")
 				return
 			} else if (tryPassword == null || tryPassword.trim() == "") {
-				showToast(context, "Please enter your password")
+				if (verbose)
+					showToast(context, "Please enter your password")
 				return
 			} else {
 
@@ -32,21 +39,21 @@ class App {
 				when (cursor?.count) {
 					0 -> {
 						//no user with this name/password
-						showToast(context, "Username or password is incorrect")
+						if (verbose)
+							showToast(context, "Username or password is incorrect")
 						return
 					}
 					1 -> {
 						//username found
 						cursor.moveToFirst()
-						val username = cursor.getString(cursor.getColumnIndex(UserDB.COL_USERNAME))
-						val password = cursor.getString(cursor.getColumnIndex(UserDB.COL_PASSWORD))
-						val id: Int = cursor.getInt(cursor.getColumnIndex(UserDB.COL_ID))
-						val status: User.UserStatus = User.UserStatus.valueOf(cursor.getString(cursor.getColumnIndex(UserDB.COL_STATUS)))
-						val email: String? = cursor.getString(cursor.getColumnIndex(UserDB.COL_EMAIL))
-						val firstName: String? = cursor.getString(cursor.getColumnIndex(UserDB.COL_FIRSTNAME))
-						val lastName: String? = cursor.getString(cursor.getColumnIndex(UserDB.COL_LASTNAME))
-						currentUser = User(username, password, id, status, email, firstName, lastName)
+						currentUser = cursorToUser(cursor)
 						isLoggedIn = true
+
+						//shared prefs to remember current user
+						val editor = context.getSharedPreferences(APP_KEY, Context.MODE_PRIVATE).edit()
+						editor.putString(USERNAME_KEY, currentUser!!.name)
+						editor.putString(PASSWORD_KEY, currentUser!!.password)
+						editor.apply()
 
 						//now opening the appropriate activity - admin or student
 						if (context is Activity) {
@@ -57,19 +64,15 @@ class App {
 								//user logged in is a student. open student activity
 								context.startActivity(Intent(context, StudentActivity::class.java))
 							}
-							showToast(context, "Logged in as ${currentUser!!.status.toString().toLowerCase(Locale.getDefault())} ${currentUser!!.name}")
+							if (verbose)
+								showToast(context, "Logged in as ${currentUser!!.status.toString().toLowerCase(Locale.getDefault())} ${currentUser!!.name}")
 							context.finish()
 						}
-
-
-						//shared prefs to remember current user
-						//TODO
-
 					}
-
 					else -> {
-						//no idea what's going on
-						showToast(context, "Error reading username and password")
+						//multiple users with same username and password found? no idea what's going on.
+						if (verbose)
+							showToast(context, "Error reading username and password")
 						return
 					}
 				}
@@ -79,13 +82,24 @@ class App {
 
 		}
 
-		fun logout(context: Context) {
+		fun loginWithPrefs(context: Context){
+			val prefs = context.getSharedPreferences(APP_KEY, Context.MODE_PRIVATE)
+			val tryUsername = prefs.getString(USERNAME_KEY, null)
+			val tryPassword = prefs.getString(PASSWORD_KEY, null)
+			if (tryUsername != null && tryPassword != null){
+				login(context, tryUsername, tryPassword, false)
+			}
+		}
+
+		fun logout(context: Context, verbose: Boolean = true) {
 			//remove user from shared prefs
-			//todo
+			val editor = context.getSharedPreferences(APP_KEY, Context.MODE_PRIVATE).edit()
+			editor.clear().apply()
 
 			//move user back to login activity
 			if (context is Activity){
-				showToast(context, "Logged out of ${currentUser!!.status.toString().toLowerCase(Locale.getDefault())} ${currentUser?.name}")
+				if (verbose)
+					showToast(context, "Logged out of ${currentUser!!.status.toString().toLowerCase(Locale.getDefault())} ${currentUser?.name}")
 				currentUser = null
 				isLoggedIn = false
 				context.startActivity(Intent(context, LoginActivity::class.java))
@@ -141,8 +155,19 @@ class App {
 			//todo
 		}
 
-		fun showToast(context: Context, msg: String, length: Int = Toast.LENGTH_LONG) {
+		private fun showToast(context: Context, msg: String, length: Int = Toast.LENGTH_LONG) {
 			Toast.makeText(context, msg, length).show()
+		}
+
+		private fun cursorToUser(cursor: Cursor): User{
+			val username = cursor.getString(cursor.getColumnIndex(UserDB.COL_USERNAME))
+			val password = cursor.getString(cursor.getColumnIndex(UserDB.COL_PASSWORD))
+			val id: Int = cursor.getInt(cursor.getColumnIndex(UserDB.COL_ID))
+			val status: User.UserStatus = User.UserStatus.valueOf(cursor.getString(cursor.getColumnIndex(UserDB.COL_STATUS)))
+			val email: String? = cursor.getString(cursor.getColumnIndex(UserDB.COL_EMAIL))
+			val firstName: String? = cursor.getString(cursor.getColumnIndex(UserDB.COL_FIRSTNAME))
+			val lastName: String? = cursor.getString(cursor.getColumnIndex(UserDB.COL_LASTNAME))
+			return User(username, password, id, status, email, firstName, lastName)
 		}
 	}
 }
