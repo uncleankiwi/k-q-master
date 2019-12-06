@@ -19,7 +19,7 @@ class StudentActivity : AppCompatActivity() {
         return true
     }
 
-    fun studentLogout() {
-        App.logout()
+    fun studentLogout(item: MenuItem) {
+        App.logout(this)
     }
 }

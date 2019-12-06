@@ -45,20 +45,6 @@ class FragLogin : Fragment() {
 		val valBtnLoginLogin = view.findViewById<Button>(R.id.btnLogin_Login)
 		valBtnLoginLogin.setOnClickListener {
 			App.login(activity!!, editLogin_Username.text.toString(), editLogin_Password.text.toString())
-
-			if (App.isLoggedIn) {
-				if (App.currentUser!!.status == User.UserStatus.ADMIN || App.currentUser!!.status == User.UserStatus.SUPERUSER) {
-					//user logged in is admin. open admin activity
-					startActivity(Intent(activity!!, AdminActivity::class.java))
-				}
-				else if (App.currentUser!!.status == User.UserStatus.STUDENT){
-					//user logged in is a student. open student activity
-					startActivity(Intent(activity!!, StudentActivity::class.java))
-				}
-				activity!!.finish()
-
-			}
-
 		}
 
 		return view

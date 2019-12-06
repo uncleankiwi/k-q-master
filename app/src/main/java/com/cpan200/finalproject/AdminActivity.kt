@@ -20,7 +20,7 @@ class AdminActivity : AppCompatActivity() {
         return true
     }
 
-    fun adminLogout() {
-        App.logout()
+    fun adminLogout(item: MenuItem) {
+        App.logout(this)
     }
 }

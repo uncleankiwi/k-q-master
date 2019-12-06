@@ -2,14 +2,18 @@ package com.cpan200.classes
 
 import android.app.Activity
 import android.content.Context
-import android.util.Log
+import android.content.Intent
 import android.widget.Toast
 import com.cpan200.dbclasses.UserDB
+import com.cpan200.finalproject.AdminActivity
+import com.cpan200.finalproject.LoginActivity
+import com.cpan200.finalproject.StudentActivity
+import java.util.*
 
 class App {
 	companion object {
-		var isLoggedIn: Boolean = false
-		var currentUser: User? = null
+		private var isLoggedIn: Boolean = false
+		private var currentUser: User? = null
 
 		fun login(context: Context, tryUsername: String?, tryPassword: String?) {
 			//check if username and password entered
@@ -44,7 +48,19 @@ class App {
 						currentUser = User(username, password, id, status, email, firstName, lastName)
 						isLoggedIn = true
 
-						Log.i("test123", "status ${currentUser!!.status.toString()}, ${currentUser!!.name}, ${currentUser!!.password}")
+						//now opening the appropriate activity - admin or student
+						if (context is Activity) {
+							if (currentUser!!.status == User.UserStatus.ADMIN || currentUser!!.status == User.UserStatus.SUPERUSER) {
+								//user logged in is admin. open admin activity
+								context.startActivity(Intent(context, AdminActivity::class.java))
+							} else if (currentUser!!.status == User.UserStatus.STUDENT) {
+								//user logged in is a student. open student activity
+								context.startActivity(Intent(context, StudentActivity::class.java))
+							}
+							showToast(context, "Logged in as ${currentUser!!.status.toString().toLowerCase(Locale.getDefault())} ${currentUser!!.name}")
+							context.finish()
+						}
+
 
 						//shared prefs to remember current user
 						//TODO
@@ -64,15 +80,15 @@ class App {
 		}
 
 		fun logout(context: Context) {
-			currentUser = null
-			isLoggedIn = false
-
 			//remove user from shared prefs
 			//todo
 
 			//move user back to login activity
 			if (context is Activity){
-				context.startIntent()
+				showToast(context, "Logged out of ${currentUser!!.status.toString().toLowerCase(Locale.getDefault())} ${currentUser?.name}")
+				currentUser = null
+				isLoggedIn = false
+				context.startActivity(Intent(context, LoginActivity::class.java))
 				context.finish()
 			}
 
@@ -95,7 +111,7 @@ class App {
 				val passwordE: String = password.trim()
 				var emailE: String? = email?.trim()
 				if (emailE == "") emailE = null
-				var firstNameE: String? = email?.trim()
+				var firstNameE: String? = firstName?.trim()
 				if (firstNameE == "") firstNameE = null
 				var lastNameE: String? = lastName?.trim()
 				if (lastNameE == "") lastNameE = null

@@ -5,8 +5,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
-import com.cpan200.classes.User
 
 class UserDB(
     context: Context?,
@@ -70,19 +68,15 @@ class UserDB(
         val db = this.writableDatabase
         val cursor: Cursor? = db.rawQuery("SELECT MAX($COL_ID) FROM $TABLE_NAME", null)
         if (cursor == null || cursor.count == 0){
-            Log.i("test123", "null or 0 count")
             return 0
         }
         else {
             if (cursor.moveToFirst()){
-                Log.i("test123", "trying to fetch max")
                 val n: Int = cursor.getInt(0)
                 cursor.close()
-                Log.i("test123", "fetched $n")
                 return n
             }
         }
-        Log.i("test123", "code escaped")
         return 0
     }
 
