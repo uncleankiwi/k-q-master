@@ -44,7 +44,8 @@ class UserDB(
     }
 fun tryLogin(username: String, password: String): Cursor?{
     val db = this.readableDatabase
-    return db.rawQuery("SELECT $TABLE_NAME WHERE $COL_USERNAME = \"$username\" AND $COL_PASSWORD = \"$password\"", null)
+    return db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COL_USERNAME = \"$username\" AND $COL_PASSWORD = \"$password\"", null)
+    //return db.rawQuery("SELECT * FROM $TABLE_NAME", null)
 
 }
 

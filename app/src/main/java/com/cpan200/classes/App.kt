@@ -1,8 +1,12 @@
 package com.cpan200.classes
 
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import com.cpan200.dbclasses.UserDB
+import com.cpan200.finalproject.AdminActivity
+import com.cpan200.finalproject.StudentActivity
 
 class App {
 	companion object {
@@ -42,8 +46,8 @@ class App {
 						currentUser = User(username, password, id, status, email, firstName, lastName)
 						isLoggedIn = true
 
-						//open appropriate activity: admin or student
-
+						//shared prefs to remember current user
+						//TODO
 
 					}
 
@@ -62,6 +66,13 @@ class App {
 		fun logout() {
 			currentUser = null
 			isLoggedIn = false
+
+			//remove user from shared prefs
+			//todo
+
+			//move user back to login activity
+			//todo
+
 
 		}
 
