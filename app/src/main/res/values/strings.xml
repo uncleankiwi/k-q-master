@@ -4,6 +4,9 @@
     <!-- <string name=""></string> -->
     <!-- -->
 
+    <!-- MENU -->
+    <string name="Log_out">Log out</string>
+
     <!-- LOGIN -->
     <!-- login frag -->
     <string name="App_logo">App logo</string>

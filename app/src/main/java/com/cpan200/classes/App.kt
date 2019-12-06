@@ -1,6 +1,8 @@
 package com.cpan200.classes
 
+import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import com.cpan200.dbclasses.UserDB
 
@@ -36,11 +38,13 @@ class App {
 						val password = cursor.getString(cursor.getColumnIndex(UserDB.COL_PASSWORD))
 						val id: Int = cursor.getInt(cursor.getColumnIndex(UserDB.COL_ID))
 						val status: User.UserStatus = User.UserStatus.valueOf(cursor.getString(cursor.getColumnIndex(UserDB.COL_STATUS)))
-						val email = cursor.getString(cursor.getColumnIndex(UserDB.COL_EMAIL))
-						val firstName: String = cursor.getString(cursor.getColumnIndex(UserDB.COL_FIRSTNAME))
-						val lastName: String = cursor.getString(cursor.getColumnIndex(UserDB.COL_LASTNAME))
+						val email: String? = cursor.getString(cursor.getColumnIndex(UserDB.COL_EMAIL))
+						val firstName: String? = cursor.getString(cursor.getColumnIndex(UserDB.COL_FIRSTNAME))
+						val lastName: String? = cursor.getString(cursor.getColumnIndex(UserDB.COL_LASTNAME))
 						currentUser = User(username, password, id, status, email, firstName, lastName)
 						isLoggedIn = true
+
+						Log.i("test123", "status ${currentUser!!.status.toString()}, ${currentUser!!.name}, ${currentUser!!.password}")
 
 						//shared prefs to remember current user
 						//TODO
@@ -59,7 +63,7 @@ class App {
 
 		}
 
-		fun logout() {
+		fun logout(context: Context) {
 			currentUser = null
 			isLoggedIn = false
 
@@ -67,7 +71,11 @@ class App {
 			//todo
 
 			//move user back to login activity
-			//todo
+			if (context is Activity){
+				context.startIntent()
+				context.finish()
+			}
+
 
 		}
 
