@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -8,17 +9,17 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/txtStudentPanelUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Username_temp"
             android:textSize="24sp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnStudentPanelEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="@string/Edit" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,18 +27,18 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btnStudentPanelScores"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="@string/Scores" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/btnStudentPanelDelete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="@string/Delete" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

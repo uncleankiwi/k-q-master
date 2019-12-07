@@ -58,6 +58,13 @@
     <!-- student panel -->
     <string name="Username_temp">(Username)</string>
 
+    <!-- question panel -->
+    <string name="Question">Question</string>
+    <string name="Set_image">Set image</string>
+
+    <!-- add element panel -->
+    <string name="Add">Add</string>
+
     <!-- -->
     <!-- <string name=""></string> -->
 
