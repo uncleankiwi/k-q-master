@@ -57,7 +57,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/First_name"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/editEditParticularsLastname"
@@ -65,7 +66,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/Last_name"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/editEditParticularsEmail"
@@ -73,7 +75,9 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/Email"
-        android:inputType="textPersonName" />
+        android:inputType="text"
+        android:importantForAutofill="no"
+        tools:ignore="TextFields" />
 
     <LinearLayout
         android:layout_width="match_parent"

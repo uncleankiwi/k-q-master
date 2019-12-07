@@ -30,7 +30,7 @@
     <string name="Students">Students</string>
 
     <!-- quiz main fragment-->
-    <string name="Quiz_title">Quiz title</string>
+    <string name="Quiz_title">(Quiz title)</string>
     <string name="Close">Close</string>
     <string name="Submit">Submit</string>
     <string name="Save">Save</string>
@@ -41,8 +41,24 @@
     <string name="Student">Student</string>
     <string name="Status">Status</string>
 
-    <!-- <string name=""></string> -->
-    <!-- -->
+    <!-- scores main fragment -->
+    <string name="Scores_prefix">Scores: </string>
+    <string name="Username_prefix">Username: </string>
+    <string name="Score_prefix">Score: </string>
 
+    <!-- quiz panel -->
+    <string name="Edit">Edit</string>
+    <string name="Publish">Publish</string>
+    <string name="Scores">Scores</string>
+    <string name="Delete">Delete</string>
+    <string name="Finalized_prefix">Finalized: </string>
+    <string name="Questions_prefix">Questions: </string>
+    <string name="Total_marks_prefix">Total marks: </string>
+
+    <!-- student panel -->
+    <string name="Username_temp">(Username)</string>
+
+    <!-- -->
+    <!-- <string name=""></string> -->
 
 </resources>
