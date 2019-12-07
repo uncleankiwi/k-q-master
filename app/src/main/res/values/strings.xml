@@ -25,4 +25,15 @@
     <string name="Email">Email</string>
     <string name="Cancel">Cancel</string>
 
+    <!-- admin main frag -->
+    <string name="Quizzes">Quizzes</string>
+    <string name="Students">Students</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- quiz list fragment-->
+    <!-- <string name=""></string> -->
+    <!-- -->
+
 </resources>
