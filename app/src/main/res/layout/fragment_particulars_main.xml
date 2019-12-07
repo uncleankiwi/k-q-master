@@ -1,13 +1,98 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.cpan200.finalproject.user_fragments.FragParticularsMain">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:text="@string/Edit_particulars"
+        android:textSize="24sp" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/txtEditParticularsUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Username" />
+
+    <EditText
+        android:id="@+id/editEditParticularsPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/Password"
+        android:inputType="textPassword"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/txtEditParticularsStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Status" />
+
+    <RadioGroup
+        android:id="@+id/radgrpEditParticularsStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <RadioButton
+            android:id="@+id/radEditParticularsAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Admin" />
+
+        <RadioButton
+            android:id="@+id/radEditParticularsStudent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Student" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/editEditParticularsFirstname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/First_name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/editEditParticularsLastname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/Last_name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/editEditParticularsEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/Email"
+        android:inputType="textPersonName" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnEditParticularsCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Cancel" />
+
+        <Button
+            android:id="@+id/btnEditParticularsSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Save" />
+    </LinearLayout>
+
+</LinearLayout>

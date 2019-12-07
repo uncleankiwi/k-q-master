@@ -29,11 +29,20 @@
     <string name="Quizzes">Quizzes</string>
     <string name="Students">Students</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- quiz main fragment-->
+    <string name="Quiz_title">Quiz title</string>
+    <string name="Close">Close</string>
+    <string name="Submit">Submit</string>
+    <string name="Save">Save</string>
 
-    <!-- quiz list fragment-->
+    <!-- particulars main fragment-->
+    <string name="Edit_particulars">Edit particulars</string>
+    <string name="Admin">Admin</string>
+    <string name="Student">Student</string>
+    <string name="Status">Status</string>
+
     <!-- <string name=""></string> -->
     <!-- -->
+
 
 </resources>
