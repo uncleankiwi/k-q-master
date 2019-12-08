@@ -72,10 +72,6 @@ class App {
 			QuizzesDB(context, null).addRow()
 		}
 
-//		fun addQuestion(context: Context, question: String?, answers: MutableList<String>?, correctAnswer: Int, image: Blob?) {
-
-//		}
-
 		fun editQuiz(context: Context, id: Int, quiz: Quiz) {
 			//this edits 1 line in QuizzesDB
 			//then drops QuizDB_N, recreates it,
@@ -92,12 +88,10 @@ class App {
 				quizzesDB.updateRow(id, quiz.title, quiz.questionList, quiz.finalized, quiz.maxAttempts)
 				quizzesDB.close()
 
-
-				//drop QuizDB_N
-
-				//recreate QuizDB_N
-
-				//add question
+				//recreate QuizDB_N and add questions
+				val quizDB = QuizDB(context, id, null)
+				quizDB.recreateTable(id, quiz)
+				quizDB.close()
 			}
 
 
@@ -262,8 +256,11 @@ class App {
 			//todo
 		}
 
-		fun changeOwnParticulars() {
-			//todo
+		fun changeParticulars(username: String, newPassword: String, newEmail:String?, newFirstName: String?, newLastName: String?) {
+			//change password, email, firstName, lastName
+
+			//if user specified is current user,
+
 		}
 
 		fun showToast(context: Context, msg: String, length: Int = Toast.LENGTH_LONG) {
