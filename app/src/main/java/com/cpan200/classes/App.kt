@@ -11,6 +11,7 @@ import com.cpan200.dbclasses.UserDB
 import com.cpan200.finalproject.AdminActivity
 import com.cpan200.finalproject.LoginActivity
 import com.cpan200.finalproject.StudentActivity
+import java.sql.Blob
 import java.util.*
 
 class App {
@@ -67,24 +68,25 @@ class App {
 
 		}
 
-		fun addQuiz(context: Context, ) {
-			//todo
-//			context: Context, username: String?, password: String?,
-//			email: String?, firstName: String?, lastName: String?
+		fun addQuiz(context: Context) {
+//			const val COL_TITLE = "title"
+//			const val COL_QUESTIONS = "questions"
+//			const val COL_TOTALMARKS = "totalmarks"
+//			const val COL_FINALIZED = "finalized"       //ready to publish?
+//			const val COL_MAXOPTIONS = "maxoptions"     //highest number of choices in an MCQ
+//			const val COL_MAXATTEMPTS = "maxattempts"
+
+		}
+
+		fun addQuestion(context: Context, question: String?, answers: MutableList<String>?, correctAnswer: Int, image: Blob?) {
+
 		}
 
 		fun editQuiz(id: Int, quiz: Quiz) {
 			//todo
 		}
 
-
-
-		fun login(
-				context: Context,
-				tryUsername: String?,
-				tryPassword: String?,
-				verbose: Boolean = true
-		) {
+		fun login(context: Context, tryUsername: String?, tryPassword: String?, verbose: Boolean = true) {
 			//check if username and password entered
 			if (tryUsername == null || tryUsername.trim() == "") {
 				if (verbose)

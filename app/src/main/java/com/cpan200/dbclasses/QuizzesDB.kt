@@ -1,5 +1,6 @@
 package com.cpan200.dbclasses
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -46,6 +47,18 @@ class QuizzesDB(
 
     fun getAllRows() : Cursor? {
         return this.readableDatabase.rawQuery("SELECT * FROM $TABLE_NAME", null)
+    }
+
+    fun addRow(){
+        val row = ContentValues()
+        val db = this.writableDatabase
+        row.put(COL_QUESTIONS, 0)
+        row.put(COL_TOTALMARKS, 0)
+        row.put(COL_FINALIZED, 0)
+        row.put(COL_MAXOPTIONS, 5)
+        row.put(COL_MAXATTEMPTS, 1)
+        db.insert(TABLE_NAME, null, row)
+        db.close()
     }
 
 
