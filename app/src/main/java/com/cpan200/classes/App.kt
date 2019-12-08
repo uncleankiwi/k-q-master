@@ -20,12 +20,33 @@ class App {
 		private const val USERNAME_KEY: String = "username"
 		private const val PASSWORD_KEY: String = "password"
 
-		private val quizzes: MutableList<Quiz>? = null
-		private val users: MutableList<User>? = null
-		private val currentQuiz: MutableList<Question>? = null
+//		private val quizzes: MutableList<Quiz>? = null
+//		private val users: MutableList<User>? = null
+//		private val currentQuiz: MutableList<Question>? = null
 
-		fun getQuizzes(): MutableList<Quiz>{
+		fun getQuizList(): MutableList<Quiz>{
+			val quizList = mutableListOf<Quiz>()
+			//todo read entire quizzesdb, populate quizlist
+			return quizList
+		}
 
+		fun getQuiz(id: Int): Quiz{
+			var quiz: Quiz
+			val questionList = mutableListOf<Question>()
+			//todo read id row of quizzesdb, populate quiz
+			//todo read quizdbN, populate questionlist
+
+			quiz.questionList = questionList
+			return quiz
+
+		}
+
+		fun addQuiz(quiz: Quiz){
+			//todo
+		}
+
+		fun editQuiz(id: Int, quiz: Quiz){
+			//todo
 		}
 
 		fun login(context: Context, tryUsername: String?, tryPassword: String?, verbose: Boolean = true) {
