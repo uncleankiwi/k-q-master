@@ -20,6 +20,14 @@ class App {
 		private const val USERNAME_KEY: String = "username"
 		private const val PASSWORD_KEY: String = "password"
 
+		private val quizzes: MutableList<Quiz>? = null
+		private val users: MutableList<User>? = null
+		private val currentQuiz: MutableList<Question>? = null
+
+		fun getQuizzes(): MutableList<Quiz>{
+
+		}
+
 		fun login(context: Context, tryUsername: String?, tryPassword: String?, verbose: Boolean = true) {
 			//check if username and password entered
 			if (tryUsername == null || tryUsername.trim() == "") {
