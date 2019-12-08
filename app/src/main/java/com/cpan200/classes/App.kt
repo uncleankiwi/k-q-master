@@ -43,23 +43,34 @@ class App {
 			var quiz = Quiz()
 			val questionList = mutableListOf<Question>()
 
-			//todo read id row of quizzesdb, populate quiz
+			//read 'id'th row of quizzesDB, take that one quiz out
 			val quizzesCursor = QuizzesDB(context, null).getRow(id)
 			if (quizzesCursor!!.count != 0){
 				quizzesCursor.moveToFirst()
 				quiz = cursorToQuiz(quizzesCursor)
 			}
 
-			//todo read quizdbN, populate questionlist
+			//read quizDB_N, populate questionList
 			val questionsCursor = QuizDB(context, id, null).getAllRows()
+			if (questionsCursor!!.count != 0){
+				questionsCursor.moveToFirst()
+				questionList.add(cursorToQuestion(questionsCursor, quiz.maxOptions!!))
 
+				while (questionsCursor.moveToNext()){
+					questionList.add(cursorToQuestion(questionsCursor, quiz.maxOptions!!))
+				}
+			}
+
+			//put questionList into the quiz
 			quiz.questionList = questionList
 			return quiz
 
 		}
 
-		fun addQuiz(quiz: Quiz) {
+		fun addQuiz(context: Context, ) {
 			//todo
+//			context: Context, username: String?, password: String?,
+//			email: String?, firstName: String?, lastName: String?
 		}
 
 		fun editQuiz(id: Int, quiz: Quiz) {
@@ -219,6 +230,18 @@ class App {
 
 		fun showToast(context: Context, msg: String, length: Int = Toast.LENGTH_LONG) {
 			Toast.makeText(context, msg, length).show()
+		}
+
+		private fun cursorToQuestion(cursor: Cursor, maxOptions: Int): Question {
+			val id: Int = cursor.getInt(cursor.getColumnIndex(QuizDB.COL_ID))
+			val question: String = cursor.getString(cursor.getColumnIndex(QuizDB.COL_QUESTION))
+			val answers = mutableListOf<String>()
+			for (i in 0 until (maxOptions - 1)){
+				//get answer in the ith column
+				answers.add(cursor.getString(cursor.getColumnIndex(QuizDB.COL_ANS_N + i.toString())))
+			}
+			val correctAnswer: Int = cursor.getInt(cursor.getColumnIndex(QuizDB.COL_CORRECTANS))
+			return Question(id, question, answers, correctAnswer)
 		}
 
 		private fun cursorToQuiz(cursor: Cursor): Quiz{

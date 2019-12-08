@@ -1,6 +1,5 @@
 package com.cpan200.classes
 
-import android.media.Image
 import java.sql.Blob
 
 class Question(
