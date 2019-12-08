@@ -69,13 +69,7 @@ class App {
 		}
 
 		fun addQuiz(context: Context) {
-//			const val COL_TITLE = "title"
-//			const val COL_QUESTIONS = "questions"
-//			const val COL_TOTALMARKS = "totalmarks"
-//			const val COL_FINALIZED = "finalized"       //ready to publish?
-//			const val COL_MAXOPTIONS = "maxoptions"     //highest number of choices in an MCQ
-//			const val COL_MAXATTEMPTS = "maxattempts"
-
+			QuizzesDB(context, null).addRow()
 		}
 
 		fun addQuestion(context: Context, question: String?, answers: MutableList<String>?, correctAnswer: Int, image: Blob?) {
@@ -83,7 +77,9 @@ class App {
 		}
 
 		fun editQuiz(id: Int, quiz: Quiz) {
-			//todo
+			//this edits 1 line in QuizzesDB
+			//then drops QuizDB_N, recreates it,
+			//then adds every question
 		}
 
 		fun login(context: Context, tryUsername: String?, tryPassword: String?, verbose: Boolean = true) {

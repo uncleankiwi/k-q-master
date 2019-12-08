@@ -65,14 +65,13 @@ class QuizzesDB(
     fun updateRow(id: Int, title: String?, questionList: MutableList<Question>?, finalized: Boolean?, maxAttempts: Int?){
         val row = ContentValues()
         val db = this.writableDatabase
-        row.put(COL_TITLE)
-//        const val COL_TITLE = "title"
-//        const val COL_QUESTIONS = "questions"
-//        const val COL_TOTALMARKS = "totalmarks"
-//        const val COL_FINALIZED = "finalized"       //ready to publish?
-//        const val COL_MAXOPTIONS = "maxoptions"     //highest number of choices in an MCQ
-//        const val COL_MAXATTEMPTS = "maxattempts"
-
+        row.put(COL_TITLE, title)
+        row.put(COL_QUESTIONS, questionList?.size)
+        row.put(COL_TOTALMARKS, questionList?.size)
+        row.put(COL_FINALIZED, finalized)
+        row.put(COL_MAXOPTIONS, 5)  //future feature: allow more options...
+        row.put(COL_MAXATTEMPTS, maxAttempts)
+        db.update(TABLE_NAME, row, "_id = $id", null)
     }
 
 
