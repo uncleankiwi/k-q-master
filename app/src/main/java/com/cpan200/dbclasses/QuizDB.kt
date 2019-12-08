@@ -1,6 +1,7 @@
 package com.cpan200.dbclasses
 
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
@@ -22,7 +23,7 @@ class QuizDB(
         const val COL_IMAGE = "image"             //picture associated with this question
     }
 
-    val tableName = "quiz${quizID}"
+    private val tableName = "quiz${quizID}"
 
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -44,5 +45,10 @@ class QuizDB(
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
         db?.execSQL("DROP TABLE IF EXISTS $tableName")
         onCreate(db)
+    }
+
+
+    fun getAllRows() : Cursor? {
+        return this.readableDatabase.rawQuery("SELECT * FROM $tableName", null)
     }
 }

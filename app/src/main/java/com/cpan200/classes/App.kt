@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.widget.Toast
+import com.cpan200.dbclasses.QuizDB
 import com.cpan200.dbclasses.QuizzesDB
 import com.cpan200.dbclasses.UserDB
 import com.cpan200.finalproject.AdminActivity
@@ -21,26 +22,36 @@ class App {
 		private const val USERNAME_KEY: String = "username"
 		private const val PASSWORD_KEY: String = "password"
 
-		fun getQuizList(): MutableList<Quiz> {
+		fun getQuizList(context: Context): MutableList<Quiz> {
 			val quizList = mutableListOf<Quiz>()
-			//todo read entire quizzesdb, populate quizlist
+
+			//read entire quizzesDB, populate quizList
+			val quizzesCursor = QuizzesDB(context, null).getAllRows()
+			if (quizzesCursor!!.count != 0){
+				quizzesCursor.moveToFirst()
+				quizList.add(cursorToQuiz(quizzesCursor))
+
+				while (quizzesCursor.moveToNext()){
+					quizList.add(cursorToQuiz(quizzesCursor))
+				}
+			}
+
 			return quizList
 		}
 
 		fun getQuiz(context: Context, id: Int): Quiz {
-			var quiz: Quiz
+			var quiz = Quiz()
 			val questionList = mutableListOf<Question>()
 
 			//todo read id row of quizzesdb, populate quiz
-			val quizzesCursor = QuizzesDB(context, null).getAllRows()
+			val quizzesCursor = QuizzesDB(context, null).getRow(id)
 			if (quizzesCursor!!.count != 0){
 				quizzesCursor.moveToFirst()
-				while (quizzesCursor.moveToNext()){
-
-				}
+				quiz = cursorToQuiz(quizzesCursor)
 			}
 
 			//todo read quizdbN, populate questionlist
+			val questionsCursor = QuizDB(context, id, null).getAllRows()
 
 			quiz.questionList = questionList
 			return quiz
@@ -219,7 +230,7 @@ class App {
 			val finalized: Boolean = (cursor.getInt(cursor.getColumnIndex(QuizzesDB.COL_FINALIZED)) == 1)
 			val maxOptions: Int = cursor.getInt(cursor.getColumnIndex(QuizzesDB.COL_MAXOPTIONS))
 			val maxAttempts: Int = cursor.getInt(cursor.getColumnIndex(QuizzesDB.COL_MAXATTEMPTS))
-			return Quiz(title, questions, totalMarks, finalized, maxOptions, maxAttempts, mutableListOf())
+			return Quiz(id, title, questions, totalMarks, finalized, maxOptions, maxAttempts, mutableListOf())
 		}
 
 		private fun cursorToUser(cursor: Cursor): User {

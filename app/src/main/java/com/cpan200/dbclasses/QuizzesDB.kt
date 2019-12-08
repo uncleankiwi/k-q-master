@@ -40,6 +40,10 @@ class QuizzesDB(
         onCreate(db)
     }
 
+    fun getRow(id: Int) : Cursor? {
+        return this.readableDatabase.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COL_ID = \"$id\"", null)
+    }
+
     fun getAllRows() : Cursor? {
         return this.readableDatabase.rawQuery("SELECT * FROM $TABLE_NAME", null)
     }
