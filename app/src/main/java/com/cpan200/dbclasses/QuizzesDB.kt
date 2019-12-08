@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.cpan200.classes.Question
 
 class QuizzesDB(
     context: Context?,
@@ -59,6 +60,19 @@ class QuizzesDB(
         row.put(COL_MAXATTEMPTS, 1)
         db.insert(TABLE_NAME, null, row)
         db.close()
+    }
+
+    fun updateRow(id: Int, title: String?, questionList: MutableList<Question>?, finalized: Boolean?, maxAttempts: Int?){
+        val row = ContentValues()
+        val db = this.writableDatabase
+        row.put(COL_TITLE)
+//        const val COL_TITLE = "title"
+//        const val COL_QUESTIONS = "questions"
+//        const val COL_TOTALMARKS = "totalmarks"
+//        const val COL_FINALIZED = "finalized"       //ready to publish?
+//        const val COL_MAXOPTIONS = "maxoptions"     //highest number of choices in an MCQ
+//        const val COL_MAXATTEMPTS = "maxattempts"
+
     }
 
 

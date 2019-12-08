@@ -48,7 +48,8 @@ class QuizDB(
     }
 
 
-    fun getAllRows() : Cursor? {
+    fun getAllRows(id: Int) : Cursor? {
+        val tableName = "quiz${id}"
         return this.readableDatabase.rawQuery("SELECT * FROM $tableName", null)
     }
 }
