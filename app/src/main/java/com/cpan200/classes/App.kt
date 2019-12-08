@@ -73,13 +73,35 @@ class App {
 		}
 
 //		fun addQuestion(context: Context, question: String?, answers: MutableList<String>?, correctAnswer: Int, image: Blob?) {
-//
+
 //		}
 
-		fun editQuiz(id: Int, quiz: Quiz) {
+		fun editQuiz(context: Context, id: Int, quiz: Quiz) {
 			//this edits 1 line in QuizzesDB
 			//then drops QuizDB_N, recreates it,
 			//then adds every question
+
+			if (false){
+				//checking quiz input
+				//todo
+				return
+			}
+			else {
+				//editing quizzesDB entry
+				val quizzesDB = QuizzesDB(context, null)
+				quizzesDB.updateRow(id, quiz.title, quiz.questionList, quiz.finalized, quiz.maxAttempts)
+				quizzesDB.close()
+
+
+				//drop QuizDB_N
+
+				//recreate QuizDB_N
+
+				//add question
+			}
+
+
+
 		}
 
 		fun login(context: Context, tryUsername: String?, tryPassword: String?, verbose: Boolean = true) {
@@ -218,6 +240,7 @@ class App {
 					}
 
 					userDB.addRow(usernameE, passwordE, statusE, emailE, firstNameE, lastNameE)
+					userDB.close()
 				}
 
 			}
