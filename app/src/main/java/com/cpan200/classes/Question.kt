@@ -8,5 +8,5 @@ class Question(
     var answers: MutableList<String>,
     var correctAnswer: Int) {
 
-    var image: Blob? = null
+    var image: ByteArray? = null
 }

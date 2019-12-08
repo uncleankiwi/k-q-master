@@ -252,14 +252,27 @@ class App {
 
 		}
 
-		fun changeUserStatus() {
+		fun changeUserStatus(context: Context) {
 			//todo
 		}
 
-		fun changeParticulars(username: String, newPassword: String, newEmail:String?, newFirstName: String?, newLastName: String?) {
+		fun changeParticulars(context: Context, username: String, newPassword: String, newEmail:String?, newFirstName: String?, newLastName: String?) {
 			//change password, email, firstName, lastName
 
-			//if user specified is current user,
+            var currentPasswordChanged = false
+
+			//if user specified is current user and password was changed, log out
+
+            if (!currentPasswordChanged){
+                showToast(context, "User information changed.")
+                //todo close window
+            }
+            else {
+                showToast(context, "Password changed. Please sign in with the new password.")
+                logout(context, false)
+            }
+
+
 
 		}
 
