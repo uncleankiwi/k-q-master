@@ -72,9 +72,9 @@ class App {
 			QuizzesDB(context, null).addRow()
 		}
 
-		fun addQuestion(context: Context, question: String?, answers: MutableList<String>?, correctAnswer: Int, image: Blob?) {
-
-		}
+//		fun addQuestion(context: Context, question: String?, answers: MutableList<String>?, correctAnswer: Int, image: Blob?) {
+//
+//		}
 
 		fun editQuiz(id: Int, quiz: Quiz) {
 			//this edits 1 line in QuizzesDB
@@ -223,8 +223,16 @@ class App {
 			}
 		}
 
-		fun deleteUser() {
-			//todo
+		fun deleteUser(context: Context, username: String) {
+			//check if this is current user
+			if (username == currentUser!!.name){
+				showToast(context, "Can't delete a user currently logged in.")
+			}
+			else {
+				UserDB(context, null).deleteRow(username)
+				showToast(context, "Deleted user $username")
+			}
+
 		}
 
 		fun changeUserStatus() {

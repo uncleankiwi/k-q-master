@@ -86,6 +86,11 @@ class UserDB(
 
     fun findExistingUser(tryUsername: String): Cursor?{
         return this.readableDatabase.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COL_USERNAME = \"$tryUsername\"", null)
+
+    }
+
+    fun deleteRow(username: String){
+        this.writableDatabase.execSQL("DELETE FROM $TABLE_NAME WHERE $COL_USERNAME = \"$username\"")
     }
 
 
