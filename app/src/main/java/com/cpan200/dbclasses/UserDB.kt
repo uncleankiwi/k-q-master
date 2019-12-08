@@ -84,5 +84,9 @@ class UserDB(
         return this.readableDatabase.rawQuery("SELECT * FROM $TABLE_NAME", null)
     }
 
+    fun findExistingUser(tryUsername: String): Cursor?{
+        return this.readableDatabase.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COL_USERNAME = \"$tryUsername\"", null)
+    }
+
 
 }

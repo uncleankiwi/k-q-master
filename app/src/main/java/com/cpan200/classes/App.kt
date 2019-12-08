@@ -180,10 +180,7 @@ class App {
 
 		}
 
-		fun createUser(
-				context: Context, username: String?, password: String?,
-				email: String?, firstName: String?, lastName: String?
-		) {
+		fun createUser(context: Context, username: String?, password: String?, email: String?, firstName: String?, lastName: String?) {
 			if (username == null || username.trim() == "") {
 				showToast(context, "Please enter a username")
 				return
@@ -193,23 +190,35 @@ class App {
 			} else {
 				val userDB = UserDB(context, null)
 				val usernameE = username.trim()
-				val passwordE: String = password.trim()
-				var emailE: String? = email?.trim()
-				if (emailE == "") emailE = null
-				var firstNameE: String? = firstName?.trim()
-				if (firstNameE == "") firstNameE = null
-				var lastNameE: String? = lastName?.trim()
-				if (lastNameE == "") lastNameE = null
 
-				//make a student
-				var statusE: String = User.UserStatus.STUDENT.toString()
-				if (userDB.rows() == 0) {
-					//...unless this is the first user ever created
-					//in which case make a SUPERUSER
-					statusE = User.UserStatus.SUPERUSER.toString()
+				//check if username already taken
+				val userCursor = userDB.findExistingUser(usernameE)
+				val existingUsers: Int = userCursor!!.count
+				userCursor.close()
+				if (existingUsers != 0){
+					showToast(context, "Username already taken")
+					return
 				}
+				else {
+					//start creating new user
+					val passwordE: String = password.trim()
+					var emailE: String? = email?.trim()
+					if (emailE == "") emailE = null
+					var firstNameE: String? = firstName?.trim()
+					if (firstNameE == "") firstNameE = null
+					var lastNameE: String? = lastName?.trim()
+					if (lastNameE == "") lastNameE = null
 
-				userDB.addRow(usernameE, passwordE, statusE, emailE, firstNameE, lastNameE)
+					//make a student
+					var statusE: String = User.UserStatus.STUDENT.toString()
+					if (userDB.rows() == 0) {
+						//...unless this is the first user ever created
+						//in which case make a SUPERUSER
+						statusE = User.UserStatus.SUPERUSER.toString()
+					}
+
+					userDB.addRow(usernameE, passwordE, statusE, emailE, firstNameE, lastNameE)
+				}
 
 			}
 		}
