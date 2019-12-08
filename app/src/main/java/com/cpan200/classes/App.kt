@@ -155,7 +155,7 @@ class App {
 			//todo
 		}
 
-		private fun showToast(context: Context, msg: String, length: Int = Toast.LENGTH_LONG) {
+		fun showToast(context: Context, msg: String, length: Int = Toast.LENGTH_LONG) {
 			Toast.makeText(context, msg, length).show()
 		}
 
