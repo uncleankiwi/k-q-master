@@ -5,6 +5,6 @@ class Quiz(
 		var questions: Int? = null,
 		var totalMarks: Int? = null,
 		var finalized: Boolean? = null,
-		var maxOptions: Boolean? = null,
-		var maxAttempts: Boolean? = null,
+		var maxOptions: Int? = null,
+		var maxAttempts: Int? = null,
 		var questionList: MutableList<Question>? = null)

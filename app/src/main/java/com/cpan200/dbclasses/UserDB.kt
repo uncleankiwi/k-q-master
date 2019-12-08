@@ -80,5 +80,9 @@ class UserDB(
         return 0
     }
 
+    fun getAllRows() : Cursor? {
+        return this.readableDatabase.rawQuery("SELECT * FROM $TABLE_NAME", null)
+    }
+
 
 }

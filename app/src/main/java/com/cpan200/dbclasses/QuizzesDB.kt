@@ -1,6 +1,7 @@
 package com.cpan200.dbclasses
 
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
@@ -37,6 +38,10 @@ class QuizzesDB(
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(db)
+    }
+
+    fun getAllRows() : Cursor? {
+        return this.readableDatabase.rawQuery("SELECT * FROM $TABLE_NAME", null)
     }
 
 

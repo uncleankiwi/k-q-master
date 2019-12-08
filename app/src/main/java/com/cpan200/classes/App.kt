@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.widget.Toast
+import com.cpan200.dbclasses.QuizzesDB
 import com.cpan200.dbclasses.UserDB
 import com.cpan200.finalproject.AdminActivity
 import com.cpan200.finalproject.LoginActivity
@@ -20,20 +21,25 @@ class App {
 		private const val USERNAME_KEY: String = "username"
 		private const val PASSWORD_KEY: String = "password"
 
-//		private val quizzes: MutableList<Quiz>? = null
-//		private val users: MutableList<User>? = null
-//		private val currentQuiz: MutableList<Question>? = null
-
-		fun getQuizList(): MutableList<Quiz>{
+		fun getQuizList(): MutableList<Quiz> {
 			val quizList = mutableListOf<Quiz>()
 			//todo read entire quizzesdb, populate quizlist
 			return quizList
 		}
 
-		fun getQuiz(id: Int): Quiz{
+		fun getQuiz(context: Context, id: Int): Quiz {
 			var quiz: Quiz
 			val questionList = mutableListOf<Question>()
+
 			//todo read id row of quizzesdb, populate quiz
+			val quizzesCursor = QuizzesDB(context, null).getAllRows()
+			if (quizzesCursor!!.count != 0){
+				quizzesCursor.moveToFirst()
+				while (quizzesCursor.moveToNext()){
+
+				}
+			}
+
 			//todo read quizdbN, populate questionlist
 
 			quiz.questionList = questionList
@@ -41,15 +47,22 @@ class App {
 
 		}
 
-		fun addQuiz(quiz: Quiz){
+		fun addQuiz(quiz: Quiz) {
 			//todo
 		}
 
-		fun editQuiz(id: Int, quiz: Quiz){
+		fun editQuiz(id: Int, quiz: Quiz) {
 			//todo
 		}
 
-		fun login(context: Context, tryUsername: String?, tryPassword: String?, verbose: Boolean = true) {
+
+
+		fun login(
+				context: Context,
+				tryUsername: String?,
+				tryPassword: String?,
+				verbose: Boolean = true
+		) {
 			//check if username and password entered
 			if (tryUsername == null || tryUsername.trim() == "") {
 				if (verbose)
@@ -79,7 +92,8 @@ class App {
 						isLoggedIn = true
 
 						//shared prefs to remember current user
-						val editor = context.getSharedPreferences(APP_KEY, Context.MODE_PRIVATE).edit()
+						val editor =
+								context.getSharedPreferences(APP_KEY, Context.MODE_PRIVATE).edit()
 						editor.putString(USERNAME_KEY, currentUser!!.name)
 						editor.putString(PASSWORD_KEY, currentUser!!.password)
 						editor.apply()
@@ -94,7 +108,12 @@ class App {
 								context.startActivity(Intent(context, StudentActivity::class.java))
 							}
 							if (verbose)
-								showToast(context, "Logged in as ${currentUser!!.status.toString().toLowerCase(Locale.getDefault())} ${currentUser!!.name}")
+								showToast(
+										context,
+										"Logged in as ${currentUser!!.status.toString().toLowerCase(
+												Locale.getDefault()
+										)} ${currentUser!!.name}"
+								)
 							context.finish()
 						}
 					}
@@ -111,11 +130,11 @@ class App {
 
 		}
 
-		fun loginWithPrefs(context: Context){
+		fun loginWithPrefs(context: Context) {
 			val prefs = context.getSharedPreferences(APP_KEY, Context.MODE_PRIVATE)
 			val tryUsername = prefs.getString(USERNAME_KEY, null)
 			val tryPassword = prefs.getString(PASSWORD_KEY, null)
-			if (tryUsername != null && tryPassword != null){
+			if (tryUsername != null && tryPassword != null) {
 				login(context, tryUsername, tryPassword, false)
 			}
 		}
@@ -126,9 +145,12 @@ class App {
 			editor.clear().apply()
 
 			//move user back to login activity
-			if (context is Activity){
+			if (context is Activity) {
 				if (verbose)
-					showToast(context, "Logged out of ${currentUser!!.status.toString().toLowerCase(Locale.getDefault())} ${currentUser?.name}")
+					showToast(
+							context,
+							"Logged out of ${currentUser!!.status.toString().toLowerCase(Locale.getDefault())} ${currentUser?.name}"
+					)
 				currentUser = null
 				isLoggedIn = false
 				context.startActivity(Intent(context, LoginActivity::class.java))
@@ -138,17 +160,17 @@ class App {
 
 		}
 
-		fun createUser(context: Context, username: String?, password: String?,
-					   email: String?, firstName: String?, lastName: String?){
+		fun createUser(
+				context: Context, username: String?, password: String?,
+				email: String?, firstName: String?, lastName: String?
+		) {
 			if (username == null || username.trim() == "") {
 				showToast(context, "Please enter a username")
 				return
-			}
-			else if (password == null || password.trim() == ""){
+			} else if (password == null || password.trim() == "") {
 				showToast(context, "Please enter a password")
 				return
-			}
-			else {
+			} else {
 				val userDB = UserDB(context, null)
 				val usernameE = username.trim()
 				val passwordE: String = password.trim()
@@ -161,7 +183,7 @@ class App {
 
 				//make a student
 				var statusE: String = User.UserStatus.STUDENT.toString()
-				if (userDB.rows() == 0){
+				if (userDB.rows() == 0) {
 					//...unless this is the first user ever created
 					//in which case make a SUPERUSER
 					statusE = User.UserStatus.SUPERUSER.toString()
@@ -172,15 +194,15 @@ class App {
 			}
 		}
 
-		fun deleteUser(){
+		fun deleteUser() {
 			//todo
 		}
 
-		fun changeUserStatus(){
+		fun changeUserStatus() {
 			//todo
 		}
 
-		fun changeOwnParticulars(){
+		fun changeOwnParticulars() {
 			//todo
 		}
 
@@ -188,11 +210,24 @@ class App {
 			Toast.makeText(context, msg, length).show()
 		}
 
-		private fun cursorToUser(cursor: Cursor): User{
+		private fun cursorToQuiz(cursor: Cursor): Quiz{
+			val id: Int = cursor.getInt(cursor.getColumnIndex(QuizzesDB.COL_ID))
+			val title: String = cursor.getString(cursor.getColumnIndex(QuizzesDB.COL_TITLE))
+			val questions: Int = cursor.getInt(cursor.getColumnIndex(QuizzesDB.COL_QUESTIONS))
+			val totalMarks: Int = cursor.getInt(cursor.getColumnIndex(QuizzesDB.COL_TOTALMARKS))
+			//converts int to boolean
+			val finalized: Boolean = (cursor.getInt(cursor.getColumnIndex(QuizzesDB.COL_FINALIZED)) == 1)
+			val maxOptions: Int = cursor.getInt(cursor.getColumnIndex(QuizzesDB.COL_MAXOPTIONS))
+			val maxAttempts: Int = cursor.getInt(cursor.getColumnIndex(QuizzesDB.COL_MAXATTEMPTS))
+			return Quiz(title, questions, totalMarks, finalized, maxOptions, maxAttempts, mutableListOf())
+		}
+
+		private fun cursorToUser(cursor: Cursor): User {
 			val username = cursor.getString(cursor.getColumnIndex(UserDB.COL_USERNAME))
 			val password = cursor.getString(cursor.getColumnIndex(UserDB.COL_PASSWORD))
 			val id: Int = cursor.getInt(cursor.getColumnIndex(UserDB.COL_ID))
-			val status: User.UserStatus = User.UserStatus.valueOf(cursor.getString(cursor.getColumnIndex(UserDB.COL_STATUS)))
+			val status: User.UserStatus =
+					User.UserStatus.valueOf(cursor.getString(cursor.getColumnIndex(UserDB.COL_STATUS)))
 			val email: String? = cursor.getString(cursor.getColumnIndex(UserDB.COL_EMAIL))
 			val firstName: String? = cursor.getString(cursor.getColumnIndex(UserDB.COL_FIRSTNAME))
 			val lastName: String? = cursor.getString(cursor.getColumnIndex(UserDB.COL_LASTNAME))
