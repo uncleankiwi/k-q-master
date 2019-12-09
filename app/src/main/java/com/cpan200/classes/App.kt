@@ -143,10 +143,21 @@ class App {
 			currentQuiz!!.questionList!!.add(Question(null, "(New question)", null, null))
 		}
 
-		fun submitScore(context: Context, score: Double){
+		fun submitScore(context: Context, id: Int, score: Double){
 			var dbScore: Double? = null
 			var dbAttempt: Int? = null
+			val userDB = UserDB(context, null)
+			val userCursor = userDB.getScoreAttempt(currentUser!!.name!!, id)
 
+			val savedScore = userCursor.getString(UserDB.COL_QUIZN + id.toString(), null)
+			val savedAttempts = userCursor.getString(UserDB.COL_ATTEMPTN + id.toString(), null)
+
+			var highScore = score
+			if (savedScore > highScore) highScore = savedScore
+
+			userDB.updateScoreAttempt(currentUser!!.name!!, id, highScore, savedAttempts + 1)
+
+			//todo
 
 		}
 

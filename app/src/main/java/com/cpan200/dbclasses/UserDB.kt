@@ -91,16 +91,20 @@ class UserDB(
     }
 
     fun deleteRow(username: String){
-        this.writableDatabase.execSQL("DELETE FROM $TABLE_NAME WHERE $COL_USERNAME = \"$username\"")
+        val db = this.writableDatabase
+        db.execSQL("DELETE FROM $TABLE_NAME WHERE $COL_USERNAME = \"$username\"")
+        db.close()
     }
 
     fun updateUserInfo(username: String, password: String, email: String?, firstName: String?, lastName: String?){
         val row = ContentValues()
+        val db = this.writableDatabase
         row.put(COL_PASSWORD, password)
         row.put(COL_EMAIL, email)
         row.put(COL_FIRSTNAME, firstName)
         row.put(COL_LASTNAME, lastName)
-        this.writableDatabase.update(TABLE_NAME, row, "$COL_USERNAME = $username", null)
+        db.update(TABLE_NAME, row, "$COL_USERNAME = $username", null)
+        db.close()
     }
 
     fun updateUserStatus(username: String, status: User.UserStatus){
@@ -110,13 +114,12 @@ class UserDB(
     }
 
     fun deleteQuizCol(id: Int){
-        //doesn't actually delete. zeroes  all values in these two cols
+        //doesn't actually delete. zeroes all values in these two cols
         val db = this.writableDatabase
         val row = ContentValues()
         row.put(COL_QUIZN + id.toString(), 0)
         row.put(COL_ATTEMPTN + id.toString(), 0)
         db.update(TABLE_NAME, row, "1 = 1", null)
-
         db.close()
     }
 
@@ -128,14 +131,17 @@ class UserDB(
     }
 
     fun updateScoreAttempt(username: String, id: Int, score: Double, attempt: Int){
-        //todo record a score
-
-
-        //todo add 1 to attempts
+        val db = this.writableDatabase
+        val row = ContentValues()
+        row.put(COL_QUIZN + id.toString(), score)
+        row.put(COL_ATTEMPTN + id.toString(), attempt)
+        db.update(TABLE_NAME, row, "$COL_USERNAME = $username", null)
+        db.close()
     }
 
     fun getScoreAttempt(username: String, id: Int): Cursor? {
-        //todo
+        val db = this.readableDatabase
+        return db.rawQuery("SELECT COLUMN $COL_QUIZN${id}, COLUMN $COL_ATTEMPTN${id} FROM $TABLE_NAME WHERE $COL_USERNAME = \"$username\"", null)
     }
 
 }
