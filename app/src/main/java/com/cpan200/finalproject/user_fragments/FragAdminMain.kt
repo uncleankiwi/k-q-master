@@ -1,6 +1,7 @@
 package com.cpan200.finalproject.user_fragments
 
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.widget.Button
 import androidx.fragment.app.FragmentManager
 import com.cpan200.classes.App
 import com.cpan200.finalproject.R
+import com.cpan200.finalproject.login_fragments.FragLogin
 
 /**
  * A simple [Fragment] subclass.
@@ -24,6 +26,7 @@ class FragAdminMain : Fragment() {
 		fragmentManager!!.beginTransaction()
 				.replace(R.id.AdminSubContainer, FragQuizList(), "FragQuizList").commit()
 
+
 		val valBtnAdminMainQuizzes = view.findViewById<Button>(R.id.btnAdminMainQuizzes)
 		valBtnAdminMainQuizzes.setOnClickListener {
 			fragmentManager!!.beginTransaction()
@@ -36,7 +39,7 @@ class FragAdminMain : Fragment() {
 					.replace(R.id.AdminSubContainer, FragStudentList(), "FragStudentList").commit()
 		}
 
-				return view
+		return view
 	}
 
 

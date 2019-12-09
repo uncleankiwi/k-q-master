@@ -16,6 +16,8 @@ import java.util.*
 
 class App {
 	companion object {
+		const val LOG = "test123"
+
 		private var isLoggedIn: Boolean = false
 		private var currentUser: User? = null
 

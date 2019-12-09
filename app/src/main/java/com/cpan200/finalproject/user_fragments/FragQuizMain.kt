@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cpan200.classes.App
 import com.cpan200.classes.QuestionListAdapter
 import com.cpan200.finalproject.R
@@ -26,12 +28,15 @@ class FragQuizMain : Fragment() {
         val view =inflater.inflate(R.layout.fragment_quiz_main, container, false)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        rcyQuizMain.layoutManager = layoutManager
 
+		val valRcyQuizMain = view.findViewById<RecyclerView>(R.id.rcyQuizMain)
+		valRcyQuizMain.layoutManager = layoutManager
+
+		val valBtnQuizMainAdd = view.findViewById<Button>(R.id.btnQuizMainAdd)
 		if (App.questionListViewMode == QuestionListAdapter.ViewMode.EDIT)
-			btnQuizMainAdd.isGone = false
+			valBtnQuizMainAdd.isGone = false
 		else if (App.questionListViewMode == QuestionListAdapter.ViewMode.DO)
-			btnQuizMainAdd.isGone = true
+			valBtnQuizMainAdd.isGone = true
 
         return view
     }

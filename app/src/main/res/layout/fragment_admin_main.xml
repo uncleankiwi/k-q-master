@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
@@ -25,12 +25,13 @@
             android:text="@string/Students" />
     </LinearLayout>
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/AdminSubContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-    </FrameLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

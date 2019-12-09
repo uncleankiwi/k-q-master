@@ -25,6 +25,7 @@ class FragQuizList : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_quiz_list, container, false)
+
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
 		val valRcyQuizList = view.findViewById<RecyclerView>(R.id.rcyQuizList)
