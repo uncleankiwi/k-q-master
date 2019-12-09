@@ -25,7 +25,7 @@ class FragQuizList : Fragment() {
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         rcyQuizList.layoutManager = layoutManager
-        rcyQuizList.adapter = QuizListAdapter(context!!, App.getQuizList(context!!))
+        rcyQuizList.adapter = QuizListAdapter(context!!, App.getQuizList(context!!), App.quizListViewMode)
 
         return view
     }

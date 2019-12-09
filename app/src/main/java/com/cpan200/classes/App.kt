@@ -23,6 +23,10 @@ class App {
 		private const val USERNAME_KEY: String = "username"
 		private const val PASSWORD_KEY: String = "password"
 
+		//workaround for passing info to fragments. should use interfaces
+		var quizListViewMode: QuizListAdapter.ViewMode = QuizListAdapter.ViewMode.ADMIN
+		var questionListViewMode: QuestionListAdapter.ViewMode = QuestionListAdapter.ViewMode.EDIT
+
 		fun getQuizList(context: Context): MutableList<Quiz> {
 			val quizList = mutableListOf<Quiz>()
 
