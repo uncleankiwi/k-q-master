@@ -32,7 +32,14 @@ class FragQuizList : Fragment() {
         layoutManager.orientation = LinearLayoutManager.VERTICAL
 		val valRcyQuizList = view.findViewById<RecyclerView>(R.id.rcyQuizList)
 		valRcyQuizList.layoutManager = layoutManager
-		valRcyQuizList.adapter = QuizListAdapter(context!!, App.getFinalizedQuizList(context!!), App.quizListViewMode)
+
+		val isAdmin = App.currentUser!!.status == User.UserStatus.SUPERUSER || App.currentUser!!.status == User.UserStatus.ADMIN
+		val quizzes = if (!isAdmin)
+			App.getFinalizedQuizList(context!!)
+		else
+			App.getQuizList(context!!)
+
+		valRcyQuizList.adapter = QuizListAdapter(context!!, quizzes, App.quizListViewMode)
 
 		val valBtnQuizListAdd = view.findViewById<Button>(R.id.btnQuizListAdd)
 		if (App.currentUser!!.status == User.UserStatus.SUPERUSER || App.currentUser!!.status == User.UserStatus.ADMIN)

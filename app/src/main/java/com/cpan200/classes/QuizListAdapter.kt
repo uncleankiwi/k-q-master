@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.cpan200.classes.QuizListAdapter.*
@@ -35,7 +36,11 @@ class QuizListAdapter(
 	}
 
 	fun refreshData(){
-		quizzes = App.getFinalizedQuizList(context)
+		val isAdmin = App.currentUser!!.status == User.UserStatus.SUPERUSER || App.currentUser!!.status == User.UserStatus.ADMIN
+		quizzes = if (!isAdmin)
+			App.getFinalizedQuizList(context)
+		else
+			App.getQuizList(context)
 		notifyDataSetChanged()
 	}
 
@@ -56,9 +61,21 @@ class QuizListAdapter(
 			itemView.btnPanelQuizPublish.isEnabled = !this.currentQuiz!!.finalized!!
 			itemView.btnPanelQuizScores.isEnabled = this.currentQuiz!!.finalized!!
 
-		}
+			val isAdmin = App.currentUser!!.status == User.UserStatus.SUPERUSER || App.currentUser!!.status == User.UserStatus.ADMIN
+			//val isEditMode = isAdmin && !this.currentQuiz!!.finalized!!
+			itemView.llPanelQuizContainer.isGone = !isAdmin
+
+			}
+
+
 
 		init {
+			val isAdmin = App.currentUser!!.status == User.UserStatus.SUPERUSER || App.currentUser!!.status == User.UserStatus.ADMIN
+			var container = R.id.StudentContainer
+			if (isAdmin) {
+				container = R.id.AdminContainer
+			}
+
 			itemView.btnPanelQuizDelete.setOnClickListener {
 				App.showToast(context, "Deleted ${currentQuiz!!.title}")
 				App.deleteQuiz(context, this.currentQuiz!!.id!!)
@@ -75,7 +92,7 @@ class QuizListAdapter(
 				if (this.currentQuiz!!.finalized!!){
 					App.currentQuiz = App.getQuiz(context, this.currentQuiz!!.id!!)
 					(context as AppCompatActivity).supportFragmentManager.beginTransaction()
-							.replace(R.id.AdminContainer, FragQuizMain(), "FragQuizMain")
+							.replace(container, FragQuizMain(), "FragQuizMain")
 							.addToBackStack(null)
 							.commit()
 				}
@@ -83,8 +100,7 @@ class QuizListAdapter(
 
 			itemView.btnPanelQuizEdit.setOnClickListener {
 				//open up an unfinalized quiz for editing AND the current user is a superuser/admin
-				if ((App.currentUser!!.status == User.UserStatus.SUPERUSER || App.currentUser!!.status == User.UserStatus.ADMIN)
-						&& !this.currentQuiz!!.finalized!!){
+				if (isAdmin && !this.currentQuiz!!.finalized!!){
 					App.currentQuiz = App.getQuiz(context, this.currentQuiz!!.id!!)
 					(context as AppCompatActivity).supportFragmentManager.beginTransaction()
 							.replace(R.id.AdminContainer, FragQuizMain(), "FragQuizMain")

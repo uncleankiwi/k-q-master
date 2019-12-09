@@ -16,43 +16,51 @@
             android:textSize="24sp" />
 
         <LinearLayout
+            android:id="@+id/llPanelQuizContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btnPanelQuizEdit"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/Edit" />
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btnPanelQuizPublish"
-                android:layout_width="wrap_content"
+                <Button
+                    android:id="@+id/btnPanelQuizEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/Edit" />
+
+                <Button
+                    android:id="@+id/btnPanelQuizPublish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/Publish" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/Publish" />
-        </LinearLayout>
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                <Button
+                    android:id="@+id/btnPanelQuizScores"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/Scores" />
 
-            <Button
-                android:id="@+id/btnPanelQuizScores"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/Scores" />
+                <Button
+                    android:id="@+id/btnPanelQuizDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/Delete" />
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/btnPanelQuizDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/Delete" />
         </LinearLayout>
 
         <TextView
