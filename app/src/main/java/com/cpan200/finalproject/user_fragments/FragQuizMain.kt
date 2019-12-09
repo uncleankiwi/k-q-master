@@ -68,6 +68,11 @@ class FragQuizMain : Fragment() {
 			when (App.currentQuiz!!.finalized){
 				true ->{
 					//do mode
+					App.currentQuizAttempt = mutableListOf()
+					for (question in App.currentQuiz!!.questionList!!){
+						App.currentQuizAttempt.add(0)
+					}
+
 					valTxtQuizMainTitle.text = App.currentQuiz?.title
 					valTxtQuizMainTitle.isGone = false
 					valEditQuizMainTitle.isGone = true
@@ -77,6 +82,14 @@ class FragQuizMain : Fragment() {
 					valBtnQuizMainSubmitSave.setOnClickListener {
 						//submit quiz, calc score
 						//todo submit quiz, calc score
+
+						var score = 0.0
+						for ((i, question) in App.currentQuiz!!.questionList!!.withIndex()){
+							if (question.correctAnswer == App.currentQuizAttempt[i]){
+								score++
+							}
+						}
+						App.submitScore(context!!, App.currentQuiz!!.id!!, score)
 					}
 				}
 				false ->{

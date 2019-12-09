@@ -29,6 +29,7 @@ class App {
 		var currentQuiz: Quiz? = null
 
 		var currentEditingQuiz: Quiz? = null
+		var currentQuizAttempt = mutableListOf<Int>()
 
 		//workaround for passing info to fragments. should use interfaces
 		var quizListViewMode: QuizListAdapter.ViewMode = QuizListAdapter.ViewMode.ADMIN
@@ -146,8 +147,7 @@ class App {
 		}
 
 		fun submitScore(context: Context, id: Int, score: Double){
-			var dbScore: Double? = null
-			var dbAttempt: Int? = null
+			showToast(context, "Your score: $score")
 			val userDB = UserDB(context, null)
 			val userCursor = userDB.getScoreAttempt(currentUser!!.name!!, id)
 
