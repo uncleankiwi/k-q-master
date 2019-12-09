@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
@@ -59,13 +60,17 @@ class FragQuizMain : Fragment() {
 		}
 
 		val valTxtQuizMainTitle = view.findViewById<TextView>(R.id.txtQuizMainTitle)
-		valTxtQuizMainTitle.text = App.currentQuiz?.title
+		val valEditQuizMainTitle = view.findViewById<EditText>(R.id.editQuizMainTitle)
 
 		//changing layouts depending on whether quiz opened is finalized or not
 		if (App.currentQuiz != null){
 			when (App.currentQuiz!!.finalized){
 				true ->{
 					//do mode
+					valTxtQuizMainTitle.text = App.currentQuiz?.title
+					valTxtQuizMainTitle.isGone = false
+					valEditQuizMainTitle.isGone = true
+
 					valBtnQuizMainAdd.isGone = true
 					valBtnQuizMainSubmitSave.text = getString(R.string.Submit)
 					valBtnQuizMainSubmitSave.setOnClickListener {
@@ -75,6 +80,10 @@ class FragQuizMain : Fragment() {
 				}
 				false ->{
 					//edit mode
+					valEditQuizMainTitle.setText(App.currentQuiz?.title)
+					valTxtQuizMainTitle.isGone = true
+					valEditQuizMainTitle.isGone = false
+
 					valBtnQuizMainAdd.isGone = false
 					valBtnQuizMainSubmitSave.text = getString(R.string.Save)
 					valBtnQuizMainSubmitSave.setOnClickListener {

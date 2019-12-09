@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import com.cpan200.finalproject.R
 import kotlinx.android.synthetic.main.panel_question.view.*
@@ -44,6 +45,20 @@ class QuestionListAdapter(
 
 			itemView.txtQuestionPanelQuestion.text = this.currentQuestion!!.question
 
+			if (quiz.finalized!!){
+				//do mode
+				itemView.txtQuestionPanelQuestion.text = currentQuestion!!.question
+				itemView.txtQuestionPanelQuestion.isGone = false
+				itemView.editQuestionPanelQuestion.isGone = true
+				itemView.llQuestionPanelEditControls.isGone = true
+				itemView.imgQuestionPanel.isGone = this.currentQuestion!!.image == null
+			} else {
+				//edit mode
+				itemView.editQuestionPanelQuestion.setText(currentQuestion!!.question)
+				itemView.txtQuestionPanelQuestion.isGone = true
+				itemView.editQuestionPanelQuestion.isGone = false
+				itemView.llQuestionPanelEditControls.isGone = false
+			}
 
 		}
     }

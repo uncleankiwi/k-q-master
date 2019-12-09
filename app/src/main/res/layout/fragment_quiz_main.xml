@@ -12,7 +12,16 @@
 		android:text="@string/Quiz_title"
 		android:textSize="24sp" />
 
-    <androidx.recyclerview.widget.RecyclerView
+	<EditText
+		android:id="@+id/editQuizMainTitle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:ems="10"
+		android:hint="@string/Quiz_title"
+		android:inputType="textPersonName"
+		android:text="@string/Quiz_title" />
+
+	<androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyQuizMain"
         android:layout_width="match_parent"
         android:layout_height="0dp"
