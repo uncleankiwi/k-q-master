@@ -53,6 +53,7 @@ class QuizzesDB(
     fun addRow(){
         val row = ContentValues()
         val db = this.writableDatabase
+		row.put(COL_TITLE, "(New quiz)")
         row.put(COL_QUESTIONS, 0)
         row.put(COL_TOTALMARKS, 0)
         row.put(COL_FINALIZED, 0)

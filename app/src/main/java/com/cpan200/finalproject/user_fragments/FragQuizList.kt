@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cpan200.classes.App
 import com.cpan200.classes.QuizListAdapter
+import com.cpan200.dbclasses.QuizzesDB
 import com.cpan200.finalproject.R
 
 /**
@@ -37,6 +38,12 @@ class FragQuizList : Fragment() {
 			valBtnQuizListAdd.isGone = false
 		else if (App.quizListViewMode == QuizListAdapter.ViewMode.STUDENT)
 			valBtnQuizListAdd.isGone = true
+		valBtnQuizListAdd.setOnClickListener {
+			val quizzesDB = QuizzesDB(context, null)
+			quizzesDB.addRow()
+			quizzesDB.close()
+			(valRcyQuizList.adapter as QuizListAdapter).refreshData()
+		}
 
         return view
     }

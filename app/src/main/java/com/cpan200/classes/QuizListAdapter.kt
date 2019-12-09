@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.panel_quiz.view.*
 
 class QuizListAdapter(
 		val context: Context,
-		private val quizzes: MutableList<Quiz>,
+		private var quizzes: MutableList<Quiz>,
 		private val viewMode: ViewMode
 ) : RecyclerView.Adapter<QuizPanelViewHolder>() {
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuizPanelViewHolder {
@@ -29,6 +29,11 @@ class QuizListAdapter(
 		holder.setData(quiz, position, viewMode)
 	}
 
+	fun refreshData(){
+		quizzes = App.getQuizList(context)
+		notifyDataSetChanged()
+	}
+
 	inner class QuizPanelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		var currentQuiz: Quiz? = null
 		var currentPosition: Int = 0
@@ -38,8 +43,6 @@ class QuizListAdapter(
 			this.currentPosition = pos
 
 			itemView.txtPanelQuizTitle.text = this.currentQuiz!!.title
-
-
 
 		}
 
