@@ -100,21 +100,31 @@ class UserDB(
         row.put(COL_EMAIL, email)
         row.put(COL_FIRSTNAME, firstName)
         row.put(COL_LASTNAME, lastName)
-        this.readableDatabase.update(TABLE_NAME, row, "$COL_USERNAME = $username", null)
+        this.writableDatabase.update(TABLE_NAME, row, "$COL_USERNAME = $username", null)
     }
 
     fun updateUserStatus(username: String, status: User.UserStatus){
         val row = ContentValues()
         row.put(COL_STATUS, status.toString())
-        this.readableDatabase.update(TABLE_NAME, row, "$COL_USERNAME = $username", null)
+        this.writableDatabase.update(TABLE_NAME, row, "$COL_USERNAME = $username", null)
     }
 
     fun deleteQuizCol(id: Int){
-        //todo del quiz col
+        //doesn't actually delete. zeroes  all values in these two cols
+        val db = this.writableDatabase
+        val row = ContentValues()
+        row.put(COL_QUIZN + id.toString(), 0)
+        row.put(COL_ATTEMPTN + id.toString(), 0)
+        db.update(TABLE_NAME, row, "1 = 1", null)
+
+        db.close()
     }
 
     fun createQuizCol(id: Int){
-        //todo create quiz cols
+        val db = this.writableDatabase
+        db.execSQL("ALTER TABLE $TABLE_NAME ADD COLUMN $COL_QUIZN${id} REAL DEFAULT NULL")
+        db.execSQL("ALTER TABLE $TABLE_NAME ADD COLUMN $COL_ATTEMPTN${id} INTEGER DEFAULT NULL")
+        db.close()
     }
 
     fun updateScoreAttempt(username: String, id: Int, score: Double, attempt: Int){
