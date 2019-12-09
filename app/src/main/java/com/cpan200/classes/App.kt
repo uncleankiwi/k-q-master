@@ -144,6 +144,7 @@ class App {
 		fun addBlankQuestion(){
 			//adds a blank question to App.currentQuiz. does not affect DB!
 			//also adds list of answers of size maxOptions
+			if (currentEditingQuiz!!.maxOptions == null) currentEditingQuiz!!.maxOptions = 5	//todo find val
 			val options = currentEditingQuiz!!.maxOptions!!
 			val emptyAns = mutableListOf<String>()
 			for (i in 0 until options){
