@@ -10,7 +10,8 @@ import com.cpan200.finalproject.R
 
 class QuizListAdapter(
 	val context: Context,
-	val quizzes: MutableList<Quiz>
+	val quizzes: MutableList<Quiz>,
+	val viewmode: ViewMode
 ) : RecyclerView.Adapter<QuizPanelViewHolder>() {
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuizPanelViewHolder {
 		val view = LayoutInflater.from(context).inflate(R.layout.panel_quiz, parent, false)
@@ -34,5 +35,10 @@ class QuizListAdapter(
 			//onclicklistener
 
 		}
+	}
+
+	enum class ViewMode {
+		ADMIN,
+		STUDENT
 	}
 }

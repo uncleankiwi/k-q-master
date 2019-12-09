@@ -1,16 +1,20 @@
 package com.cpan200.classes
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.cpan200.finalproject.R
 
 class QuestionListAdapter(
-    context: Context,
-    val quiz: Quiz
+    val context: Context,
+    val quiz: Quiz,
+    val viewMode: ViewMode
 ) : RecyclerView.Adapter<QuestionListAdapter.QuestionPanelViewHolder>()  {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionPanelViewHolder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val view = LayoutInflater.from(context).inflate(R.layout.panel_question, parent, false)
+        return QuestionPanelViewHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -27,7 +31,7 @@ class QuestionListAdapter(
 
     }
 
-    enum class viewMode {
+    enum class ViewMode {
         EDIT,
         DO
     }
