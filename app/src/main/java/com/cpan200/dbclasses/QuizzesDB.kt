@@ -66,8 +66,10 @@ class QuizzesDB(
         val row = ContentValues()
         val db = this.writableDatabase
         row.put(COL_TITLE, title)
-        row.put(COL_QUESTIONS, questionList?.size)
-        row.put(COL_TOTALMARKS, questionList?.size)
+        if (questionList != null){
+            row.put(COL_QUESTIONS, questionList.size)
+            row.put(COL_TOTALMARKS, questionList.size)
+        }
         row.put(COL_FINALIZED, finalized)
         row.put(COL_MAXOPTIONS, 5)  //future feature: allow more options...
         row.put(COL_MAXATTEMPTS, maxAttempts)
