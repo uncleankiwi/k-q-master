@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.RadioButton
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
@@ -40,6 +42,7 @@ class QuestionListAdapter(
     inner class QuestionPanelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		private var currentQuestion: Question? = null
 		var currentPosition: Int = 0
+		var ansPopulated: Boolean = false
 		fun setData(question: Question, pos: Int){
 			//viewMode: ViewMode
 			this.currentQuestion = question
@@ -52,54 +55,66 @@ class QuestionListAdapter(
 			//hiding it since it's a static 5 options for now
 			itemView.btnQuestionPanelAddAns.isGone = true
 
-			if (isEditMode){
-				//edit mode
-				//populate question title
-				itemView.editQuestionPanelQuestion.setText(this.currentQuestion!!.question)
-				itemView.txtQuestionPanelQuestion.isGone = true
-				itemView.editQuestionPanelQuestion.isGone = false
+			if (!ansPopulated){
+				if (isEditMode){
+					//edit mode
+					//populate question title
+					itemView.editQuestionPanelQuestion.setText(this.currentQuestion!!.question)
+					itemView.txtQuestionPanelQuestion.isGone = true
+					itemView.editQuestionPanelQuestion.isGone = false
 
-				//fill options with answer options
-				for (i in 0 until (quiz.maxOptions ?: 0)){
-					//create maxOptions number of options
-					val radAns = RadioButton(context)
-					radAns.text = ""
-
-					//check correct answer
-					if (i == this.currentQuestion!!.correctAnswer) radAns.isChecked = true
-					itemView.radGrpQuestionPanelAns.addView(radAns, i)
-
-					//create editTexts and fill them in
-					val editAns = EditText(context)
-					if (this.currentQuestion != null){
-						if (this.currentQuestion!!.answers != null){
-							val currAns: String? = this.currentQuestion!!.answers!![i]
-							editAns.setText(currAns)
-						}
-					}
-
-
-				}
-
-			}
-			else {
-				//do mode
-				//populate question title
-				itemView.txtQuestionPanelQuestion.text = this.currentQuestion!!.question
-				itemView.txtQuestionPanelQuestion.isGone = false
-				itemView.editQuestionPanelQuestion.isGone = true
-
-				//create options only if they aren't null/blank. fill options
-				for (i in 0 until (quiz.maxOptions ?: 0)){
-					val currAns: String? = this.currentQuestion!!.answers!![i]
-					if (currAns != null && currAns != ""){
+					//fill options with answer options
+					for (i in 0 until (quiz.maxOptions ?: 0)){
+						//create maxOptions number of options
 						val radAns = RadioButton(context)
-						radAns.text = currAns
+						radAns.text = ""
+						//radAns.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+						radAns.width = 500
+
+						//check correct answer
+						if (i == this.currentQuestion!!.correctAnswer) radAns.isChecked = true
 						itemView.radGrpQuestionPanelAns.addView(radAns, i)
+
+						//create editTexts and fill them in if the answer exists
+						val editAns = EditText(context)
+						if (this.currentQuestion != null){
+							if (this.currentQuestion!!.answers != null){
+								editAns.setText(this.currentQuestion!!.answers!![i])
+							}
+						}
+						//editAns.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+						editAns.width = 500
+						itemView.QuestionPanelAnsContainer.addView(editAns, i)
+
+
 					}
 
 				}
+				else {
+					//do mode
+					//populate question title
+					itemView.txtQuestionPanelQuestion.text = this.currentQuestion!!.question
+					itemView.txtQuestionPanelQuestion.isGone = false
+					itemView.editQuestionPanelQuestion.isGone = true
 
+					//create options only if they aren't null/blank. fill options
+					for (i in 0 until (quiz.maxOptions ?: 0)){
+						var currAns: String? = null
+						if (this.currentQuestion != null){
+							if (this.currentQuestion!!.answers != null){
+								currAns = this.currentQuestion!!.answers!![i]
+							}
+						}
+						if (currAns != null && currAns != ""){
+							val radAns = RadioButton(context)
+							radAns.text = currAns
+							itemView.radGrpQuestionPanelAns.addView(radAns, i)
+						}
+
+					}
+
+				}
+				ansPopulated = true
 			}
 
 			if (quiz.finalized!!){
