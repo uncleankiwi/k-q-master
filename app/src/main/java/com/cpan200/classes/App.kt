@@ -143,6 +143,13 @@ class App {
 			currentQuiz!!.questionList!!.add(Question(null, "(New question)", null, null))
 		}
 
+		fun submitScore(context: Context, score: Double){
+			var dbScore: Double? = null
+			var dbAttempt: Int? = null
+
+
+		}
+
 		fun login(context: Context, tryUsername: String?, tryPassword: String?, verbose: Boolean = true) {
 			//check if username and password entered
 			if (tryUsername == null || tryUsername.trim() == "") {

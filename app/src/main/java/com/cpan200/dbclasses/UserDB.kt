@@ -109,4 +109,23 @@ class UserDB(
         this.readableDatabase.update(TABLE_NAME, row, "$COL_USERNAME = $username", null)
     }
 
+    fun deleteQuizCol(id: Int){
+        //todo del quiz col
+    }
+
+    fun createQuizCol(id: Int){
+        //todo create quiz cols
+    }
+
+    fun updateScoreAttempt(username: String, id: Int, score: Double, attempt: Int){
+        //todo record a score
+
+
+        //todo add 1 to attempts
+    }
+
+    fun getScoreAttempt(username: String, id: Int): Cursor? {
+        //todo
+    }
+
 }
