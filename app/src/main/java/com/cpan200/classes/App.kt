@@ -274,8 +274,24 @@ class App {
 				showToast(context, "Can't delete a user currently logged in.")
 			}
 			else {
-				UserDB(context, null).deleteRow(username)
-				showToast(context, "Deleted user $username")
+				val userDB = UserDB(context, null)
+
+				//check if this user is a superuser. if so fail.
+				val userCursor = userDB.findExistingUser(username)
+				userCursor!!.moveToFirst()
+				val user = cursorToUser(userCursor)
+				if (user.status == User.UserStatus.SUPERUSER){
+					showToast(context, "Can't delete a superuser!")
+					userCursor.close()
+					userDB.close()
+					return
+				}
+				else {
+					userDB.deleteRow(username)
+					showToast(context, "Deleted user $username")
+					userCursor.close()
+					userDB.close()
+				}
 			}
 
 		}

@@ -35,8 +35,8 @@ class QuizListAdapter(
 	}
 
 	inner class QuizPanelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-		var currentQuiz: Quiz? = null
-		var currentPosition: Int = 0
+		private var currentQuiz: Quiz? = null
+		private var currentPosition: Int = 0
 
 		fun setData(quiz: Quiz, pos: Int, viewMode: ViewMode){
 			this.currentQuiz = quiz

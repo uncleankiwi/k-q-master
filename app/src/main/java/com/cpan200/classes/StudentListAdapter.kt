@@ -9,8 +9,8 @@ import com.cpan200.finalproject.R
 import kotlinx.android.synthetic.main.panel_student.view.*
 
 class StudentListAdapter(
-    val context: Context,
-    val studentList: MutableList<User>
+        val context: Context,
+        private var studentList: MutableList<User>
 ) : RecyclerView.Adapter<StudentListAdapter.StudentPanelViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentPanelViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.panel_student, parent, false)
@@ -26,15 +26,33 @@ class StudentListAdapter(
         holder.setData(user, position)
     }
 
+    fun refreshData(){
+        studentList = App.getUserList(context)
+        notifyDataSetChanged()
+    }
+
     inner class StudentPanelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        var currentUser: User? = null
-        var currentPosition = 0
+        private var currentUser: User? = null
+        private var currentPosition = 0
 
         fun setData(user: User, pos: Int){
             this.currentUser = user
             this.currentPosition = pos
 
-            itemView.txtStudentPanelUsername.text = currentUser!!.name
+            itemView.txtStudentPanelUsername.text = "${currentUser!!.name} (${currentUser!!.status})"
+        }
+
+        init {
+            itemView.btnStudentPanelDelete.setOnClickListener {
+                App.deleteUser(context, this.currentUser!!.name!!)
+                refreshData()
+            }
+            itemView.btnStudentPanelScores.setOnClickListener {
+
+            }
+            itemView.btnStudentPanelEdit.setOnClickListener {
+
+            }
         }
 
     }
