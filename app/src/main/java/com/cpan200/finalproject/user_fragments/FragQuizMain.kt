@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,11 +33,42 @@ class FragQuizMain : Fragment() {
 		val valRcyQuizMain = view.findViewById<RecyclerView>(R.id.rcyQuizMain)
 		valRcyQuizMain.layoutManager = layoutManager
 
+
+
+		val valBtnQuizMainClose = view.findViewById<Button>(R.id.btnQuizMainClose)
+		valBtnQuizMainClose.setOnClickListener { (context as AppCompatActivity).onBackPressed() }
+
+		val valBtnQuizMainSubmitSave = view.findViewById<Button>(R.id.btnQuizMainSubmitSave)
+
+
 		val valBtnQuizMainAdd = view.findViewById<Button>(R.id.btnQuizMainAdd)
-		if (App.questionListViewMode == QuestionListAdapter.ViewMode.EDIT)
-			valBtnQuizMainAdd.isGone = false
-		else if (App.questionListViewMode == QuestionListAdapter.ViewMode.DO)
-			valBtnQuizMainAdd.isGone = true
+		//could remove this later, since layout changes depend on quiz.finalized, not questionListViewMode
+//		if (App.questionListViewMode == QuestionListAdapter.ViewMode.EDIT)
+//			valBtnQuizMainAdd.isGone = false
+//		else if (App.questionListViewMode == QuestionListAdapter.ViewMode.DO)
+//			valBtnQuizMainAdd.isGone = true
+
+		//changing layouts depending on whether quiz opened is finalized or not
+		if (App.currentQuiz != null){
+			when (App.currentQuiz!!.finalized){
+				true ->{
+					//do mode
+					valBtnQuizMainAdd.isGone = true
+					valBtnQuizMainSubmitSave.setOnClickListener {
+						//submit quiz, calc score
+						//todo submit quiz, calc score
+					}
+				}
+				false ->{
+					//edit mode
+					valBtnQuizMainAdd.isGone = false
+					valBtnQuizMainSubmitSave.setOnClickListener {
+						//save edits made to quiz and its questions
+						//todo save edits made to quiz and its questions
+					}
+				}
+			}
+		}
 
         return view
     }

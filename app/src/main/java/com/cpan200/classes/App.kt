@@ -26,6 +26,8 @@ class App {
 		private const val USERNAME_KEY: String = "username"
 		private const val PASSWORD_KEY: String = "password"
 
+		var currentQuiz: Quiz? = null
+
 		//workaround for passing info to fragments. should use interfaces
 		var quizListViewMode: QuizListAdapter.ViewMode = QuizListAdapter.ViewMode.ADMIN
 		var questionListViewMode: QuestionListAdapter.ViewMode = QuestionListAdapter.ViewMode.EDIT

@@ -5,12 +5,12 @@
     android:orientation="vertical"
     tools:context="com.cpan200.finalproject.user_fragments.FragQuizMain">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Quiz_title"
-        android:textSize="24sp" />
+	<TextView
+		android:id="@+id/txtQuizMainTitle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/Quiz_title"
+		android:textSize="24sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcyQuizMain"

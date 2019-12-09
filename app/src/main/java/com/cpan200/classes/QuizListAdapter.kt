@@ -73,11 +73,26 @@ class QuizListAdapter(
 			itemView.setOnClickListener {
 				//bring up this quiz if finalized
 				if (this.currentQuiz!!.finalized!!){
+					App.currentQuiz = this.currentQuiz
 					(context as AppCompatActivity).supportFragmentManager.beginTransaction()
 							.replace(R.id.AdminContainer, FragQuizMain(), "FragQuizMain")
 							.addToBackStack(null)
 							.commit()
 				}
+			}
+
+			itemView.btnPanelQuizEdit.setOnClickListener {
+				if (!this.currentQuiz!!.finalized!!){
+					App.currentQuiz = this.currentQuiz
+					(context as AppCompatActivity).supportFragmentManager.beginTransaction()
+							.replace(R.id.AdminContainer, FragQuizMain(), "FragQuizMain")
+							.addToBackStack(null)
+							.commit()
+				}
+			}
+
+			itemView.btnPanelQuizScores.setOnClickListener {
+
 			}
 
 
