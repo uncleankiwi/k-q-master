@@ -1,12 +1,17 @@
 package com.cpan200.classes
 
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.cpan200.classes.QuizListAdapter.*
 import com.cpan200.finalproject.R
+import com.cpan200.finalproject.user_fragments.FragQuizMain
 import kotlinx.android.synthetic.main.panel_quiz.view.*
 
 class QuizListAdapter(
@@ -63,6 +68,16 @@ class QuizListAdapter(
 			itemView.btnPanelQuizPublish.setOnClickListener {
 				App.publishQuiz(context, this.currentQuiz!!.id!!)
 				refreshData()
+			}
+
+			itemView.setOnClickListener {
+				//bring up this quiz if finalized
+				if (this.currentQuiz!!.finalized!!){
+					(context as AppCompatActivity).supportFragmentManager.beginTransaction()
+							.replace(R.id.AdminContainer, FragQuizMain(), "FragQuizMain")
+							.addToBackStack(null)
+							.commit()
+				}
 			}
 
 
