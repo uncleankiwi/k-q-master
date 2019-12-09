@@ -4,10 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.FrameLayout
-import android.widget.LinearLayout
-import android.widget.RadioButton
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.*
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import com.cpan200.finalproject.R
@@ -68,8 +67,9 @@ class QuestionListAdapter(
 						//create maxOptions number of options
 						val radAns = RadioButton(context)
 						radAns.text = ""
-						//radAns.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
-						radAns.width = 500
+						radAns.layoutParams = LinearLayout.LayoutParams(
+								LinearLayout.LayoutParams.WRAP_CONTENT,
+								LinearLayout.LayoutParams.WRAP_CONTENT).also { it.setMargins(0, 23, 0, 20) }
 
 						//check correct answer
 						if (i == this.currentQuestion!!.correctAnswer) radAns.isChecked = true
@@ -77,13 +77,15 @@ class QuestionListAdapter(
 
 						//create editTexts and fill them in if the answer exists
 						val editAns = EditText(context)
+						editAns.hint = context.getString(R.string.spacer)
 						if (this.currentQuestion != null){
 							if (this.currentQuestion!!.answers != null){
 								editAns.setText(this.currentQuestion!!.answers!![i])
 							}
 						}
-						//editAns.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
-						editAns.width = 500
+						//editAns.layoutParams = LinearLayout.LayoutParams(
+//								LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+
 						itemView.QuestionPanelAnsContainer.addView(editAns, i)
 
 
