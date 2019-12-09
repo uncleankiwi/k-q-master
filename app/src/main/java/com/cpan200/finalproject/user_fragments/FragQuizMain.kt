@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +33,7 @@ class FragQuizMain : Fragment() {
 
 		val valRcyQuizMain = view.findViewById<RecyclerView>(R.id.rcyQuizMain)
 		valRcyQuizMain.layoutManager = layoutManager
+		valRcyQuizMain.adapter = QuestionListAdapter(context!!, App.currentQuiz!!)
 
 
 
@@ -47,6 +49,17 @@ class FragQuizMain : Fragment() {
 //			valBtnQuizMainAdd.isGone = false
 //		else if (App.questionListViewMode == QuestionListAdapter.ViewMode.DO)
 //			valBtnQuizMainAdd.isGone = true
+		valBtnQuizMainAdd.setOnClickListener {
+			//adds a blank question to current quiz
+			//adds it to App.currentQuiz, not to QuizDB!
+			//to add to quiz DB, use submit button
+			App.addBlankQuestion()
+			(valRcyQuizMain.adapter as QuestionListAdapter).refreshData()
+
+		}
+
+		val valTxtQuizMainTitle = view.findViewById<TextView>(R.id.txtQuizMainTitle)
+		valTxtQuizMainTitle.text = App.currentQuiz?.title
 
 		//changing layouts depending on whether quiz opened is finalized or not
 		if (App.currentQuiz != null){
@@ -54,6 +67,7 @@ class FragQuizMain : Fragment() {
 				true ->{
 					//do mode
 					valBtnQuizMainAdd.isGone = true
+					valBtnQuizMainSubmitSave.text = getString(R.string.Submit)
 					valBtnQuizMainSubmitSave.setOnClickListener {
 						//submit quiz, calc score
 						//todo submit quiz, calc score
@@ -62,6 +76,7 @@ class FragQuizMain : Fragment() {
 				false ->{
 					//edit mode
 					valBtnQuizMainAdd.isGone = false
+					valBtnQuizMainSubmitSave.text = getString(R.string.Save)
 					valBtnQuizMainSubmitSave.setOnClickListener {
 						//save edits made to quiz and its questions
 						//todo save edits made to quiz and its questions

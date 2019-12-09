@@ -128,6 +128,11 @@ class App {
 			quizzesDB.close()
 		}
 
+		fun addBlankQuestion(){
+			//adds a blank question to App.currentQuiz. does not affect DB!
+			currentQuiz!!.questionList!!.add(Question(null, "(New question", null, null))
+		}
+
 		fun login(context: Context, tryUsername: String?, tryPassword: String?, verbose: Boolean = true) {
 			//check if username and password entered
 			if (tryUsername == null || tryUsername.trim() == "") {

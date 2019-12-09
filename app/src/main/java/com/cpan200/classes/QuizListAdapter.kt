@@ -73,7 +73,7 @@ class QuizListAdapter(
 			itemView.setOnClickListener {
 				//bring up this quiz if finalized
 				if (this.currentQuiz!!.finalized!!){
-					App.currentQuiz = this.currentQuiz
+					App.currentQuiz = App.getQuiz(context, this.currentQuiz!!.id!!)
 					(context as AppCompatActivity).supportFragmentManager.beginTransaction()
 							.replace(R.id.AdminContainer, FragQuizMain(), "FragQuizMain")
 							.addToBackStack(null)
@@ -82,8 +82,9 @@ class QuizListAdapter(
 			}
 
 			itemView.btnPanelQuizEdit.setOnClickListener {
+				//open up an unfinalized quiz for editing
 				if (!this.currentQuiz!!.finalized!!){
-					App.currentQuiz = this.currentQuiz
+					App.currentQuiz = App.getQuiz(context, this.currentQuiz!!.id!!)
 					(context as AppCompatActivity).supportFragmentManager.beginTransaction()
 							.replace(R.id.AdminContainer, FragQuizMain(), "FragQuizMain")
 							.addToBackStack(null)

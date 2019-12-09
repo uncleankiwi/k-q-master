@@ -10,8 +10,8 @@ import kotlinx.android.synthetic.main.panel_question.view.*
 
 class QuestionListAdapter(
 		val context: Context,
-		private val quiz: Quiz,
-		val viewMode: ViewMode
+		private var quiz: Quiz
+		//private val viewMode: ViewMode
 ) : RecyclerView.Adapter<QuestionListAdapter.QuestionPanelViewHolder>()  {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionPanelViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.panel_question, parent, false)
@@ -25,13 +25,20 @@ class QuestionListAdapter(
     override fun onBindViewHolder(holder: QuestionPanelViewHolder, position: Int) {
         quiz.questionList = quiz.questionList ?: mutableListOf()
         val question = quiz.questionList!![position]
-        holder.setData(question, position, viewMode)
+        holder.setData(question, position) //viewMode
     }
 
+	fun refreshData(){
+		//this gets currentQuiz global variable, NOT from db!
+		quiz = App.currentQuiz!!
+		notifyDataSetChanged()
+	}
+
     inner class QuestionPanelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-		var currentQuestion: Question? = null
+		private var currentQuestion: Question? = null
 		var currentPosition: Int = 0
-		fun setData(question: Question, pos: Int, viewMode: ViewMode){
+		fun setData(question: Question, pos: Int){
+			//viewMode: ViewMode
 			this.currentQuestion = question
 			this.currentPosition = pos
 
