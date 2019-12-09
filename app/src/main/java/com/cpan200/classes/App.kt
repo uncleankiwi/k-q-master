@@ -259,18 +259,35 @@ class App {
 		fun changeParticulars(context: Context, username: String, newPassword: String, newEmail:String?, newFirstName: String?, newLastName: String?) {
 			//change password, email, firstName, lastName
 
-            var currentPasswordChanged = false
+			//sanitization
+			val newPasswordE = newPassword.trim()
+			val newEmailE = newEmail?.trim()
+			val newFirstNameE = newFirstName?.trim()
+			val newLastNameE = newLastName?.trim()
 
-			//if user specified is current user and password was changed, log out
+			if (newPasswordE == "") {
+				showToast(context, "Please enter a password")
+			}
+			else{
+				//get old password
+				val userDB = UserDB(context, null)
+				val userCursor = userDB.getPasswordFromUser(username)
+				userCursor!!.moveToFirst()
+				val oldPassword = userCursor.getString(userCursor.getColumnIndex(UserDB.COL_PASSWORD))
+				val passwordChanged = (oldPassword == newPasswordE)
 
-            if (!currentPasswordChanged){
-                showToast(context, "User information changed.")
-                //todo close window
-            }
-            else {
-                showToast(context, "Password changed. Please sign in with the new password.")
-                logout(context, false)
-            }
+
+				if (!passwordChanged && ){
+					//if user specified is current user and password was changed, log out
+					showToast(context, "User information changed.")
+					//todo close window
+				}
+				else {
+					showToast(context, "Password changed. Please sign in with the new password.")
+					logout(context, false)
+				}
+
+			}
 
 
 

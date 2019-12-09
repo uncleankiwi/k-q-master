@@ -93,5 +93,9 @@ class UserDB(
         this.writableDatabase.execSQL("DELETE FROM $TABLE_NAME WHERE $COL_USERNAME = \"$username\"")
     }
 
+    fun getPasswordFromUser(username: String) : Cursor? {
+        return this.readableDatabase.rawQuery("SELECT $COL_PASSWORD FROM $TABLE_NAME WHERE $COL_USERNAME = \"$username\"", null)
+    }
+
 
 }
