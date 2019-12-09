@@ -20,7 +20,7 @@ class App {
 		const val LOG = "test123"
 
 		private var isLoggedIn: Boolean = false
-		private var currentUser: User? = null
+		var currentUser: User? = null
 
 		private const val APP_KEY: String = "App"
 		private const val USERNAME_KEY: String = "username"
@@ -48,6 +48,16 @@ class App {
 			quizzesCursor.close()
 
 			return quizList
+		}
+
+		fun getFinalizedQuizList(context: Context):MutableList<Quiz>{
+			val quizList = getQuizList(context)
+			val finalizedQuizList = mutableListOf<Quiz>()
+			for (quiz in quizList){
+				if (quiz.finalized == true)
+					finalizedQuizList.add(quiz)
+			}
+			return finalizedQuizList
 		}
 
 		fun getQuiz(context: Context, id: Int): Quiz {
@@ -130,7 +140,7 @@ class App {
 
 		fun addBlankQuestion(){
 			//adds a blank question to App.currentQuiz. does not affect DB!
-			currentQuiz!!.questionList!!.add(Question(null, "(New question", null, null))
+			currentQuiz!!.questionList!!.add(Question(null, "(New question)", null, null))
 		}
 
 		fun login(context: Context, tryUsername: String?, tryPassword: String?, verbose: Boolean = true) {

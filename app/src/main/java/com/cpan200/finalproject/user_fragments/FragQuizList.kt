@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cpan200.classes.App
 import com.cpan200.classes.QuizListAdapter
+import com.cpan200.classes.User
 import com.cpan200.dbclasses.QuizzesDB
 import com.cpan200.finalproject.R
 
@@ -31,12 +32,12 @@ class FragQuizList : Fragment() {
         layoutManager.orientation = LinearLayoutManager.VERTICAL
 		val valRcyQuizList = view.findViewById<RecyclerView>(R.id.rcyQuizList)
 		valRcyQuizList.layoutManager = layoutManager
-		valRcyQuizList.adapter = QuizListAdapter(context!!, App.getQuizList(context!!), App.quizListViewMode)
+		valRcyQuizList.adapter = QuizListAdapter(context!!, App.getFinalizedQuizList(context!!), App.quizListViewMode)
 
 		val valBtnQuizListAdd = view.findViewById<Button>(R.id.btnQuizListAdd)
-		if (App.quizListViewMode == QuizListAdapter.ViewMode.ADMIN)
+		if (App.currentUser!!.status == User.UserStatus.SUPERUSER || App.currentUser!!.status == User.UserStatus.ADMIN)
 			valBtnQuizListAdd.isGone = false
-		else if (App.quizListViewMode == QuizListAdapter.ViewMode.STUDENT)
+		else if (App.currentUser!!.status == User.UserStatus.STUDENT)
 			valBtnQuizListAdd.isGone = true
 		valBtnQuizListAdd.setOnClickListener {
 			App.addQuiz(context!!)

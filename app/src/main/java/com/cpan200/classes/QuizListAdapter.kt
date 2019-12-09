@@ -35,7 +35,7 @@ class QuizListAdapter(
 	}
 
 	fun refreshData(){
-		quizzes = App.getQuizList(context)
+		quizzes = App.getFinalizedQuizList(context)
 		notifyDataSetChanged()
 	}
 
@@ -82,8 +82,9 @@ class QuizListAdapter(
 			}
 
 			itemView.btnPanelQuizEdit.setOnClickListener {
-				//open up an unfinalized quiz for editing
-				if (!this.currentQuiz!!.finalized!!){
+				//open up an unfinalized quiz for editing AND the current user is a superuser/admin
+				if ((App.currentUser!!.status == User.UserStatus.SUPERUSER || App.currentUser!!.status == User.UserStatus.ADMIN)
+						&& !this.currentQuiz!!.finalized!!){
 					App.currentQuiz = App.getQuiz(context, this.currentQuiz!!.id!!)
 					(context as AppCompatActivity).supportFragmentManager.beginTransaction()
 							.replace(R.id.AdminContainer, FragQuizMain(), "FragQuizMain")

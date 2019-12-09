@@ -6,12 +6,18 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import com.cpan200.classes.App
+import com.cpan200.finalproject.user_fragments.FragQuizList
 
 class StudentActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student)
+
+        if (savedInstanceState == null){
+            supportFragmentManager.beginTransaction()
+                    .add(R.id.StudentContainer, FragQuizList(), "FragQuizList").commit()
+        }
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
