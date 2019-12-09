@@ -65,7 +65,7 @@ class QuizListAdapter(
 			//val isEditMode = isAdmin && !this.currentQuiz!!.finalized!!
 			itemView.llPanelQuizContainer.isGone = !isAdmin
 
-			}
+		}
 
 
 
