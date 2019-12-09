@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cpan200.finalproject.R
+import kotlinx.android.synthetic.main.panel_student.view.*
 
 class StudentListAdapter(
     val context: Context,
@@ -22,10 +23,19 @@ class StudentListAdapter(
 
     override fun onBindViewHolder(holder: StudentPanelViewHolder, position: Int) {
         val user = studentList[position]
-        //holder.setdata
+        holder.setData(user, position)
     }
 
     inner class StudentPanelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+        var currentUser: User? = null
+        var currentPosition = 0
+
+        fun setData(user: User, pos: Int){
+            this.currentUser = user
+            this.currentPosition = pos
+
+            itemView.txtStudentPanelUsername.text = currentUser!!.name
+        }
 
     }
 }
