@@ -2,7 +2,6 @@ package com.cpan200.finalproject.user_fragments
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cpan200.classes.App
 import com.cpan200.classes.QuizListAdapter
 import com.cpan200.classes.User
-import com.cpan200.dbclasses.QuizzesDB
 import com.cpan200.finalproject.R
 
 /**

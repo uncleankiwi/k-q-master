@@ -171,6 +171,20 @@ class App {
 			userCursor?.close()
 		}
 
+		fun getScore(context: Context, id: Int): Double {
+			val userDB = UserDB(context, null)
+			val userCursor = userDB.getScoreAttempt(currentUser!!.name!!, id)
+
+			var savedScore: Double? = 0.0
+			if (userCursor != null){
+				savedScore = userCursor.getDouble(userCursor.getColumnIndex(UserDB.COL_QUIZN + id.toString()))
+			}
+			if (savedScore == null)
+				return 0.0
+			else
+				return savedScore
+		}
+
 		fun login(context: Context, tryUsername: String?, tryPassword: String?, verbose: Boolean = true) {
 			//check if username and password entered
 			if (tryUsername == null || tryUsername.trim() == "") {

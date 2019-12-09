@@ -81,8 +81,6 @@ class FragQuizMain : Fragment() {
 					valBtnQuizMainSubmitSave.text = getString(R.string.Submit)
 					valBtnQuizMainSubmitSave.setOnClickListener {
 						//submit quiz, calc score
-						//todo submit quiz, calc score
-
 						var score = 0.0
 						for ((i, question) in App.currentQuiz!!.questionList!!.withIndex()){
 							if (question.correctAnswer == App.currentQuizAttempt[i]){

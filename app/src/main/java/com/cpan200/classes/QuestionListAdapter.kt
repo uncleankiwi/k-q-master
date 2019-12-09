@@ -103,7 +103,7 @@ class QuestionListAdapter(
 
 					//radio button listener
 					itemView.radGrpQuestionPanelAns.setOnCheckedChangeListener { _, i ->
-
+						App.currentEditingQuiz!!.questionList!![currentPosition].correctAnswer = i
 					}
 
 				}
@@ -131,7 +131,9 @@ class QuestionListAdapter(
 					}
 
 					//radio button listener
-
+					itemView.radGrpQuestionPanelAns.setOnCheckedChangeListener { _, i ->
+						App.currentQuizAttempt[currentPosition] = i
+					}
 
 				}
 				ansPopulated = true
