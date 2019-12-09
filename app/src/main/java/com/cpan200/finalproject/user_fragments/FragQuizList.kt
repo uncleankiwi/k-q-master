@@ -2,17 +2,18 @@ package com.cpan200.finalproject.user_fragments
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.core.view.isGone
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cpan200.classes.App
 import com.cpan200.classes.QuizListAdapter
 import com.cpan200.finalproject.R
-import kotlinx.android.synthetic.main.fragment_quiz_list.*
-import kotlinx.android.synthetic.main.fragment_quiz_main.*
 
 /**
  * A simple [Fragment] subclass.
@@ -26,13 +27,15 @@ class FragQuizList : Fragment() {
         val view = inflater.inflate(R.layout.fragment_quiz_list, container, false)
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        rcyQuizList.layoutManager = layoutManager
-        rcyQuizList.adapter = QuizListAdapter(context!!, App.getQuizList(context!!), App.quizListViewMode)
+		val valRcyQuizList = view.findViewById<RecyclerView>(R.id.rcyQuizList)
+		valRcyQuizList.layoutManager = layoutManager
+		valRcyQuizList.adapter = QuizListAdapter(context!!, App.getQuizList(context!!), App.quizListViewMode)
 
+		val valBtnQuizListAdd = view.findViewById<Button>(R.id.btnQuizListAdd)
 		if (App.quizListViewMode == QuizListAdapter.ViewMode.ADMIN)
-			btnQuizMainAdd.isGone = false
-		else if (App.questionListViewMode == QuizListAdapter.ViewMode.STUDENT)
-			btnQuizMainAdd.isGone = true
+			valBtnQuizListAdd.isGone = false
+		else if (App.quizListViewMode == QuizListAdapter.ViewMode.STUDENT)
+			valBtnQuizListAdd.isGone = true
 
         return view
     }

@@ -10,9 +10,9 @@ import com.cpan200.finalproject.R
 import kotlinx.android.synthetic.main.panel_quiz.view.*
 
 class QuizListAdapter(
-	val context: Context,
-	private val quizzes: MutableList<Quiz>,
-	val viewMode: ViewMode
+		val context: Context,
+		private val quizzes: MutableList<Quiz>,
+		private val viewMode: ViewMode
 ) : RecyclerView.Adapter<QuizPanelViewHolder>() {
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuizPanelViewHolder {
 		val view = LayoutInflater.from(context).inflate(R.layout.panel_quiz, parent, false)
