@@ -71,7 +71,7 @@ class QuizzesDB(
         row.put(COL_FINALIZED, finalized)
         row.put(COL_MAXOPTIONS, 5)  //future feature: allow more options...
         row.put(COL_MAXATTEMPTS, maxAttempts)
-        db.update(TABLE_NAME, row, "_id = $id", null)
+        db.update(TABLE_NAME, row, "$COL_ID = $id", null)
     }
 
 

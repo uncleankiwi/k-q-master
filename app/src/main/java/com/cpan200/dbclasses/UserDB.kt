@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.cpan200.classes.User
 
 class UserDB(
     context: Context?,
@@ -93,9 +94,19 @@ class UserDB(
         this.writableDatabase.execSQL("DELETE FROM $TABLE_NAME WHERE $COL_USERNAME = \"$username\"")
     }
 
-    fun getPasswordFromUser(username: String) : Cursor? {
-        return this.readableDatabase.rawQuery("SELECT $COL_PASSWORD FROM $TABLE_NAME WHERE $COL_USERNAME = \"$username\"", null)
+    fun updateUserInfo(username: String, password: String, email: String?, firstName: String?, lastName: String?){
+        val row = ContentValues()
+        row.put(COL_PASSWORD, password)
+        row.put(COL_EMAIL, email)
+        row.put(COL_FIRSTNAME, firstName)
+        row.put(COL_LASTNAME, lastName)
+        this.readableDatabase.update(TABLE_NAME, row, "$COL_USERNAME = $username", null)
     }
 
+    fun updateUserStatus(username: String, status: User.UserStatus){
+        val row = ContentValues()
+        row.put(COL_STATUS, status.toString())
+        this.readableDatabase.update(TABLE_NAME, row, "$COL_USERNAME = $username", null)
+    }
 
 }

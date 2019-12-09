@@ -77,21 +77,27 @@ class App {
 			//then drops QuizDB_N, recreates it,
 			//then adds every question
 
-			if (false){
-				//checking quiz input
-				//todo
-				return
-			}
-			else {
-				//editing quizzesDB entry
-				val quizzesDB = QuizzesDB(context, null)
-				quizzesDB.updateRow(id, quiz.title, quiz.questionList, quiz.finalized, quiz.maxAttempts)
-				quizzesDB.close()
+			//checking quiz input
+			when {
+				quiz.title == "" -> {
+					showToast(context, "Please enter a quiz title.")
+					return
+				}
+				quiz.finalized == true -> {
+					showToast(context, "Cannot modify a published quiz.")
+					return
+				}
+				else -> {
+					//editing quizzesDB entry
+					val quizzesDB = QuizzesDB(context, null)
+					quizzesDB.updateRow(id, quiz.title, quiz.questionList, quiz.finalized, quiz.maxAttempts)
+					quizzesDB.close()
 
-				//recreate QuizDB_N and add questions
-				val quizDB = QuizDB(context, id, null)
-				quizDB.recreateTable(id, quiz)
-				quizDB.close()
+					//recreate QuizDB_N and add questions
+					val quizDB = QuizDB(context, id, null)
+					quizDB.recreateTable(id, quiz)
+					quizDB.close()
+				}
 			}
 
 
@@ -252,8 +258,37 @@ class App {
 
 		}
 
-		fun changeUserStatus(context: Context) {
-			//todo
+		fun changeUserStatus(context: Context, username: String, newStatus: User.UserStatus) {
+			val userDB = UserDB(context, null)
+			val userCursor = userDB.findExistingUser(username)
+			userCursor!!.moveToFirst()
+			val oldStatus = userCursor.getString(userCursor.getColumnIndex(UserDB.COL_STATUS))
+
+			when {
+				oldStatus == newStatus.toString() -> {
+					userDB.close()
+					userCursor.close()
+					return
+				}
+
+				username == currentUser!!.name -> {
+					showToast(context, "Can't change the status of a user currently logged in.")
+					userDB.close()
+					userCursor.close()
+					return
+				}
+
+				else -> {
+					userDB.updateUserStatus(username, newStatus)
+					showToast(context, "User status changed.")
+					userDB.close()
+					userCursor.close()
+
+					//press back button
+					if (context is Activity) context.onBackPressed()
+				}
+			}
+
 		}
 
 		fun changeParticulars(context: Context, username: String, newPassword: String, newEmail:String?, newFirstName: String?, newLastName: String?) {
@@ -267,20 +302,26 @@ class App {
 
 			if (newPasswordE == "") {
 				showToast(context, "Please enter a password")
+				return
 			}
 			else{
 				//get old password
 				val userDB = UserDB(context, null)
-				val userCursor = userDB.getPasswordFromUser(username)
+				val userCursor = userDB.findExistingUser(username)
 				userCursor!!.moveToFirst()
 				val oldPassword = userCursor.getString(userCursor.getColumnIndex(UserDB.COL_PASSWORD))
 				val passwordChanged = (oldPassword == newPasswordE)
 
+				//update user info
+				userDB.updateUserInfo(username, newPasswordE, newEmailE, newFirstNameE, newLastNameE)
 
-				if (!passwordChanged && ){
+				//finishing
+				if (!passwordChanged && currentUser!!.name == username){
 					//if user specified is current user and password was changed, log out
 					showToast(context, "User information changed.")
-					//todo close window
+
+					//close fragment
+					if (context is Activity) context.onBackPressed()
 				}
 				else {
 					showToast(context, "Password changed. Please sign in with the new password.")
