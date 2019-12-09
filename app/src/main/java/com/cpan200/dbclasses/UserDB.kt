@@ -145,7 +145,7 @@ class UserDB(
 
     fun getScoreAttempt(username: String, id: Int): Cursor? {
         val db = this.readableDatabase
-        return db.rawQuery("SELECT COLUMN $COL_QUIZN${id}, COLUMN $COL_ATTEMPTN${id} FROM $TABLE_NAME WHERE $COL_USERNAME = \"$username\"", null)
+        return db.rawQuery("SELECT $COL_QUIZN${id}, $COL_ATTEMPTN${id} FROM $TABLE_NAME WHERE $COL_USERNAME = \"$username\"", null)
     }
 
 }

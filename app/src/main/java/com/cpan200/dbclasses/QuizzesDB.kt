@@ -61,6 +61,11 @@ class QuizzesDB(
         row.put(COL_MAXATTEMPTS, 1)
         db.insert(TABLE_NAME, null, row)
         db.close()
+
+        //todo create another db after, subtract to get cursor, find out id of new table
+        //then use id to create user QuizN and AttemptN columns
+        //val db = UserDB(context, null)
+        //db.createQuizCol()
     }
 
     fun updateRow(id: Int, title: String?, questionList: MutableList<Question>?, finalized: Boolean?, maxAttempts: Int?){

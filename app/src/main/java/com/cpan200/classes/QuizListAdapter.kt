@@ -56,8 +56,9 @@ class QuizListAdapter(
 			itemView.txtPanelQuizTitle.text = this.currentQuiz!!.title
 
 			itemView.txtPanelQuizStats.text = "Finalized: ${this.currentQuiz!!.finalized}" +
-					"\nNumber of questions: ${this.currentQuiz!!.questions}" +
-					"\nCurrent score: ${App.getScore(context, pos)}"
+					"\nNumber of questions: ${this.currentQuiz!!.questions}" //+
+	//				"\nCurrent score: ${App.getScore(context, pos)}"
+//todo fix UserDB quizN and attemptN columns invalid id first
 
 			itemView.btnPanelQuizEdit.isEnabled = !this.currentQuiz!!.finalized!!
 			itemView.btnPanelQuizPublish.isEnabled = !this.currentQuiz!!.finalized!!
