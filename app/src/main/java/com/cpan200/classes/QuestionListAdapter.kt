@@ -17,6 +17,7 @@ class QuestionListAdapter(
 		private var quiz: Quiz
 		//private val viewMode: ViewMode
 ) : RecyclerView.Adapter<QuestionListAdapter.QuestionPanelViewHolder>()  {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionPanelViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.panel_question, parent, false)
         return QuestionPanelViewHolder(view)

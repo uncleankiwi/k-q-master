@@ -28,6 +28,8 @@ class App {
 
 		var currentQuiz: Quiz? = null
 
+		var currentEditingQuiz: Quiz? = null
+
 		//workaround for passing info to fragments. should use interfaces
 		var quizListViewMode: QuizListAdapter.ViewMode = QuizListAdapter.ViewMode.ADMIN
 		var questionListViewMode: QuestionListAdapter.ViewMode = QuestionListAdapter.ViewMode.EDIT
@@ -149,16 +151,18 @@ class App {
 			val userDB = UserDB(context, null)
 			val userCursor = userDB.getScoreAttempt(currentUser!!.name!!, id)
 
-			val savedScore = userCursor.getString(UserDB.COL_QUIZN + id.toString(), null)
-			val savedAttempts = userCursor.getString(UserDB.COL_ATTEMPTN + id.toString(), null)
+			if (userCursor != null){
+				var savedScore: Double? = userCursor.getDouble(userCursor.getColumnIndex(UserDB.COL_QUIZN + id.toString()))
+				var savedAttempts: Int? = userCursor.getInt(userCursor.getColumnIndex(UserDB.COL_ATTEMPTN + id.toString()))
+				if (savedScore == null) savedScore = 0.0
+				if (savedAttempts == null) savedAttempts = 0
+				var highScore = score
+				if (savedScore > highScore) highScore = savedScore
+				userDB.updateScoreAttempt(currentUser!!.name!!, id, highScore, savedAttempts + 1)
+			}
 
-			var highScore = score
-			if (savedScore > highScore) highScore = savedScore
-
-			userDB.updateScoreAttempt(currentUser!!.name!!, id, highScore, savedAttempts + 1)
-
-			//todo
-
+			userDB.close()
+			userCursor?.close()
 		}
 
 		fun login(context: Context, tryUsername: String?, tryPassword: String?, verbose: Boolean = true) {

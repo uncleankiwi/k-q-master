@@ -14,9 +14,10 @@ import androidx.core.view.isGone
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cpan200.classes.App
+import com.cpan200.classes.Question
 import com.cpan200.classes.QuestionListAdapter
+import com.cpan200.classes.Quiz
 import com.cpan200.finalproject.R
-import kotlinx.android.synthetic.main.fragment_quiz_main.*
 
 
 /**
@@ -80,6 +81,8 @@ class FragQuizMain : Fragment() {
 				}
 				false ->{
 					//edit mode
+					App.currentEditingQuiz = null
+					App.currentEditingQuiz.questionList = mutableListOf()
 					valEditQuizMainTitle.setText(App.currentQuiz?.title)
 					valTxtQuizMainTitle.isGone = true
 					valEditQuizMainTitle.isGone = false
@@ -89,6 +92,21 @@ class FragQuizMain : Fragment() {
 					valBtnQuizMainSubmitSave.setOnClickListener {
 						//save edits made to quiz and its questions
 						//todo save edits made to quiz and its questions
+						var fail = false
+
+						if (valEditQuizMainTitle.text.toString() == ""){
+							App.showToast(context!!, "Please enter a quiz title.")
+							fail = true
+						} else if (App.currentEditingQuiz.questionList?.count() == 0) {
+							App.showToast(context!!, "Please create at least 1 question.")
+							fail = true
+						}
+
+						if (!fail) {
+							App.currentQuiz!!.title = valEditQuizMainTitle.text.toString()
+							//todo assign
+						}
+
 					}
 				}
 			}
