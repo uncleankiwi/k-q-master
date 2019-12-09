@@ -75,6 +75,20 @@ class QuizzesDB(
         row.put(COL_MAXOPTIONS, 5)  //future feature: allow more options...
         row.put(COL_MAXATTEMPTS, maxAttempts)
         db.update(TABLE_NAME, row, "$COL_ID = $id", null)
+		db.close()
+    }
+
+	fun deleteRow(id: Int){
+		val db = this.writableDatabase
+		db.execSQL("DELETE FROM $TABLE_NAME WHERE $COL_ID = $id")
+		db.close()
+	}
+
+    fun publishQuiz(id: Int){
+        val db = this.writableDatabase
+        val row = ContentValues()
+        row.put(COL_FINALIZED, true)
+        db.update(TABLE_NAME, row, "$COL_ID = $id", null)
     }
 
 

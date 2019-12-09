@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
+import android.util.Log
 import android.widget.Toast
 import com.cpan200.dbclasses.QuizDB
 import com.cpan200.dbclasses.QuizzesDB
@@ -76,7 +77,9 @@ class App {
 		}
 
 		fun addQuiz(context: Context) {
-			QuizzesDB(context, null).addRow()
+			val quizzesDB = QuizzesDB(context, null)
+			quizzesDB.addRow()
+			quizzesDB.close()
 		}
 
 		fun editQuiz(context: Context, id: Int, quiz: Quiz) {
@@ -109,6 +112,18 @@ class App {
 
 
 
+		}
+
+		fun deleteQuiz(context: Context, id: Int){
+			val quizzesDB = QuizzesDB(context, null)
+			quizzesDB.deleteRow(id)
+			quizzesDB.close()
+		}
+
+		fun publishQuiz(context: Context, id: Int){
+			val quizzesDB = QuizzesDB(context, null)
+			quizzesDB.publishQuiz(id)
+			quizzesDB.close()
 		}
 
 		fun login(context: Context, tryUsername: String?, tryPassword: String?, verbose: Boolean = true) {
@@ -359,6 +374,10 @@ class App {
 
 		fun showToast(context: Context, msg: String, length: Int = Toast.LENGTH_LONG) {
 			Toast.makeText(context, msg, length).show()
+		}
+
+		fun showLog(msg: String){
+			Log.i(LOG, msg)
 		}
 
 		private fun cursorToQuestion(cursor: Cursor, maxOptions: Int): Question {

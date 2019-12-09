@@ -39,9 +39,7 @@ class FragQuizList : Fragment() {
 		else if (App.quizListViewMode == QuizListAdapter.ViewMode.STUDENT)
 			valBtnQuizListAdd.isGone = true
 		valBtnQuizListAdd.setOnClickListener {
-			val quizzesDB = QuizzesDB(context, null)
-			quizzesDB.addRow()
-			quizzesDB.close()
+			App.addQuiz(context!!)
 			(valRcyQuizList.adapter as QuizListAdapter).refreshData()
 		}
 

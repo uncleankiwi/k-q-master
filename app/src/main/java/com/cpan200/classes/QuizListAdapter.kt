@@ -44,10 +44,28 @@ class QuizListAdapter(
 
 			itemView.txtPanelQuizTitle.text = this.currentQuiz!!.title
 
+			itemView.txtPanelQuizStats.text = "Finalized: ${this.currentQuiz!!.finalized}" +
+					"\nNumber of questions: ${this.currentQuiz!!.questions}"
+
+			itemView.btnPanelQuizEdit.isEnabled = !this.currentQuiz!!.finalized!!
+			itemView.btnPanelQuizPublish.isEnabled = !this.currentQuiz!!.finalized!!
+			itemView.btnPanelQuizScores.isEnabled = this.currentQuiz!!.finalized!!
+
 		}
 
 		init {
-			//onclicklistener
+			itemView.btnPanelQuizDelete.setOnClickListener {
+				App.showToast(context, "Deleted ${currentQuiz!!.title}")
+				App.deleteQuiz(context, this.currentQuiz!!.id!!)
+				refreshData()
+			}
+
+			itemView.btnPanelQuizPublish.setOnClickListener {
+				App.publishQuiz(context, this.currentQuiz!!.id!!)
+				refreshData()
+			}
+
+
 
 		}
 	}
