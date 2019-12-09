@@ -81,8 +81,8 @@ class FragQuizMain : Fragment() {
 				}
 				false ->{
 					//edit mode
-					App.currentEditingQuiz = null
-					App.currentEditingQuiz.questionList = mutableListOf()
+					App.currentEditingQuiz = Quiz()
+					App.currentEditingQuiz!!.questionList = mutableListOf()
 					valEditQuizMainTitle.setText(App.currentQuiz?.title)
 					valTxtQuizMainTitle.isGone = true
 					valEditQuizMainTitle.isGone = false
@@ -90,21 +90,41 @@ class FragQuizMain : Fragment() {
 					valBtnQuizMainAdd.isGone = false
 					valBtnQuizMainSubmitSave.text = getString(R.string.Save)
 					valBtnQuizMainSubmitSave.setOnClickListener {
+
 						//save edits made to quiz and its questions
-						//todo save edits made to quiz and its questions
 						var fail = false
 
 						if (valEditQuizMainTitle.text.toString() == ""){
 							App.showToast(context!!, "Please enter a quiz title.")
 							fail = true
-						} else if (App.currentEditingQuiz.questionList?.count() == 0) {
+						} else if (App.currentEditingQuiz!!.questionList!!.count() == 0) {
 							App.showToast(context!!, "Please create at least 1 question.")
 							fail = true
+						} else {
+							for (question in App.currentEditingQuiz!!.questionList!!){
+
+								//make sure every question has at least 1 answer
+								if (question.answers != null){
+									fail = true
+									break
+								} else if (question.answers!!.count() == 0){
+									fail = true
+									break
+								} else if (question.correctAnswer == null){
+									//make sure every question has 1 correct answer
+									fail = true
+									break
+								} else if (question.correctAnswer!! >= question.answers!!.count()){
+									//make sure that correct answer matches index of one of the answers
+									fail = true
+									break
+								}
+							}
 						}
 
 						if (!fail) {
-							App.currentQuiz!!.title = valEditQuizMainTitle.text.toString()
-							//todo assign
+							App.currentEditingQuiz!!.title = valEditQuizMainTitle.text.toString()
+							App.editQuiz(context!!, App.currentQuiz!!.id!!, App.currentEditingQuiz!!)
 						}
 
 					}
