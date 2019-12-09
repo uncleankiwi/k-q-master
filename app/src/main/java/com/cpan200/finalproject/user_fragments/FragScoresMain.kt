@@ -26,15 +26,26 @@ class FragScoresMain : Fragment() {
         val userDB = UserDB(context, null)
         val userCursor = userDB.getAllScores(App.currentQuiz!!.id!!)
 
+        if (userCursor.count != 0){
+            userCursor.moveToFirst()
+            populateScoreRow(userCursor, App.currentQuiz!!.id!!)
 
+            while (userCursor.moveToNext()){
+                populateScoreRow(userCursor, App.currentQuiz!!.id!!)
+            }
+        }
+
+        userDB.close()
+        userCursor.close()
 
         return view
     }
 
     private fun populateScoreRow(cursor: Cursor, id: Int){
-        txtScoresMainUsername.append(cursor.getDouble(cursor.getColumnIndex(UserDB.COL_QUIZN + id.toString())).toString())
+        txtScoresMainUsername.append(cursor.getString(cursor.getColumnIndex(UserDB.COL_USERNAME)))
         txtScoresMainUsername.append("\n")
-        txtScoresMainScore
+        txtScoresMainScore.append(cursor.getDouble(cursor.getColumnIndex(UserDB.COL_QUIZN + id.toString())).toString())
+        txtScoresMainScore.append("\n")
     }
 
 
