@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cpan200.classes.QuizListAdapter.*
 import com.cpan200.finalproject.R
 import com.cpan200.finalproject.user_fragments.FragQuizMain
+import com.cpan200.finalproject.user_fragments.FragScoresMain
 import kotlinx.android.synthetic.main.panel_quiz.view.*
 
 class QuizListAdapter(
@@ -111,7 +112,13 @@ class QuizListAdapter(
 			}
 
 			itemView.btnPanelQuizScores.setOnClickListener {
-
+				if (isAdmin && this.currentQuiz!!.finalized!!){
+					App.currentQuiz = App.getQuiz(context, this.currentQuiz!!.id!!)
+					(context as AppCompatActivity).supportFragmentManager.beginTransaction()
+						.replace(R.id.AdminContainer, FragScoresMain(), "FragScoresMain")
+						.addToBackStack(null)
+						.commit()
+				}
 			}
 
 

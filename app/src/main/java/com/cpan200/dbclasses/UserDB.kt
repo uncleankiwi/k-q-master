@@ -125,9 +125,13 @@ class UserDB(
 
     fun createQuizCol(id: Int){
         val db = this.writableDatabase
-        db.execSQL("ALTER TABLE $TABLE_NAME ADD COLUMN $COL_QUIZN${id} REAL DEFAULT NULL")
-        db.execSQL("ALTER TABLE $TABLE_NAME ADD COLUMN $COL_ATTEMPTN${id} INTEGER DEFAULT NULL")
+        db.execSQL("ALTER TABLE $TABLE_NAME ADD COLUMN $COL_QUIZN${id} REAL DEFAULT 0")
+        db.execSQL("ALTER TABLE $TABLE_NAME ADD COLUMN $COL_ATTEMPTN${id} INTEGER DEFAULT 0")
         db.close()
+    }
+
+    fun getAllScores(id: Int): Cursor{
+        return this.readableDatabase.rawQuery("SELECT COLUMN $COL_QUIZN${id}, COLUMN $COL_ATTEMPTN${id} FROM $TABLE_NAME ORDER BY $COL_QUIZN${id}", null)
     }
 
     fun updateScoreAttempt(username: String, id: Int, score: Double, attempt: Int){
