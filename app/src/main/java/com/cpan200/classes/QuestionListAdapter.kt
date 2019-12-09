@@ -1,6 +1,8 @@
 package com.cpan200.classes
 
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,6 +81,15 @@ class QuestionListAdapter(
 						//create editTexts and fill them in if the answer exists
 						val editAns = EditText(context)
 						editAns.hint = context.getString(R.string.spacer)
+						//also create a listener to save new answers
+						editAns.addTextChangedListener(object : TextWatcher {
+							override fun afterTextChanged(p0: Editable?) {}
+							override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+							override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+								App.currentEditingQuiz!!.questionList!![currentPosition].answers!![i] = p0.toString()
+							}
+						})
+
 						if (this.currentQuestion != null){
 							if (this.currentQuestion!!.answers != null){
 								editAns.setText(this.currentQuestion!!.answers!![i])
@@ -88,7 +99,10 @@ class QuestionListAdapter(
 //								LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
 
 						itemView.QuestionPanelAnsContainer.addView(editAns, i)
+					}
 
+					//radio button listener
+					itemView.radGrpQuestionPanelAns.setOnCheckedChangeListener { _, i ->
 
 					}
 
@@ -115,6 +129,9 @@ class QuestionListAdapter(
 						}
 
 					}
+
+					//radio button listener
+
 
 				}
 				ansPopulated = true

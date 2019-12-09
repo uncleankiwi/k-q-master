@@ -143,7 +143,13 @@ class App {
 
 		fun addBlankQuestion(){
 			//adds a blank question to App.currentQuiz. does not affect DB!
-			currentQuiz!!.questionList!!.add(Question(null, "(New question)", null, null))
+			//also adds list of answers of size maxOptions
+			val options = currentEditingQuiz!!.maxOptions!!
+			val emptyAns = mutableListOf<String>()
+			for (i in 0 until options){
+				emptyAns.add("")
+			}
+			currentEditingQuiz!!.questionList!!.add(Question(null, "(New question)", emptyAns, null))
 		}
 
 		fun submitScore(context: Context, id: Int, score: Double){
