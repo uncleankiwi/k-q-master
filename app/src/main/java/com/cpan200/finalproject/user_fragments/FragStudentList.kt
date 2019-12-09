@@ -6,7 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.cpan200.classes.App
+import com.cpan200.classes.StudentListAdapter
 import com.cpan200.finalproject.R
+import kotlinx.android.synthetic.main.fragment_student_list.*
 
 
 /**
@@ -18,8 +22,12 @@ class FragStudentList : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_student_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_student_list, container, false)
+        val layoutManager = LinearLayoutManager(context)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
+        rcyStudentList.layoutManager = layoutManager
+        rcyStudentList.adapter = StudentListAdapter(context!!, App.getUserList(context!!))
+        return view
     }
 
 

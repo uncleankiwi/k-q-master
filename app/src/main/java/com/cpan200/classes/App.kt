@@ -40,6 +40,7 @@ class App {
 					quizList.add(cursorToQuiz(quizzesCursor))
 				}
 			}
+			quizzesCursor.close()
 
 			return quizList
 		}
@@ -336,6 +337,22 @@ class App {
 
 
 
+		}
+
+		fun getUserList(context: Context): MutableList<User>{
+			val userList = mutableListOf<User>()
+			val userCursor = UserDB(context, null).getAllRows()
+			if (userCursor!!.count != 0){
+				userCursor.moveToFirst()
+				userList.add(cursorToUser(userCursor))
+
+				while (userCursor.moveToNext()){
+					userList.add(cursorToUser(userCursor))
+				}
+			}
+			userCursor.close()
+
+			return userList
 		}
 
 		fun showToast(context: Context, msg: String, length: Int = Toast.LENGTH_LONG) {
