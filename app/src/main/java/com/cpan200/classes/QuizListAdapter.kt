@@ -1,16 +1,13 @@
 package com.cpan200.classes
 
-import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.view.isGone
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.cpan200.classes.QuizListAdapter.*
+import com.cpan200.classes.QuizListAdapter.QuizPanelViewHolder
 import com.cpan200.finalproject.R
 import com.cpan200.finalproject.user_fragments.FragQuizMain
 import com.cpan200.finalproject.user_fragments.FragScoresMain
@@ -55,14 +52,18 @@ class QuizListAdapter(
 
 			itemView.txtPanelQuizTitle.text = this.currentQuiz!!.title
 
-			itemView.txtPanelQuizStats.text = "Finalized: ${this.currentQuiz!!.finalized}" +
-					"\nNumber of questions: ${this.currentQuiz!!.questions}" //+
-	//				"\nCurrent score: ${App.getScore(context, pos)}"
-//todo fix UserDB quizN and attemptN columns invalid id first
+			itemView.txtPanelQuizStats.text = context.getString(
+					R.string.txtPanelQuizStats,
+					this.currentQuiz!!.finalized.toString(),
+					this.currentQuiz!!.questions,
+					App.getAttempts(context, pos),
+					App.getScore(context, pos))
+			//todo fix UserDB quizN and attemptN columns invalid id first
 
-			itemView.btnPanelQuizEdit.isEnabled = !this.currentQuiz!!.finalized!!
-			itemView.btnPanelQuizPublish.isEnabled = !this.currentQuiz!!.finalized!!
-			itemView.btnPanelQuizScores.isEnabled = this.currentQuiz!!.finalized!!
+
+			itemView.btnPanelQuizEdit.isEnabled = !this.currentQuiz!!.finalized
+			itemView.btnPanelQuizPublish.isEnabled = !this.currentQuiz!!.finalized
+			itemView.btnPanelQuizScores.isEnabled = this.currentQuiz!!.finalized
 
 			val isAdmin = App.currentUser!!.status == User.UserStatus.SUPERUSER || App.currentUser!!.status == User.UserStatus.ADMIN
 			//val isEditMode = isAdmin && !this.currentQuiz!!.finalized!!
@@ -92,7 +93,7 @@ class QuizListAdapter(
 
 			itemView.setOnClickListener {
 				//bring up this quiz if finalized
-				if (this.currentQuiz!!.finalized!!){
+				if (this.currentQuiz!!.finalized){
 					App.currentQuiz = App.getQuiz(context, this.currentQuiz!!.id!!)
 					(context as AppCompatActivity).supportFragmentManager.beginTransaction()
 							.replace(container, FragQuizMain(), "FragQuizMain")
@@ -103,7 +104,7 @@ class QuizListAdapter(
 
 			itemView.btnPanelQuizEdit.setOnClickListener {
 				//open up an unfinalized quiz for editing AND the current user is a superuser/admin
-				if (isAdmin && !this.currentQuiz!!.finalized!!){
+				if (isAdmin && !this.currentQuiz!!.finalized){
 					App.currentQuiz = App.getQuiz(context, this.currentQuiz!!.id!!)
 					(context as AppCompatActivity).supportFragmentManager.beginTransaction()
 							.replace(R.id.AdminContainer, FragQuizMain(), "FragQuizMain")
@@ -113,7 +114,7 @@ class QuizListAdapter(
 			}
 
 			itemView.btnPanelQuizScores.setOnClickListener {
-				if (isAdmin && this.currentQuiz!!.finalized!!){
+				if (isAdmin && this.currentQuiz!!.finalized){
 					App.currentQuiz = App.getQuiz(context, this.currentQuiz!!.id!!)
 					(context as AppCompatActivity).supportFragmentManager.beginTransaction()
 						.replace(R.id.AdminContainer, FragScoresMain(), "FragScoresMain")

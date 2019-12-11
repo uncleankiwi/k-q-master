@@ -24,14 +24,14 @@ class FragScoresMain : Fragment() {
         val view = inflater.inflate(R.layout.fragment_scores_main, container, false)
 
         val userDB = UserDB(context, null)
-        val userCursor = userDB.getAllScores(App.currentQuiz!!.id!!)
+        val userCursor = userDB.getAllScores(App.currentQuiz.id!!)
 
         if (userCursor.count != 0){
             userCursor.moveToFirst()
-            populateScoreRow(userCursor, App.currentQuiz!!.id!!)
+            populateScoreRow(userCursor, App.currentQuiz.id!!)
 
             while (userCursor.moveToNext()){
-                populateScoreRow(userCursor, App.currentQuiz!!.id!!)
+                populateScoreRow(userCursor, App.currentQuiz.id!!)
             }
         }
 

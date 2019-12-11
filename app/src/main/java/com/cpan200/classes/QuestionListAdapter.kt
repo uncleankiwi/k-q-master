@@ -6,9 +6,9 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.*
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.RadioButton
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import com.cpan200.finalproject.R
@@ -26,32 +26,32 @@ class QuestionListAdapter(
     }
 
     override fun getItemCount(): Int {
-        return quiz.questionList?.count() ?: 0
+        return quiz.questionList.count()
     }
 
     override fun onBindViewHolder(holder: QuestionPanelViewHolder, position: Int) {
-        quiz.questionList = quiz.questionList ?: mutableListOf()
-        val question = quiz.questionList!![position]
+        quiz.questionList = quiz.questionList
+        val question = quiz.questionList[position]
         holder.setData(question, position) //viewMode
     }
 
 	fun refreshData(){
 		//this gets currentQuiz global variable, NOT from db!
-		quiz = App.currentQuiz!!
+		quiz = App.currentQuiz
 		notifyDataSetChanged()
 	}
 
     inner class QuestionPanelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 		private var currentQuestion: Question? = null
 		var currentPosition: Int = 0
-		var ansPopulated: Boolean = false
+		private var ansPopulated: Boolean = false
 		fun setData(question: Question, pos: Int){
 			//viewMode: ViewMode
 			this.currentQuestion = question
 			this.currentPosition = pos
 
 			val isAdmin = App.currentUser!!.status == User.UserStatus.SUPERUSER || App.currentUser!!.status == User.UserStatus.ADMIN
-			val isEditMode = isAdmin && !quiz.finalized!!
+			val isEditMode = isAdmin && !quiz.finalized
 			itemView.txtQuestionPanelQuestion.text = this.currentQuestion!!.question
 
 			//hiding it since it's a static 5 options for now
@@ -66,7 +66,7 @@ class QuestionListAdapter(
 					itemView.editQuestionPanelQuestion.isGone = false
 
 					//fill options with answer options
-					for (i in 0 until (quiz.maxOptions ?: 0)){
+					for (i in 0 until (quiz.maxOptions)){
 						//create maxOptions number of options
 						val radAns = RadioButton(context)
 						radAns.text = ""
@@ -86,14 +86,12 @@ class QuestionListAdapter(
 							override fun afterTextChanged(p0: Editable?) {}
 							override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 							override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-								App.currentEditingQuiz!!.questionList!![currentPosition].answers!![i] = p0.toString()
+								App.currentEditingQuiz!!.questionList[currentPosition].answers[i] = p0.toString()
 							}
 						})
 
 						if (this.currentQuestion != null){
-							if (this.currentQuestion!!.answers != null){
-								editAns.setText(this.currentQuestion!!.answers!![i])
-							}
+								editAns.setText(this.currentQuestion!!.answers[i])
 						}
 						//editAns.layoutParams = LinearLayout.LayoutParams(
 //								LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
@@ -103,7 +101,7 @@ class QuestionListAdapter(
 
 					//radio button listener
 					itemView.radGrpQuestionPanelAns.setOnCheckedChangeListener { _, i ->
-						App.currentEditingQuiz!!.questionList!![currentPosition].correctAnswer = i
+						App.currentEditingQuiz!!.questionList[currentPosition].correctAnswer = i
 					}
 
 				}
@@ -115,12 +113,10 @@ class QuestionListAdapter(
 					itemView.editQuestionPanelQuestion.isGone = true
 
 					//create options only if they aren't null/blank. fill options
-					for (i in 0 until (quiz.maxOptions ?: 0)){
+					for (i in 0 until (quiz.maxOptions)){
 						var currAns: String? = null
 						if (this.currentQuestion != null){
-							if (this.currentQuestion!!.answers != null){
-								currAns = this.currentQuestion!!.answers!![i]
-							}
+							currAns = this.currentQuestion!!.answers[i]
 						}
 						if (currAns != null && currAns != ""){
 							val radAns = RadioButton(context)
@@ -139,7 +135,7 @@ class QuestionListAdapter(
 				ansPopulated = true
 			}
 
-			if (quiz.finalized!!){
+			if (quiz.finalized){
 				//do mode
 				itemView.txtQuestionPanelQuestion.text = currentQuestion!!.question
 				itemView.txtQuestionPanelQuestion.isGone = false

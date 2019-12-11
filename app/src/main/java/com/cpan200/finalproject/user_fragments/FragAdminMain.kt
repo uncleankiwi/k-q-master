@@ -1,17 +1,13 @@
 package com.cpan200.finalproject.user_fragments
 
 
-import android.app.Activity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.fragment.app.FragmentManager
-import com.cpan200.classes.App
+import androidx.fragment.app.Fragment
 import com.cpan200.finalproject.R
-import com.cpan200.finalproject.login_fragments.FragLogin
 
 /**
  * A simple [Fragment] subclass.

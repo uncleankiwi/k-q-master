@@ -55,7 +55,7 @@ class QuizDB(
         return this.readableDatabase.rawQuery("SELECT * FROM $tableName", null)
     }
 
-    fun recreateTable(id: Int, quiz: Quiz){
+    fun recreateTable(quiz: Quiz){
         val db = this.writableDatabase
         db.execSQL("DROP TABLE IF EXISTS $tableName")
         db.execSQL("CREATE TABLE $tableName (" +
@@ -70,7 +70,7 @@ class QuizDB(
                 "$COL_CORRECTANS INT, " +
                 "$COL_IMAGE BLOB)")
 
-        for (question: Question in quiz.questionList!!){
+        for (question: Question in quiz.questionList){
             addRow(db, question)
         }
 
@@ -80,12 +80,11 @@ class QuizDB(
     private fun addRow(db: SQLiteDatabase, question: Question){
         val row = ContentValues()
         row.put(COL_QUESTION, question.question)
-        if (question.answers != null) {
-            for ((i, ans: String?) in question.answers!!.withIndex()) {
-                if (ans != "")
-                    row.put(COL_ANS_N + i.toString(), ans)
-            }
+        for ((i, ans: String?) in question.answers.withIndex()) {
+            if (ans != "")
+                row.put(COL_ANS_N + i.toString(), ans)
         }
+
         row.put(COL_MARKS, 1)
         row.put(COL_CORRECTANS, question.correctAnswer)
         row.put(COL_IMAGE, question.image)

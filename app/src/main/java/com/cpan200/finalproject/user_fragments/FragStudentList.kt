@@ -2,17 +2,15 @@ package com.cpan200.finalproject.user_fragments
 
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cpan200.classes.App
 import com.cpan200.classes.StudentListAdapter
 import com.cpan200.finalproject.R
-import kotlinx.android.synthetic.main.fragment_student_list.*
 
 
 /**

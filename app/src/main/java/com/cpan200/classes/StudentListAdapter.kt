@@ -39,7 +39,9 @@ class StudentListAdapter(
             this.currentUser = user
             this.currentPosition = pos
 
-            itemView.txtStudentPanelUsername.text = "${currentUser!!.name} (${currentUser!!.status})"
+            itemView.txtStudentPanelUsername.text = context.getString(R.string.txtStudentPanelUsername,
+                    currentUser!!.name,
+                    currentUser!!.status)
         }
 
         init {

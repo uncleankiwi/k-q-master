@@ -28,7 +28,7 @@ class App {
 
 		var currentQuiz: Quiz = Quiz()
 
-		var currentEditingQuiz: Quiz = Quiz()
+		var currentEditingQuiz: Quiz? = null
 		var currentQuizAttempt = mutableListOf<Int>()
 
 		//workaround for passing info to fragments. should use interfaces
@@ -141,18 +141,16 @@ class App {
 			quizzesDB.close()
 		}
 
-		fun addBlankQuestion(){
+		fun addBlankQuestion(context: Context, id: Int){
 			//adds a blank question to App.currentQuiz. does not affect DB!
 			//also adds list of answers of size maxOptions
 
-			currentEditingQuiz.maxOptions = 5	//todo find val
-
-			val options = currentEditingQuiz.maxOptions
+			val options = getQuiz(context, currentEditingQuiz!!.id!!).maxOptions
 			val emptyAns = mutableListOf<String>()
 			for (i in 0 until options){
 				emptyAns.add("")
 			}
-			currentEditingQuiz.questionList.add(Question())
+			currentEditingQuiz!!.questionList.add(Question())
 		}
 
 		fun submitScore(context: Context, id: Int, score: Double){
@@ -182,10 +180,18 @@ class App {
 			if (userCursor != null){
 				savedScore = userCursor.getDouble(userCursor.getColumnIndex(UserDB.COL_QUIZN + id.toString()))
 			}
-			if (savedScore == null)
-				return 0.0
-			else
-				return savedScore
+			return savedScore ?: 0.0
+		}
+
+		fun getAttempts(context: Context, id: Int): Int {
+			val userDB = UserDB(context, null)
+			val userCursor = userDB.getScoreAttempt(currentUser!!.name!!, id)
+
+			var attempts: Int? = 0
+			if (userCursor != null){
+				attempts = userCursor.getInt(userCursor.getColumnIndex(UserDB.COL_ATTEMPTN + id.toString()))
+			}
+			return attempts ?: 0
 		}
 
 		fun login(context: Context, tryUsername: String?, tryPassword: String?, verbose: Boolean = true) {
