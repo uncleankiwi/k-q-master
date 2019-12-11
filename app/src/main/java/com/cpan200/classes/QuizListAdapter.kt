@@ -54,9 +54,9 @@ class QuizListAdapter(
 			itemView.txtPanelQuizStats.text = context.getString(
 					R.string.txtPanelQuizStats,
 					this.currentQuiz!!.finalized.toString(),
-					this.currentQuiz!!.questions,
-					App.getAttempts(context, pos),
-					App.getScore(context, pos))
+					this.currentQuiz!!.questions.toString(),
+					App.getAttempts(context, pos).toString(),
+					App.getScore(context, pos).toString())
 
 			itemView.btnPanelQuizEdit.isEnabled = !this.currentQuiz!!.finalized
 			itemView.btnPanelQuizPublish.isEnabled = !this.currentQuiz!!.finalized
@@ -76,6 +76,10 @@ class QuizListAdapter(
 			itemView.btnPanelQuizDelete.setOnClickListener {
 				App.showToast(context, "Deleted ${currentQuiz!!.title}")
 				App.deleteQuiz(context, this.currentQuiz!!.id!!)
+
+				//todo
+				App.showusercols(context)
+
 				refreshData()
 			}
 

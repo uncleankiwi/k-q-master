@@ -115,6 +115,9 @@ class App {
 			val userDB = UserDB(context, null)
 			userDB.createQuizCol(newID)
 
+			//todo
+			showusercols(context)
+
 			quizzesDB.close()
 		}
 
@@ -200,8 +203,10 @@ class App {
 
 			var savedScore: Double? = 0.0
 			if (userCursor != null){
+				userCursor.moveToFirst()
 				savedScore = userCursor.getDouble(userCursor.getColumnIndex(UserDB.COL_QUIZN + id.toString()))
 			}
+			userCursor?.close()
 			return savedScore ?: 0.0
 		}
 
@@ -209,11 +214,9 @@ class App {
 			val userDB = UserDB(context, null)
 			val userCursor = userDB.getScoreAttempt(currentUser!!.name!!, id)
 
-			for (string in userCursor!!.columnNames)
-				showLog(string)
-
 			var attempts: Int? = 0
 			if (userCursor != null){
+				userCursor.moveToFirst()
 				attempts = userCursor.getInt(userCursor.getColumnIndex(UserDB.COL_ATTEMPTN + id.toString()))
 			}
 			return attempts ?: 0
@@ -487,6 +490,14 @@ class App {
 
 		fun showLog(msg: String){
 			Log.i(LOG, msg)
+		}
+
+		fun showusercols(context: Context){
+			val userDB = UserDB(context, null)
+			val usertest = userDB.getAllRows()
+			for (string in usertest!!.columnNames){
+				showLog(string)
+			}
 		}
 
 		private fun cursorToQuestion(cursor: Cursor, maxOptions: Int): Question {

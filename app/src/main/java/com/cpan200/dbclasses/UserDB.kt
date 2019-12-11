@@ -62,7 +62,6 @@ class UserDB(
 		row.put(COL_FIRSTNAME, firstName)
 		row.put(COL_LASTNAME, lastName)
 		db.insert(TABLE_NAME, null, row)
-		db.close()
 	}
 
 	fun rows(): Int{
@@ -105,7 +104,6 @@ class UserDB(
 		row.put(COL_FIRSTNAME, firstName)
 		row.put(COL_LASTNAME, lastName)
 		db.update(TABLE_NAME, row, "$COL_USERNAME = $username", null)
-		db.close()
 	}
 
 	fun updateUserStatus(username: String, status: User.UserStatus){
@@ -121,7 +119,6 @@ class UserDB(
 		row.put(COL_QUIZN + id.toString(), 0)
 		row.put(COL_ATTEMPTN + id.toString(), 0)
 		db.update(TABLE_NAME, row, "1 = 1", null)
-		db.close()
 	}
 
 	private fun colSetExistsCheck(cols: Set<String>): Map<String, Boolean> {
@@ -133,9 +130,7 @@ class UserDB(
 		for (string in cols){
 			outMap[string] = colNames.contains(string)
 		}
-
 		userCursor.close()
-		db.close()
 		return outMap
 	}
 
@@ -150,7 +145,6 @@ class UserDB(
 		if (!colCheckMap.getValue(COL_ATTEMPTN + id.toString())){
 			db.execSQL("ALTER TABLE $TABLE_NAME ADD COLUMN $COL_ATTEMPTN${id} INTEGER DEFAULT 0")
 		}
-		db.close()
 	}
 
 	fun getAllScores(id: Int): Cursor{
@@ -163,7 +157,6 @@ class UserDB(
 		row.put(COL_QUIZN + id.toString(), score)
 		row.put(COL_ATTEMPTN + id.toString(), attempt)
 		db.update(TABLE_NAME, row, "$COL_USERNAME = $username", null)
-		db.close()
 	}
 
 	fun getScoreAttempt(username: String, id: Int): Cursor? {

@@ -55,9 +55,9 @@
     <string name="Questions_prefix">Questions: </string>
     <string name="Total_marks_prefix">Total marks: </string>
     <string name="txtPanelQuizStats">Finalized: %1$s\n
-        Number of questions: %2$d\n
-        Attempts: %3$d\n
-        Current high score: %4$d\n</string>
+        Number of questions: %2$s\n
+        Attempts: %3$s\n
+        Current high score: %4$s</string>
 
     <!-- student panel -->
     <string name="Username_temp">(Username)</string>
