@@ -91,7 +91,15 @@ class QuestionListAdapter(
 						})
 
 						if (this.currentQuestion != null){
+							//todo
+							try{
 								editAns.setText(this.currentQuestion!!.answers[i])
+							}
+							catch(e: Exception){
+								App.showLog("hoho. answers oob!")
+							}
+							//end todo
+
 						}
 						//editAns.layoutParams = LinearLayout.LayoutParams(
 //								LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
