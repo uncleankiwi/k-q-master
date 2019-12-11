@@ -26,9 +26,9 @@ class App {
 		private const val USERNAME_KEY: String = "username"
 		private const val PASSWORD_KEY: String = "password"
 
-		var currentQuiz: Quiz? = null
+		var currentQuiz: Quiz = Quiz()
 
-		var currentEditingQuiz: Quiz? = null
+		var currentEditingQuiz: Quiz = Quiz()
 		var currentQuizAttempt = mutableListOf<Int>()
 
 		//workaround for passing info to fragments. should use interfaces
@@ -144,13 +144,15 @@ class App {
 		fun addBlankQuestion(){
 			//adds a blank question to App.currentQuiz. does not affect DB!
 			//also adds list of answers of size maxOptions
-			if (currentEditingQuiz!!.maxOptions == null) currentEditingQuiz!!.maxOptions = 5	//todo find val
-			val options = currentEditingQuiz!!.maxOptions!!
+
+			currentEditingQuiz.maxOptions = 5	//todo find val
+
+			val options = currentEditingQuiz.maxOptions
 			val emptyAns = mutableListOf<String>()
 			for (i in 0 until options){
 				emptyAns.add("")
 			}
-			currentEditingQuiz!!.questionList!!.add(Question(null, "(New question)", emptyAns, null))
+			currentEditingQuiz.questionList.add(Question())
 		}
 
 		fun submitScore(context: Context, id: Int, score: Double){
