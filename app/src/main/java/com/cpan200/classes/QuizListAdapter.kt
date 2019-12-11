@@ -99,6 +99,10 @@ class QuizListAdapter(
 				//open up an unfinalized quiz for editing AND the current user is a superuser/admin
 				if (isAdmin && !this.currentQuiz!!.finalized){
 					App.currentEditingQuiz = App.getQuiz(context, this.currentQuiz!!.id!!)
+					//add at least maxOption answers to every question in currentEditingQuiz
+					//todo oob fix main?
+					App.maxOptionsToQuestions(App.currentEditingQuiz as Quiz)
+
 					(context as AppCompatActivity).supportFragmentManager.beginTransaction()
 							.replace(R.id.AdminContainer, FragQuizMain(), "FragQuizMain")
 							.addToBackStack(null)

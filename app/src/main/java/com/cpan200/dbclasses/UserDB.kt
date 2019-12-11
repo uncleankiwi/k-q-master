@@ -137,7 +137,6 @@ class UserDB(
 			outMap[string] = colNames.contains(string)
 		}
 		userCursor.close()
-		db.close()
 		return outMap
 	}
 

@@ -162,6 +162,14 @@ class App {
 			quizzesDB.close()
 		}
 
+		fun maxOptionsToQuestions(quiz: Quiz){
+			for (question in quiz.questionList){
+				while (question.answers.count() < quiz.maxOptions){
+					question.answers.add("")
+				}
+			}
+		}
+
 		fun submitScore(context: Context, id: Int, score: Double){
 			showToast(context, "Your score: $score")
 			val userDB = UserDB(context, null)
@@ -445,11 +453,7 @@ class App {
 					showToast(context, "Password changed. Please sign in with the new password.")
 					logout(context, false)
 				}
-
 			}
-
-
-
 		}
 
 		fun getUserList(context: Context): MutableList<User>{
@@ -476,13 +480,13 @@ class App {
 			Log.i(LOG, msg)
 		}
 
-		fun showusercols(context: Context){
-			val userDB = UserDB(context, null)
-			val usertest = userDB.getAllRows()
-			for (string in usertest!!.columnNames){
-				showLog(string)
-			}
-		}
+//		fun showusercols(context: Context){
+//			val userDB = UserDB(context, null)
+//			val usertest = userDB.getAllRows()
+//			for (string in usertest!!.columnNames){
+//				showLog(string)
+//			}
+//		}
 
 		private fun cursorToQuestion(cursor: Cursor, maxOptions: Int): Question {
 			val id: Int = cursor.getInt(cursor.getColumnIndex(QuizDB.COL_ID))

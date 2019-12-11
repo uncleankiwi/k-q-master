@@ -86,7 +86,15 @@ class QuestionListAdapter(
 							override fun afterTextChanged(p0: Editable?) {}
 							override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 							override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-								App.currentEditingQuiz!!.questionList[currentPosition].answers[i] = p0.toString()
+
+								App.showLog("curr pos $currentPosition")
+								App.showLog("curr pos ${App.currentEditingQuiz!!.questionList.count()}")
+								App.showLog("index $i, ")
+								App.showLog("answer count ${App.currentEditingQuiz!!.questionList[currentPosition].answers.count()}")	//todo crash here
+
+								if (i < App.currentEditingQuiz!!.questionList[currentPosition].answers.count())
+									App.currentEditingQuiz!!.questionList[currentPosition].answers[i] = p0.toString()
+								//todo potential oob fix #2
 							}
 						})
 
