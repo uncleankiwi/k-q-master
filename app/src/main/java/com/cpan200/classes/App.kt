@@ -32,7 +32,15 @@ class App {
 
 		//workaround for passing info to fragments. should use interfaces
 		var quizListViewMode: QuizListAdapter.ViewMode = QuizListAdapter.ViewMode.STUDENT
-		var questionListViewMode: QuestionListAdapter.ViewMode = QuestionListAdapter.ViewMode.EDIT
+			private set
+			get() {
+				return if (currentUser?.status == null || currentUser?.status == User.UserStatus.STUDENT)
+					QuizListAdapter.ViewMode.STUDENT
+				else if (currentUser?.status == User.UserStatus.SUPERUSER || currentUser?.status == User.UserStatus.ADMIN)
+					QuizListAdapter.ViewMode.ADMIN
+				else
+					QuizListAdapter.ViewMode.STUDENT
+			}
 
 		fun getQuizList(context: Context): MutableList<Quiz> {
 			val quizList = mutableListOf<Quiz>()
@@ -56,7 +64,7 @@ class App {
 			val quizList = getQuizList(context)
 			val finalizedQuizList = mutableListOf<Quiz>()
 			for (quiz in quizList){
-				if (quiz.finalized == true)
+				if (quiz.finalized)
 					finalizedQuizList.add(quiz)
 			}
 			return finalizedQuizList
@@ -123,9 +131,6 @@ class App {
 					quizDB.close()
 				}
 			}
-
-
-
 		}
 
 		fun deleteQuiz(context: Context, id: Int){

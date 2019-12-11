@@ -15,8 +15,7 @@ import kotlinx.android.synthetic.main.panel_quiz.view.*
 
 class QuizListAdapter(
 		val context: Context,
-		private var quizzes: MutableList<Quiz>,
-		private val viewMode: ViewMode
+		private var quizzes: MutableList<Quiz>
 ) : RecyclerView.Adapter<QuizPanelViewHolder>() {
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuizPanelViewHolder {
 		val view = LayoutInflater.from(context).inflate(R.layout.panel_quiz, parent, false)
@@ -30,11 +29,11 @@ class QuizListAdapter(
 
 	override fun onBindViewHolder(holder: QuizPanelViewHolder, position: Int) {
 		val quiz = quizzes[position]
-		holder.setData(quiz, position, viewMode)
+		holder.setData(quiz, position)
 	}
 
 	fun refreshData(){
-		val isAdmin = App.currentUser!!.status == User.UserStatus.SUPERUSER || App.currentUser!!.status == User.UserStatus.ADMIN
+		val isAdmin = (App.quizListViewMode == ViewMode.ADMIN)
 		quizzes = if (!isAdmin)
 			App.getFinalizedQuizList(context)
 		else
@@ -46,7 +45,7 @@ class QuizListAdapter(
 		private var currentQuiz: Quiz? = null
 		private var currentPosition: Int = 0
 
-		fun setData(quiz: Quiz, pos: Int, viewMode: ViewMode){
+		fun setData(quiz: Quiz, pos: Int){
 			this.currentQuiz = quiz
 			this.currentPosition = pos
 
@@ -63,16 +62,12 @@ class QuizListAdapter(
 			itemView.btnPanelQuizPublish.isEnabled = !this.currentQuiz!!.finalized
 			itemView.btnPanelQuizScores.isEnabled = this.currentQuiz!!.finalized
 
-			val isAdmin = App.currentUser!!.status == User.UserStatus.SUPERUSER || App.currentUser!!.status == User.UserStatus.ADMIN
-			//val isEditMode = isAdmin && !this.currentQuiz!!.finalized!!
+			val isAdmin = (App.quizListViewMode == ViewMode.ADMIN)
 			itemView.llPanelQuizContainer.isGone = !isAdmin
-
 		}
 
-
-
 		init {
-			val isAdmin = App.currentUser!!.status == User.UserStatus.SUPERUSER || App.currentUser!!.status == User.UserStatus.ADMIN
+			val isAdmin = (App.quizListViewMode == ViewMode.ADMIN)
 			var container = R.id.StudentContainer
 			if (isAdmin) {
 				container = R.id.AdminContainer

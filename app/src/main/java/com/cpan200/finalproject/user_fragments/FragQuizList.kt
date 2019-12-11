@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cpan200.classes.App
 import com.cpan200.classes.QuizListAdapter
-import com.cpan200.classes.User
 import com.cpan200.finalproject.R
 
 /**
@@ -31,19 +30,17 @@ class FragQuizList : Fragment() {
 		val valRcyQuizList = view.findViewById<RecyclerView>(R.id.rcyQuizList)
 		valRcyQuizList.layoutManager = layoutManager
 
-		val isAdmin = App.currentUser!!.status == User.UserStatus.SUPERUSER || App.currentUser!!.status == User.UserStatus.ADMIN
+		val isAdmin = (App.quizListViewMode == QuizListAdapter.ViewMode.ADMIN)
 		val quizzes = if (!isAdmin)
 			App.getFinalizedQuizList(context!!)
 		else
 			App.getQuizList(context!!)
 
-		valRcyQuizList.adapter = QuizListAdapter(context!!, quizzes, App.quizListViewMode)
+		valRcyQuizList.adapter = QuizListAdapter(context!!, quizzes)
 
 		val valBtnQuizListAdd = view.findViewById<Button>(R.id.btnQuizListAdd)
-		if (App.currentUser!!.status == User.UserStatus.SUPERUSER || App.currentUser!!.status == User.UserStatus.ADMIN)
-			valBtnQuizListAdd.isGone = false
-		else if (App.currentUser!!.status == User.UserStatus.STUDENT)
-			valBtnQuizListAdd.isGone = true
+		valBtnQuizListAdd.isGone = !isAdmin
+
 		valBtnQuizListAdd.setOnClickListener {
 			App.addQuiz(context!!)
 			(valRcyQuizList.adapter as QuizListAdapter).refreshData()

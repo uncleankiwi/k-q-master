@@ -152,9 +152,4 @@ class QuestionListAdapter(
 
 		}
     }
-
-    enum class ViewMode {
-        EDIT,
-        DO
-    }
 }
