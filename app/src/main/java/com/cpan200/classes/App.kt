@@ -114,10 +114,6 @@ class App {
 			//now create columns for the new quiz's scores and attempts in the user table
 			val userDB = UserDB(context, null)
 			userDB.createQuizCol(newID)
-
-			//todo
-			showusercols(context)
-
 			quizzesDB.close()
 		}
 
@@ -166,16 +162,20 @@ class App {
 			quizzesDB.close()
 		}
 
-		fun addBlankQuestion(context: Context){
+		fun addBlankQuestion(){
 			//adds a blank question to App.currentQuiz. does not affect DB!
 			//also adds list of answers of size maxOptions
+			//todo
 
-			val options = getQuiz(context, currentEditingQuiz!!.id!!).maxOptions
-			val emptyAns = mutableListOf<String>()
-			for (i in 0 until options){
-				emptyAns.add("")
-			}
+
+//			showLog(currentEditingQuiz!!.title)
+//			showLog(currentEditingQuiz!!.maxOptions.toString())
+
 			currentEditingQuiz!!.questionList.add(Question())
+//			for (i in 0 until currentEditingQuiz!!.maxOptions){
+//				emptyAns.add("")
+//			}
+
 		}
 
 		fun submitScore(context: Context, id: Int, score: Double){

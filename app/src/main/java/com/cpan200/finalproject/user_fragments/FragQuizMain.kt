@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cpan200.classes.App
+import com.cpan200.classes.Question
 import com.cpan200.classes.QuestionListAdapter
 import com.cpan200.finalproject.R
 
@@ -53,7 +54,8 @@ class FragQuizMain : Fragment() {
 			//adds a blank question to current quiz
 			//adds it to App.currentQuiz, not to QuizDB!
 			//to add to quiz DB, use submit button
-			App.addBlankQuestion(context!!)
+			App.currentEditingQuiz!!.questionList.add(Question())
+			App.addBlankQuestion()
 			(valRcyQuizMain.adapter as QuestionListAdapter).refreshData()
 
 		}

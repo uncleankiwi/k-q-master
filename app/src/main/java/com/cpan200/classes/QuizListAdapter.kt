@@ -76,10 +76,6 @@ class QuizListAdapter(
 			itemView.btnPanelQuizDelete.setOnClickListener {
 				App.showToast(context, "Deleted ${currentQuiz!!.title}")
 				App.deleteQuiz(context, this.currentQuiz!!.id!!)
-
-				//todo
-				App.showusercols(context)
-
 				refreshData()
 			}
 
@@ -102,7 +98,7 @@ class QuizListAdapter(
 			itemView.btnPanelQuizEdit.setOnClickListener {
 				//open up an unfinalized quiz for editing AND the current user is a superuser/admin
 				if (isAdmin && !this.currentQuiz!!.finalized){
-					App.currentQuiz = App.getQuiz(context, this.currentQuiz!!.id!!)
+					App.currentEditingQuiz = App.getQuiz(context, this.currentQuiz!!.id!!)
 					(context as AppCompatActivity).supportFragmentManager.beginTransaction()
 							.replace(R.id.AdminContainer, FragQuizMain(), "FragQuizMain")
 							.addToBackStack(null)
