@@ -138,7 +138,9 @@ class App {
 			quizzesDB.deleteRow(id)
 			quizzesDB.close()
 
-			//todo zero out quizN and attempt N columns in userDB
+			val userDB = UserDB(context, null)
+			userDB.deleteQuizCol(id)
+			userDB.close()
 		}
 
 		fun publishQuiz(context: Context, id: Int){
