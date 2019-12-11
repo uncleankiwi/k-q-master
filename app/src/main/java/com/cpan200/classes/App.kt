@@ -92,7 +92,7 @@ class App {
 
 		fun addQuiz(context: Context) {
 			val quizzesDB = QuizzesDB(context, null)
-			quizzesDB.addRow()
+			quizzesDB.addRow(context)
 			quizzesDB.close()
 		}
 
@@ -132,6 +132,8 @@ class App {
 			val quizzesDB = QuizzesDB(context, null)
 			quizzesDB.deleteRow(id)
 			quizzesDB.close()
+
+			//todo zero out quizN and attempt N columns in userDB
 		}
 
 		fun publishQuiz(context: Context, id: Int){

@@ -58,8 +58,6 @@ class QuizListAdapter(
 					this.currentQuiz!!.questions,
 					App.getAttempts(context, pos),
 					App.getScore(context, pos))
-			//todo fix UserDB quizN and attemptN columns invalid id first
-
 
 			itemView.btnPanelQuizEdit.isEnabled = !this.currentQuiz!!.finalized
 			itemView.btnPanelQuizPublish.isEnabled = !this.currentQuiz!!.finalized
