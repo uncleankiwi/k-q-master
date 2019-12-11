@@ -12,7 +12,6 @@ import com.cpan200.dbclasses.UserDB
 import com.cpan200.finalproject.AdminActivity
 import com.cpan200.finalproject.LoginActivity
 import com.cpan200.finalproject.StudentActivity
-import java.sql.Blob
 import java.util.*
 
 class App {
@@ -32,7 +31,7 @@ class App {
 		var currentQuizAttempt = mutableListOf<Int>()
 
 		//workaround for passing info to fragments. should use interfaces
-		var quizListViewMode: QuizListAdapter.ViewMode = QuizListAdapter.ViewMode.ADMIN
+		var quizListViewMode: QuizListAdapter.ViewMode = QuizListAdapter.ViewMode.STUDENT
 		var questionListViewMode: QuestionListAdapter.ViewMode = QuestionListAdapter.ViewMode.EDIT
 
 		fun getQuizList(context: Context): MutableList<Quiz> {
@@ -78,10 +77,10 @@ class App {
 			val questionsCursor = QuizDB(context, id, null).getAllRows()
 			if (questionsCursor!!.count != 0){
 				questionsCursor.moveToFirst()
-				questionList.add(cursorToQuestion(questionsCursor, quiz.maxOptions!!))
+				questionList.add(cursorToQuestion(questionsCursor, quiz.maxOptions))
 
 				while (questionsCursor.moveToNext()){
-					questionList.add(cursorToQuestion(questionsCursor, quiz.maxOptions!!))
+					questionList.add(cursorToQuestion(questionsCursor, quiz.maxOptions))
 				}
 			}
 
@@ -108,7 +107,7 @@ class App {
 					showToast(context, "Please enter a quiz title.")
 					return
 				}
-				quiz.finalized == true -> {
+				quiz.finalized -> {
 					showToast(context, "Cannot modify a published quiz.")
 					return
 				}
@@ -120,7 +119,7 @@ class App {
 
 					//recreate QuizDB_N and add questions
 					val quizDB = QuizDB(context, id, null)
-					quizDB.recreateTable(id, quiz)
+					quizDB.recreateTable(quiz)
 					quizDB.close()
 				}
 			}
@@ -141,7 +140,7 @@ class App {
 			quizzesDB.close()
 		}
 
-		fun addBlankQuestion(context: Context, id: Int){
+		fun addBlankQuestion(context: Context){
 			//adds a blank question to App.currentQuiz. does not affect DB!
 			//also adds list of answers of size maxOptions
 
