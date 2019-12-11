@@ -96,15 +96,13 @@ class QuestionListAdapter(
 							//todo answer loading oob fix
 
 						}
-						//editAns.layoutParams = LinearLayout.LayoutParams(
-//								LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-
 						itemView.QuestionPanelAnsContainer.addView(editAns, i)
 					}
 
 					//radio button listener
 					itemView.radGrpQuestionPanelAns.setOnCheckedChangeListener { _, i ->
 						App.currentEditingQuiz!!.questionList[currentPosition].correctAnswer = i
+                        //todo array oob crash
 					}
 
 				}

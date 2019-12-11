@@ -49,7 +49,6 @@ class UserDB(
 	fun tryLogin(username: String, password: String): Cursor?{
 		val db = this.readableDatabase
 		return db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COL_USERNAME = \"$username\" AND $COL_PASSWORD = \"$password\"", null)
-
 	}
 
 	fun addRow(username: String, password: String, status: String, email: String?, firstName: String?, lastName: String?){
@@ -62,6 +61,7 @@ class UserDB(
 		row.put(COL_FIRSTNAME, firstName)
 		row.put(COL_LASTNAME, lastName)
 		db.insert(TABLE_NAME, null, row)
+		db.close()
 	}
 
 	fun rows(): Int{
@@ -69,15 +69,20 @@ class UserDB(
 		val db = this.writableDatabase
 		val cursor: Cursor? = db.rawQuery("SELECT MAX($COL_ID) FROM $TABLE_NAME", null)
 		if (cursor == null || cursor.count == 0){
+			cursor?.close()
+			db.close()
 			return 0
 		}
 		else {
 			if (cursor.moveToFirst()){
 				val n: Int = cursor.getInt(0)
 				cursor.close()
+				db.close()
 				return n
 			}
 		}
+		cursor.close()
+		db.close()
 		return 0
 	}
 
@@ -87,7 +92,6 @@ class UserDB(
 
 	fun findExistingUser(tryUsername: String): Cursor?{
 		return this.readableDatabase.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COL_USERNAME = \"$tryUsername\"", null)
-
 	}
 
 	fun deleteRow(username: String){
@@ -104,6 +108,7 @@ class UserDB(
 		row.put(COL_FIRSTNAME, firstName)
 		row.put(COL_LASTNAME, lastName)
 		db.update(TABLE_NAME, row, "$COL_USERNAME = $username", null)
+		db.close()
 	}
 
 	fun updateUserStatus(username: String, status: User.UserStatus){
@@ -119,6 +124,7 @@ class UserDB(
 		row.put(COL_QUIZN + id.toString(), 0)
 		row.put(COL_ATTEMPTN + id.toString(), 0)
 		db.update(TABLE_NAME, row, "1 = 1", null)
+		db.close()
 	}
 
 	private fun colSetExistsCheck(cols: Set<String>): Map<String, Boolean> {
@@ -131,20 +137,22 @@ class UserDB(
 			outMap[string] = colNames.contains(string)
 		}
 		userCursor.close()
+		db.close()
 		return outMap
 	}
 
 	fun createQuizCol(id: Int){
-		val db = this.writableDatabase
 		val colCheckMap = colSetExistsCheck(setOf(COL_QUIZN + id.toString(), COL_ATTEMPTN + id.toString()))
 
 		//create score and attempt columns in user table only if they aren't there already
+		val db = this.writableDatabase
 		if (!colCheckMap.getValue(COL_QUIZN + id.toString())){
 			db.execSQL("ALTER TABLE $TABLE_NAME ADD COLUMN $COL_QUIZN${id} REAL DEFAULT 0")
 		}
 		if (!colCheckMap.getValue(COL_ATTEMPTN + id.toString())){
 			db.execSQL("ALTER TABLE $TABLE_NAME ADD COLUMN $COL_ATTEMPTN${id} INTEGER DEFAULT 0")
 		}
+		db.close()
 	}
 
 	fun getAllScores(id: Int): Cursor{
@@ -157,6 +165,7 @@ class UserDB(
 		row.put(COL_QUIZN + id.toString(), score)
 		row.put(COL_ATTEMPTN + id.toString(), attempt)
 		db.update(TABLE_NAME, row, "$COL_USERNAME = $username", null)
+		db.close()
 	}
 
 	fun getScoreAttempt(username: String, id: Int): Cursor? {

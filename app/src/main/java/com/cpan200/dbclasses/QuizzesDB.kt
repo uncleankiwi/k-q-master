@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.cpan200.classes.Question
+import com.cpan200.classes.Quiz
 
 class QuizzesDB(
 		context: Context?,
@@ -53,12 +54,13 @@ class QuizzesDB(
 	fun addRow(){
 		val db = this.writableDatabase
 		val row = ContentValues()
-		row.put(COL_TITLE, "(New quiz)")
-		row.put(COL_QUESTIONS, 0)
-		row.put(COL_TOTALMARKS, 0)
-		row.put(COL_FINALIZED, 0)
-		row.put(COL_MAXOPTIONS, 5)
-		row.put(COL_MAXATTEMPTS, 1)
+		val dummyQuiz = Quiz()
+		row.put(COL_TITLE, dummyQuiz.title)
+		row.put(COL_QUESTIONS, dummyQuiz.questions)
+		row.put(COL_TOTALMARKS, dummyQuiz.totalMarks)
+		row.put(COL_FINALIZED, dummyQuiz.finalized)
+		row.put(COL_MAXOPTIONS, dummyQuiz.maxOptions)
+		row.put(COL_MAXATTEMPTS, dummyQuiz.maxAttempts)
 		db.insert(TABLE_NAME, null, row)
 		db.close()
 	}
