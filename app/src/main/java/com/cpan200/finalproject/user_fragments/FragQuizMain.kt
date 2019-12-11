@@ -45,19 +45,12 @@ class FragQuizMain : Fragment() {
 
 
 		val valBtnQuizMainAdd = view.findViewById<Button>(R.id.btnQuizMainAdd)
-		//could remove this later, since layout changes depend on quiz.finalized, not questionListViewMode
-//		if (App.questionListViewMode == QuestionListAdapter.ViewMode.EDIT)
-//			valBtnQuizMainAdd.isGone = false
-//		else if (App.questionListViewMode == QuestionListAdapter.ViewMode.DO)
-//			valBtnQuizMainAdd.isGone = true
 		valBtnQuizMainAdd.setOnClickListener {
 			//adds a blank question to current quiz
-			//adds it to App.currentQuiz, not to QuizDB!
-			//to add to quiz DB, use submit button
+			//adds it to App.currentEditingQuiz, not to QuizDB!
+			//to add to quiz DB, use submit button. Changes purged if not saved.
 			App.currentEditingQuiz!!.questionList.add(Question())
-			//App.addBlankQuestion() todo useless?
 			(valRcyQuizMain.adapter as QuestionListAdapter).refreshData()
-
 		}
 
 		val valTxtQuizMainTitle = view.findViewById<TextView>(R.id.txtQuizMainTitle)

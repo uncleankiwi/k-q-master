@@ -91,14 +91,9 @@ class QuestionListAdapter(
 						})
 
 						if (this.currentQuestion != null){
-							//todo
-							try{
+							if (i < this.currentQuestion!!.answers.count())
 								editAns.setText(this.currentQuestion!!.answers[i])
-							}
-							catch(e: Exception){
-								App.showLog("hoho. answers oob!")
-							}
-							//end todo
+							//todo answer loading oob fix
 
 						}
 						//editAns.layoutParams = LinearLayout.LayoutParams(

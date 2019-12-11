@@ -162,22 +162,6 @@ class App {
 			quizzesDB.close()
 		}
 
-		fun addBlankQuestion(){
-			//adds a blank question to App.currentQuiz. does not affect DB!
-			//also adds list of answers of size maxOptions
-			//todo
-
-
-//			showLog(currentEditingQuiz!!.title)
-//			showLog(currentEditingQuiz!!.maxOptions.toString())
-
-			currentEditingQuiz!!.questionList.add(Question())
-//			for (i in 0 until currentEditingQuiz!!.maxOptions){
-//				emptyAns.add("")
-//			}
-
-		}
-
 		fun submitScore(context: Context, id: Int, score: Double){
 			showToast(context, "Your score: $score")
 			val userDB = UserDB(context, null)
