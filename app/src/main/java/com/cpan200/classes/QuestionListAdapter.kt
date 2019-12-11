@@ -88,8 +88,9 @@ class QuestionListAdapter(
 							override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
 								App.showLog("curr pos $currentPosition")
-								App.showLog("curr pos ${App.currentEditingQuiz!!.questionList.count()}")
+								App.showLog("question count ${App.currentEditingQuiz!!.questionList.count()}")
 								App.showLog("index $i, ")
+								App.showLog("quiz title count ${App.currentEditingQuiz!!.title}")
 								App.showLog("answer count ${App.currentEditingQuiz!!.questionList[currentPosition].answers.count()}")	//todo crash here
 
 								if (i < App.currentEditingQuiz!!.questionList[currentPosition].answers.count())

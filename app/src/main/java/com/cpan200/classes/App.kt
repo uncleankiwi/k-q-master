@@ -162,12 +162,13 @@ class App {
 			quizzesDB.close()
 		}
 
-		fun maxOptionsToQuestions(quiz: Quiz){
+		fun maxOptionsToQuestions(quiz: Quiz): Quiz{
 			for (question in quiz.questionList){
 				while (question.answers.count() < quiz.maxOptions){
 					question.answers.add("")
 				}
 			}
+			return quiz
 		}
 
 		fun submitScore(context: Context, id: Int, score: Double){
