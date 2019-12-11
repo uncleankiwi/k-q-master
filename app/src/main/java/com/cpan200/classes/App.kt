@@ -209,6 +209,9 @@ class App {
 			val userDB = UserDB(context, null)
 			val userCursor = userDB.getScoreAttempt(currentUser!!.name!!, id)
 
+			for (string in userCursor!!.columnNames)
+				showLog(string)
+
 			var attempts: Int? = 0
 			if (userCursor != null){
 				attempts = userCursor.getInt(userCursor.getColumnIndex(UserDB.COL_ATTEMPTN + id.toString()))

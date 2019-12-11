@@ -125,8 +125,15 @@ class UserDB(
 
     fun createQuizCol(id: Int){
         val db = this.writableDatabase
-        db.execSQL("ALTER TABLE $TABLE_NAME ADD COLUMN $COL_QUIZN${id} REAL DEFAULT 0")
-        db.execSQL("ALTER TABLE $TABLE_NAME ADD COLUMN $COL_ATTEMPTN${id} INTEGER DEFAULT 0")
+
+        //create score and attempt columns in user table only if they aren't there already
+        val userCursor = db.rawQuery("SELECT * FROM $TABLE_NAME LIMIT 1", null)
+        val colNames = userCursor.columnNames
+        if (colNames.contains(COL_QUIZN + id.toString()))
+            db.execSQL("ALTER TABLE $TABLE_NAME ADD COLUMN $COL_QUIZN${id} REAL DEFAULT 0")
+        if (colNames.contains(COL_ATTEMPTN + id.toString()))
+            db.execSQL("ALTER TABLE $TABLE_NAME ADD COLUMN $COL_ATTEMPTN${id} INTEGER DEFAULT 0")
+        userCursor.close()
         db.close()
     }
 
