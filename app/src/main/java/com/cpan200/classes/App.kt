@@ -100,7 +100,21 @@ class App {
 
 		fun addQuiz(context: Context) {
 			val quizzesDB = QuizzesDB(context, null)
-			quizzesDB.addRow(context)
+
+			//getting a set of IDs in the old table
+			val oldIDSet = quizzesDB.getIDSet()
+
+			//adding a new row to table
+			quizzesDB.addRow()
+
+			//getting the difference. hopefully exactly 1 result.
+			val newIDSet = quizzesDB.getIDSet()
+			val newID = newIDSet.minus(oldIDSet).first()
+
+			//now create columns for the new quiz's scores and attempts in the user table
+			val userDB = UserDB(context, null)
+			userDB.createQuizCol(newID)
+
 			quizzesDB.close()
 		}
 

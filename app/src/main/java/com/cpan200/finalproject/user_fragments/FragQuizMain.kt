@@ -53,7 +53,7 @@ class FragQuizMain : Fragment() {
 			//adds a blank question to current quiz
 			//adds it to App.currentQuiz, not to QuizDB!
 			//to add to quiz DB, use submit button
-			App.addBlankQuestion(context!!, App.currentEditingQuiz!!.id!!)
+			App.addBlankQuestion(context!!)
 			(valRcyQuizMain.adapter as QuestionListAdapter).refreshData()
 
 		}

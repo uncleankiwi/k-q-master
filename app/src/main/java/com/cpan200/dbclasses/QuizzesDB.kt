@@ -50,11 +50,7 @@ class QuizzesDB(
 		return this.readableDatabase.rawQuery("SELECT * FROM $TABLE_NAME", null)
 	}
 
-	fun addRow(context: Context){
-		//getting a set of IDs in the old table
-		val oldIDSet = getIDSet()
-
-		//adding a new row to table
+	fun addRow(){
 		val db = this.writableDatabase
 		val row = ContentValues()
 		row.put(COL_TITLE, "(New quiz)")
@@ -65,14 +61,6 @@ class QuizzesDB(
 		row.put(COL_MAXATTEMPTS, 1)
 		db.insert(TABLE_NAME, null, row)
 		db.close()
-
-		//getting the difference. hopefully exactly 1 result.
-		val newIDSet = getIDSet()
-		val newID = newIDSet.minus(oldIDSet).first()
-
-		//now create columns for the new quiz's scores and attempts in the user table
-		val userDB = UserDB(context, null)
-		userDB.createQuizCol(newID)
 	}
 
 	fun updateRow(id: Int, title: String?, questionList: MutableList<Question>?, finalized: Boolean?, maxAttempts: Int?){
@@ -104,7 +92,7 @@ class QuizzesDB(
 	}
 
 
-	private fun getIDSet(): HashSet<Int>{
+	fun getIDSet(): HashSet<Int>{
 		val db = this.writableDatabase
 
 		val idSet = hashSetOf<Int>()
