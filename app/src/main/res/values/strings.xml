@@ -43,8 +43,9 @@
     <string name="Status">Status</string>
 
     <!-- scores main fragment -->
-    <string name="Scores_prefix">Scores: </string>
+    <string name="Scores_prefix">Viewing scores for: %1$s</string>
     <string name="Username_prefix">Username: </string>
+    <string name="Quiz_prefix">Quiz: </string>
     <string name="Score_prefix">Score: </string>
 
     <!-- quiz panel -->

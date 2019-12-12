@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cpan200.finalproject.R
 import com.cpan200.finalproject.user_fragments.FragParticularsMain
 import com.cpan200.finalproject.user_fragments.FragScoresMain
-import com.cpan200.finalproject.user_fragments.FragStudentList
 import kotlinx.android.synthetic.main.panel_student.view.*
 
 class StudentListAdapter(
@@ -55,6 +54,7 @@ class StudentListAdapter(
             }
             itemView.btnStudentPanelScores.setOnClickListener {
                 App.currentEditUser = this.currentUser
+                App.scoreViewMode = FragScoresMain.ViewMode.User
                 (context as AppCompatActivity).supportFragmentManager.beginTransaction()
                     .replace(R.id.AdminContainer, FragScoresMain(), "FragScoresMain")
                     .addToBackStack(null)

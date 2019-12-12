@@ -118,6 +118,7 @@ class QuizListAdapter(
 			itemView.btnPanelQuizScores.setOnClickListener {
 				if (isAdmin && this.currentQuiz!!.finalized){
 					App.currentQuiz = App.getQuiz(context, this.currentQuiz!!.id!!)
+					App.scoreViewMode = FragScoresMain.ViewMode.Quiz
 					(context as AppCompatActivity).supportFragmentManager.beginTransaction()
 						.replace(R.id.AdminContainer, FragScoresMain(), "FragScoresMain")
 						.addToBackStack(null)

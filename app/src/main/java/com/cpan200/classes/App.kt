@@ -13,6 +13,7 @@ import com.cpan200.dbclasses.UserDB
 import com.cpan200.finalproject.AdminActivity
 import com.cpan200.finalproject.LoginActivity
 import com.cpan200.finalproject.StudentActivity
+import com.cpan200.finalproject.user_fragments.FragScoresMain
 import java.util.*
 
 class App {
@@ -29,6 +30,8 @@ class App {
 
 		var currentQuiz: Quiz = Quiz()
 		var currentQuizAttempt = mutableListOf<Int>()
+
+		var scoreViewMode: FragScoresMain.ViewMode = FragScoresMain.ViewMode.User
 
 		//workaround for passing info to fragments. should use interfaces
 		var quizListViewMode: QuizListAdapter.ViewMode = QuizListAdapter.ViewMode.STUDENT
@@ -482,6 +485,7 @@ class App {
 		}
 
 		fun userScoresToTextView(context: Context, txtUsernames: TextView, txtScores: TextView){
+			//get all users' scores for a particular quiz - currentQuiz
 			val userDB = UserDB(context, null)
 			val userCursor = userDB.getAllScores(currentQuiz.id!!)
 
@@ -498,7 +502,8 @@ class App {
 		}
 
 		fun quizScoresToTextView(context: Context, user: User, txtQuizzes: TextView, txtScores: TextView){
-			//todo findExistingUser
+			//gets specified user's scores for all quizzes
+			//could also get attempts...
 			val userDB = UserDB(context, null)
 			val userCursor = userDB.findExistingUser(user.name!!)
 			if (userCursor != null && userCursor.count != 0) {
@@ -508,15 +513,29 @@ class App {
 				if (quizCursor != null && quizCursor.count != 0){
 					//getting list of quiz IDs in the database
 					val quizIDs = mutableListOf<Int>()
+					val quizTitles = mutableListOf<String>()
+					val userScores = mutableListOf<Double>()
 
+					quizCursor.moveToFirst()
+					quizIDs.add(quizCursor.getInt(quizCursor.getColumnIndex(QuizzesDB.COL_ID)))
+					quizTitles.add(quizCursor.getString(quizCursor.getColumnIndex(QuizzesDB.COL_TITLE)))
+					while (quizCursor.moveToNext()){
+						quizIDs.add(quizCursor.getInt(quizCursor.getColumnIndex(QuizzesDB.COL_ID)))
+						quizTitles.add(quizCursor.getString(quizCursor.getColumnIndex(QuizzesDB.COL_TITLE)))
+					}
 
-
+					//get scores in user row
 					userCursor.moveToFirst()
+					for (id in quizIDs){
+						userScores.add(userCursor.getDouble(userCursor.getColumnIndex(UserDB.COL_QUIZN + id.toString())))
+					}
 
+					//set TextViews with quiz titles and user's scores
+					for (i in 0 until quizIDs.count()){
+						txtQuizzes.append(quizTitles[i])
+						txtScores.append(userScores.toString())
+					}
 				}
-
-
-
 				quizCursor?.close()
 				quizDB.close()
 			}

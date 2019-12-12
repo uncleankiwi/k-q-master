@@ -26,17 +26,30 @@ class FragScoresMain : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_scores_main, container, false)
 
+		val valTxtScoresMainHeader = (context!! as AppCompatActivity).findViewById<TextView>(R.id.txtScoresMainHeader)
 		val valTxtScoresMainUsername = (context!! as AppCompatActivity).findViewById<TextView>(R.id.txtScoresMainUsername)
 		val valTxtScoresMainScore = (context!! as AppCompatActivity).findViewById<TextView>(R.id.txtScoresMainScore)
-
 
 		val valBtnScoresMainClose = (context!! as AppCompatActivity).findViewById<Button>(R.id.btnScoresMainClose)
 		valBtnScoresMainClose.setOnClickListener { (context!! as AppCompatActivity).onBackPressed() }
 
+		when (App.scoreViewMode){
+			ViewMode.User -> {
+				//when viewing a user's scores in all quizzes
+				valTxtScoresMainHeader.text = getString(R.string.Quiz_prefix)
+				App.quizScoresToTextView(context!!, App.currentEditUser!!, valTxtScoresMainUsername, valTxtScoresMainScore)
+			}
+			ViewMode.Quiz -> {
+				//when viewing all users' scores for CurrentQuiz
+				valTxtScoresMainHeader.text = getString(R.string.Username_prefix)
+				App.userScoresToTextView(context!!, valTxtScoresMainUsername, valTxtScoresMainScore)
+			}
+		}
         return view
     }
 
-	enum class viewMode{
-		//todo fragscores viewmode
+	enum class ViewMode{
+		Quiz,
+		User
 	}
 }
