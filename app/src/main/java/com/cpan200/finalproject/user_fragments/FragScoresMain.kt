@@ -26,25 +26,28 @@ class FragScoresMain : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_scores_main, container, false)
 
-		val valTxtScoresMainHeader = (context!! as AppCompatActivity).findViewById<TextView>(R.id.txtScoresMainHeader)
-		val valTxtScoresMainUsername = (context!! as AppCompatActivity).findViewById<TextView>(R.id.txtScoresMainUsername)
-		val valTxtScoresMainScore = (context!! as AppCompatActivity).findViewById<TextView>(R.id.txtScoresMainScore)
+		val valTxtScoresMainHeader = view.findViewById<TextView>(R.id.txtScoresMainHeader)
+		val valTxtScoresMainUsername = view.findViewById<TextView>(R.id.txtScoresMainUsername)
+		val valTxtScoresMainScore = view.findViewById<TextView>(R.id.txtScoresMainScore)
+		val valTxtScoresMainTitle = view.findViewById<TextView>(R.id.txtScoresMainTitle)
 
-		val valBtnScoresMainClose = (context!! as AppCompatActivity).findViewById<Button>(R.id.btnScoresMainClose)
-		if (valBtnScoresMainClose == null)
-		App.showLog("is null")
-		valBtnScoresMainClose.setOnClickListener { (context!! as AppCompatActivity).onBackPressed() }	//todo crash here
+
+
+		val valBtnScoresMainClose = view.findViewById<Button>(R.id.btnScoresMainClose)
+		valBtnScoresMainClose.setOnClickListener { (context!! as AppCompatActivity).onBackPressed() }
 
 		when (App.scoreViewMode){
 			ViewMode.User -> {
 				//when viewing a user's scores in all quizzes
+				valTxtScoresMainTitle.text = getString(R.string.Scores_prefix, App.currentEditUser!!.name)
 				valTxtScoresMainHeader.text = getString(R.string.Quiz_prefix)
 				App.quizScoresToTextView(context!!, App.currentEditUser!!, valTxtScoresMainUsername, valTxtScoresMainScore)
 			}
 			ViewMode.Quiz -> {
 				//when viewing all users' scores for CurrentQuiz
+				valTxtScoresMainTitle.text = getString(R.string.Scores_prefix, App.currentQuiz.title)
 				valTxtScoresMainHeader.text = getString(R.string.Username_prefix)
-				App.userScoresToTextView(context!!, valTxtScoresMainUsername, valTxtScoresMainScore)		//todo another crash here
+				App.userScoresToTextView(context!!, valTxtScoresMainUsername, valTxtScoresMainScore)
 			}
 		}
         return view

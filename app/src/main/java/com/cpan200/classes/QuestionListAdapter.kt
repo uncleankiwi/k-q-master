@@ -123,7 +123,7 @@ class QuestionListAdapter(
 					for (i in 0 until (quiz.maxOptions)){
 						var currAns: String? = null
 						if (this.currentQuestion != null){
-							currAns = this.currentQuestion!!.answers[i]
+							currAns = this.currentQuestion!!.answers[i]		//todo crash here new!
 						}
 						if (currAns != null && currAns != ""){
 							val radAns = RadioButton(context)
@@ -136,7 +136,6 @@ class QuestionListAdapter(
 						val checkedRadio = (context as AppCompatActivity).findViewById<RadioEx>(radioID)
 						if (checkedRadio.isChecked) {
 							if (checkedRadio.answerID == null){
-								App.showLog("radiobutton with null ansID checked")
 							}
 							else {
 								App.currentQuizAttempt[currentPosition] = checkedRadio.answerID!!

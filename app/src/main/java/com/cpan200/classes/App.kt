@@ -167,17 +167,13 @@ class App {
 
 		fun maxOptionsToQuestions(quiz: Quiz): Quiz{
 			for (question in quiz.questionList){
-				showLog("maxOptionsToQuestions: before add: ${question.answers.count()}")
 				while (question.answers.count() < quiz.maxOptions){
 					question.answers.add("")
 				}
-				showLog("maxOptionsToQuestions: after adding: ${question.answers.count()}")
 
-				showLog("maxOptionsToQuestions: before add: ${question.optionIds.count()}")
 				while (question.optionIds.count() < quiz.maxOptions){
 					question.optionIds.add(-1)
 				}
-				showLog("maxOptionsToQuestions: after add: ${question.optionIds.count()}")
 			}
 			return quiz
 		}
@@ -533,7 +529,9 @@ class App {
 					//set TextViews with quiz titles and user's scores
 					for (i in 0 until quizIDs.count()){
 						txtQuizzes.append(quizTitles[i])
-						txtScores.append(userScores.toString())
+						txtQuizzes.append("\n")
+						txtScores.append(userScores[i].toString())
+						txtScores.append("\n")
 					}
 				}
 				quizCursor?.close()

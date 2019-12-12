@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cpan200.classes.App
 import com.cpan200.classes.User
 import com.cpan200.finalproject.R
-import kotlinx.android.synthetic.main.fragment_particulars_main.*
 
 /**
  * A simple [Fragment] subclass.
@@ -26,14 +25,14 @@ class FragParticularsMain : Fragment() {
 		val view = inflater.inflate(R.layout.fragment_particulars_main, container, false)
 
 		if (App.currentEditUser != null){
-			val valTxtEditParticularsUsername = (context as AppCompatActivity).findViewById<TextView>(R.id.txtEditParticularsUsername)
-			val valEditEditParticularsPassword = (context as AppCompatActivity).findViewById<EditText>(R.id.editEditParticularsPassword)
-			val valRadEditParticularsSuperuser = (context as AppCompatActivity).findViewById<RadioButton>(R.id.radEditParticularsSuperuser)
-			val valRadEditParticularsAdmin = (context as AppCompatActivity).findViewById<RadioButton>(R.id.radEditParticularsAdmin)
-			val valRadEditParticularsStudent = (context as AppCompatActivity).findViewById<RadioButton>(R.id.radEditParticularsStudent)
-			val valEditEditParticularsFirstname = (context as AppCompatActivity).findViewById<EditText>(R.id.editEditParticularsFirstname)
-			val valEditEditParticularsLastname = (context as AppCompatActivity).findViewById<EditText>(R.id.editEditParticularsLastname)
-			val valEditEditParticularsEmail = (context as AppCompatActivity).findViewById<EditText>(R.id.editEditParticularsEmail)
+			val valTxtEditParticularsUsername = view.findViewById<TextView>(R.id.txtEditParticularsUsername)
+			val valEditEditParticularsPassword = view.findViewById<EditText>(R.id.editEditParticularsPassword)
+			val valRadEditParticularsSuperuser = view.findViewById<RadioButton>(R.id.radEditParticularsSuperuser)
+			val valRadEditParticularsAdmin = view.findViewById<RadioButton>(R.id.radEditParticularsAdmin)
+			val valRadEditParticularsStudent = view.findViewById<RadioButton>(R.id.radEditParticularsStudent)
+			val valEditEditParticularsFirstname = view.findViewById<EditText>(R.id.editEditParticularsFirstname)
+			val valEditEditParticularsLastname = view.findViewById<EditText>(R.id.editEditParticularsLastname)
+			val valEditEditParticularsEmail = view.findViewById<EditText>(R.id.editEditParticularsEmail)
 
 			//populate with currentEditUser's particulars
 			valTxtEditParticularsUsername.text = App.currentEditUser!!.name
@@ -41,7 +40,7 @@ class FragParticularsMain : Fragment() {
 			when (App.currentEditUser!!.status){
 				User.UserStatus.SUPERUSER -> {
 					valRadEditParticularsSuperuser.isChecked = true
-					val valRadgrpEditParticularsStatus = (context as AppCompatActivity).findViewById<RadioGroup>(R.id.radgrpEditParticularsStatus)
+					val valRadgrpEditParticularsStatus =view.findViewById<RadioGroup>(R.id.radgrpEditParticularsStatus)
 					valRadgrpEditParticularsStatus.isEnabled = false
 				}
 				User.UserStatus.ADMIN -> valRadEditParticularsAdmin.isChecked = true
@@ -52,7 +51,7 @@ class FragParticularsMain : Fragment() {
 			valEditEditParticularsLastname.setText(App.currentEditUser!!.lastName)
 			valEditEditParticularsEmail.setText(App.currentEditUser!!.email)
 
-			val valBtnEditParticularsSave = (context as AppCompatActivity).findViewById<Button>(R.id.btnEditParticularsSave)
+			val valBtnEditParticularsSave = view.findViewById<Button>(R.id.btnEditParticularsSave)
 			//save button listener
 			valBtnEditParticularsSave.setOnClickListener {
 				App.changeParticulars(context!!,
@@ -64,7 +63,7 @@ class FragParticularsMain : Fragment() {
 			}
 		}
 		//cancel button listener
-		val valBtnEditParticularsCancel = (context as AppCompatActivity).findViewById<Button>(R.id.btnEditParticularsCancel)
+		val valBtnEditParticularsCancel = view.findViewById<Button>(R.id.btnEditParticularsCancel)
 		valBtnEditParticularsCancel.setOnClickListener {
 			(context as AppCompatActivity).onBackPressed()
 		}
