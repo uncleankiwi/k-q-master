@@ -88,6 +88,12 @@ class QuizListAdapter(
 				//bring up this quiz if finalized
 				if (this.currentQuiz!!.finalized){
 					App.currentQuiz = App.getQuiz(context, this.currentQuiz!!.id!!)
+
+					App.currentQuizAttempt = mutableListOf()
+					while (App.currentQuizAttempt.count() < App.currentQuiz.questionList.count()){
+						App.currentQuizAttempt.add(-1)
+					}
+
 					(context as AppCompatActivity).supportFragmentManager.beginTransaction()
 							.replace(container, FragQuizMain(), "FragQuizMain")
 							.addToBackStack(null)
