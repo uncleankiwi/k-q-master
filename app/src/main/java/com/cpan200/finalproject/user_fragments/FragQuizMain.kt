@@ -133,13 +133,9 @@ class FragQuizMain : Fragment() {
 
 					if (!fail) {
 						//quiz looks ok, edits are accepted into database
-						App.showLog("fragquizmain: quiz ok. saving quiz")
-
 						App.currentQuiz.title = valEditQuizMainTitle.text.toString()
 						App.editQuiz(context!!, App.currentQuiz.id!!, App.currentQuiz)
-
 						App.showToast(context!!, "Changes saved.")
-						App.showLog("fragquizmain: quiz changes saved")
 					}
 
 				}

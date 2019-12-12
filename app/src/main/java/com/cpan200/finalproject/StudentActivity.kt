@@ -13,7 +13,7 @@ class StudentActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_student)
-		actionBar?.title = getString(R.string.ActionBarUsername,
+		supportActionBar?.title = getString(R.string.ActionBarUsername,
 			App.currentUser!!.name,
 			App.currentUser!!.status)
 

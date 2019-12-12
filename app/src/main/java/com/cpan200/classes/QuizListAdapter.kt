@@ -55,8 +55,8 @@ class QuizListAdapter(
 					R.string.txtPanelQuizStats,
 					this.currentQuiz!!.finalized.toString(),
 					this.currentQuiz!!.questions.toString(),
-					App.getAttempts(context, pos).toString(),
-					App.getScore(context, pos).toString())
+					App.getAttempts(context, this.currentQuiz!!.id!!).toString(),
+					App.getScore(context, this.currentQuiz!!.id!!).toString())
 
 			itemView.btnPanelQuizEdit.isEnabled = !this.currentQuiz!!.finalized
 			itemView.btnPanelQuizPublish.isEnabled = !this.currentQuiz!!.finalized
