@@ -162,9 +162,11 @@ class App {
 
 		fun maxOptionsToQuestions(quiz: Quiz): Quiz{
 			for (question in quiz.questionList){
+				showLog("maxOptionsToQuestions: before add: ${question.answers.count()}")
 				while (question.answers.count() < quiz.maxOptions){
 					question.answers.add("")
 				}
+				showLog("maxOptionsToQuestions: after adding: ${question.answers.count()}")
 			}
 			return quiz
 		}

@@ -50,6 +50,7 @@ class FragQuizMain : Fragment() {
 			//adds it to App.currentEditingQuiz, not to QuizDB!
 			//to add to quiz DB, use submit button. Changes purged if not saved.
 			App.currentQuiz.questionList.add(Question())
+			App.maxOptionsToQuestions(App.currentQuiz)
 			(valRcyQuizMain.adapter as QuestionListAdapter).refreshData()
 		}
 
@@ -101,12 +102,12 @@ class FragQuizMain : Fragment() {
 						App.showToast(context!!, "Please enter a quiz title.")
 						fail = true
 
-						App.showLog("no quiz title entered")
+						App.showLog("fragquizmain: no quiz title entered")
 					} else if (App.currentQuiz.questionList.count() == 0) {
 						App.showToast(context!!, "Please create at least 1 question.")
 						fail = true
 
-						App.showLog("no questions in quiz")
+						App.showLog("fragquizmain: no questions in quiz")
 					} else {
 						for (question in App.currentQuiz.questionList){
 
@@ -114,20 +115,20 @@ class FragQuizMain : Fragment() {
 							if (question.answers.count() == 0){
 								fail = true
 								App.showToast(context!!, "Please create at least 1 answer for every question.")
-								App.showLog("question without answers")
+								App.showLog("fragquizmain: question without answers")
 								break
 							} else if (question.correctAnswer == null){
 								//make sure every question has 1 correct answer
 								App.showToast(context!!, "Please select a correct answer for every question.")
-								App.showLog("question without correct ans")
+								App.showLog("fragquizmain: question without correct ans")
 								fail = true
 								break
-							} else if (question.correctAnswer!! >= question.answers.count()){
+							} else if (question.correctAnswer!! > question.answers.count()){
 								//make sure that correct answer matches index of one of the answers
 								App.showToast(context!!, "Please select a correct answer that matches a valid option for every question.")
-								App.showLog("question with OOB correct ans")
-								App.showLog(question.correctAnswer!!.toString())
-								App.showLog(question.answers.count()).toString())
+								App.showLog("fragquizmain: question with OOB correct ans")
+								App.showLog("fragquizmain: correct ans " + question.correctAnswer!!.toString())
+								App.showLog("fragquizmain: ans list count" + question.answers.count().toString())
 
 								fail = true
 								break
@@ -137,13 +138,13 @@ class FragQuizMain : Fragment() {
 
 					if (!fail) {
 						//quiz looks ok, edits are accepted into database
-						App.showLog("quiz ok. saving quiz")
+						App.showLog("fragquizmain: quiz ok. saving quiz")
 
 						App.currentQuiz.title = valEditQuizMainTitle.text.toString()
 						App.editQuiz(context!!, App.currentQuiz.id!!, App.currentQuiz)
 
 						App.showToast(context!!, "Changes saved.")
-						App.showLog("quiz changes saved")
+						App.showLog("fragquizmain: quiz changes saved")
 					}
 
 				}

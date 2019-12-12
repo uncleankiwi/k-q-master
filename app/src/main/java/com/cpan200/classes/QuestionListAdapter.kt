@@ -87,14 +87,19 @@ class QuestionListAdapter(
 							override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 							override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
-								App.showLog("curr pos $currentPosition")
-								App.showLog("question count ${App.currentQuiz.questionList.count()}")
-								App.showLog("index $i, ")
-								App.showLog("quiz title count ${App.currentQuiz.title}")
-								App.showLog("answer count ${App.currentQuiz.questionList[currentPosition].answers.count()}")
+								App.showLog("questionlistadapter: txt changed listener starting")
+								App.showLog("questionlistadapter: curr pos $currentPosition")
+								App.showLog("questionlistadapter: question count ${App.currentQuiz.questionList.count()}")
+								App.showLog("questionlistadapter: index $i, ")
+								App.showLog("questionlistadapter: quiz title count ${App.currentQuiz.title}")
+								App.showLog("questionlistadapter: answer count ${App.currentQuiz.questionList[currentPosition].answers.count()}")
 
-								if (i < App.currentQuiz.questionList[currentPosition].answers.count())
+								if (i < App.currentQuiz.questionList[currentPosition].answers.count()){
 									App.currentQuiz.questionList[currentPosition].answers[i] = p0.toString()
+									App.showLog("questionlistadapter: quiz ans at index $i edited, string $p0 ")
+								}
+
+
 							}
 						})
 
