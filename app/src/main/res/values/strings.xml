@@ -39,6 +39,7 @@
     <string name="Edit_particulars">Edit particulars</string>
     <string name="Admin">Admin</string>
     <string name="Student">Student</string>
+    <string name="Superuser">Superuser</string>
     <string name="Status">Status</string>
 
     <!-- scores main fragment -->

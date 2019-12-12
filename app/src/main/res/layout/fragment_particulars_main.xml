@@ -38,6 +38,12 @@
         android:layout_height="wrap_content" >
 
         <RadioButton
+            android:id="@+id/radEditParticularsSuperuser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Superuser" />
+
+        <RadioButton
             android:id="@+id/radEditParticularsAdmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -20,6 +20,7 @@ class App {
 
 		private var isLoggedIn: Boolean = false
 		var currentUser: User? = null
+		var currentEditUser: User? = null
 
 		private const val APP_KEY: String = "App"
 		private const val USERNAME_KEY: String = "username"
