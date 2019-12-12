@@ -184,7 +184,7 @@ class App {
 			val userCursor = userDB.getScoreAttempt(currentUser!!.name!!, id)
 
 			if (userCursor != null){
-				var savedScore: Double? = userCursor.getDouble(userCursor.getColumnIndex(UserDB.COL_QUIZN + id.toString()))
+				var savedScore: Double? = userCursor.getDouble(userCursor.getColumnIndex(UserDB.COL_QUIZN + id.toString()))	//todo crash here!
 				var savedAttempts: Int? = userCursor.getInt(userCursor.getColumnIndex(UserDB.COL_ATTEMPTN + id.toString()))
 				if (savedScore == null) savedScore = 0.0
 				if (savedAttempts == null) savedAttempts = 0

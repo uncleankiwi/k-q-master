@@ -120,15 +120,19 @@ class QuestionListAdapter(
 					itemView.editQuestionPanelQuestion.isGone = true
 
 					//create options only if they aren't null/blank. fill options
-					for (i in 0 until (quiz.maxOptions)){
+					for (i in 0 until (quiz.maxOptions - 1)){
 						var currAns: String? = null
 						if (this.currentQuestion != null){
-							currAns = this.currentQuestion!!.answers[i]		//todo crash here new!
+
+							App.showLog("QLA i $i | answers count: ${this.currentQuestion!!.answers.count()}")
+
+							currAns = this.currentQuestion!!.answers[i]
 						}
 						if (currAns != null && currAns != ""){
-							val radAns = RadioButton(context)
+							val radAns = RadioEx(context)
 							radAns.text = currAns
-							itemView.radGrpQuestionPanelAns.addView(radAns, i)
+							radAns.answerID = i
+							itemView.radGrpQuestionPanelAns.addView(radAns)
 						}
 					}
 
@@ -136,6 +140,7 @@ class QuestionListAdapter(
 						val checkedRadio = (context as AppCompatActivity).findViewById<RadioEx>(radioID)
 						if (checkedRadio.isChecked) {
 							if (checkedRadio.answerID == null){
+								//user didn't answer this question
 							}
 							else {
 								App.currentQuizAttempt[currentPosition] = checkedRadio.answerID!!
