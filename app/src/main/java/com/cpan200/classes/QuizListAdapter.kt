@@ -98,10 +98,10 @@ class QuizListAdapter(
 			itemView.btnPanelQuizEdit.setOnClickListener {
 				//open up an unfinalized quiz for editing AND the current user is a superuser/admin
 				if (isAdmin && !this.currentQuiz!!.finalized){
-					App.currentEditingQuiz = App.getQuiz(context, this.currentQuiz!!.id!!)
+					App.currentQuiz = App.getQuiz(context, this.currentQuiz!!.id!!)
 					//add at least maxOption answers to every question in currentEditingQuiz
 					//todo oob fix main?
-					App.currentEditingQuiz = App.maxOptionsToQuestions(App.currentEditingQuiz as Quiz)
+					App.currentQuiz = App.maxOptionsToQuestions(App.currentQuiz as Quiz)
 
 					(context as AppCompatActivity).supportFragmentManager.beginTransaction()
 							.replace(R.id.AdminContainer, FragQuizMain(), "FragQuizMain")

@@ -49,7 +49,7 @@ class FragQuizMain : Fragment() {
 			//adds a blank question to current quiz
 			//adds it to App.currentEditingQuiz, not to QuizDB!
 			//to add to quiz DB, use submit button. Changes purged if not saved.
-			App.currentEditingQuiz!!.questionList.add(Question())
+			App.currentQuiz!!.questionList.add(Question())
 			//todo doesn't add a question?
 			(valRcyQuizMain.adapter as QuestionListAdapter).refreshData()
 		}
@@ -101,11 +101,11 @@ class FragQuizMain : Fragment() {
 					if (valEditQuizMainTitle.text.toString() == ""){
 						App.showToast(context!!, "Please enter a quiz title.")
 						fail = true
-					} else if (App.currentEditingQuiz!!.questionList.count() == 0) {
+					} else if (App.currentQuiz!!.questionList.count() == 0) {
 						App.showToast(context!!, "Please create at least 1 question.")
 						fail = true
 					} else {
-						for (question in App.currentEditingQuiz!!.questionList){
+						for (question in App.currentQuiz!!.questionList){
 
 							//make sure every question has at least 1 answer
 							if (question.answers.count() == 0){
@@ -125,8 +125,8 @@ class FragQuizMain : Fragment() {
 
 					if (!fail) {
 						//quiz looks ok, edits are accepted into database
-						App.currentEditingQuiz!!.title = valEditQuizMainTitle.text.toString()
-						App.editQuiz(context!!, App.currentQuiz.id!!, App.currentEditingQuiz!!)
+						App.currentQuiz!!.title = valEditQuizMainTitle.text.toString()
+						App.editQuiz(context!!, App.currentQuiz.id!!, App.currentQuiz!!)
 					}
 
 				}

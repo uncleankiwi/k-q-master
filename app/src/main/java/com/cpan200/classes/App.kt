@@ -16,7 +16,7 @@ import java.util.*
 
 class App {
 	companion object {
-		const val LOG = "test123"
+		private const val LOG = "test123"
 
 		private var isLoggedIn: Boolean = false
 		var currentUser: User? = null
@@ -26,8 +26,6 @@ class App {
 		private const val PASSWORD_KEY: String = "password"
 
 		var currentQuiz: Quiz = Quiz()
-
-		var currentEditingQuiz: Quiz? = null
 		var currentQuizAttempt = mutableListOf<Int>()
 
 		//workaround for passing info to fragments. should use interfaces

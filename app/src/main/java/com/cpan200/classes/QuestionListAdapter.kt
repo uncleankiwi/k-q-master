@@ -88,13 +88,13 @@ class QuestionListAdapter(
 							override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
 								App.showLog("curr pos $currentPosition")
-								App.showLog("question count ${App.currentEditingQuiz!!.questionList.count()}")
+								App.showLog("question count ${App.currentQuiz!!.questionList.count()}")
 								App.showLog("index $i, ")
-								App.showLog("quiz title count ${App.currentEditingQuiz!!.title}")
-								App.showLog("answer count ${App.currentEditingQuiz!!.questionList[currentPosition].answers.count()}")	//todo crash here
+								App.showLog("quiz title count ${App.currentQuiz!!.title}")
+								App.showLog("answer count ${App.currentQuiz!!.questionList[currentPosition].answers.count()}")	//todo crash here
 
-								if (i < App.currentEditingQuiz!!.questionList[currentPosition].answers.count())
-									App.currentEditingQuiz!!.questionList[currentPosition].answers[i] = p0.toString()
+								if (i < App.currentQuiz!!.questionList[currentPosition].answers.count())
+									App.currentQuiz!!.questionList[currentPosition].answers[i] = p0.toString()
 								//todo potential oob fix #2
 							}
 						})
@@ -110,7 +110,7 @@ class QuestionListAdapter(
 
 					//radio button listener
 					itemView.radGrpQuestionPanelAns.setOnCheckedChangeListener { _, i ->
-						App.currentEditingQuiz!!.questionList[currentPosition].correctAnswer = i
+						App.currentQuiz!!.questionList[currentPosition].correctAnswer = i
                         //todo array oob crash
 					}
 
