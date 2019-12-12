@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.RadioButton
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import com.cpan200.finalproject.R
@@ -68,15 +69,25 @@ class QuestionListAdapter(
 					//fill options with answer options
 					for (i in 0 until (quiz.maxOptions)){
 						//create maxOptions number of options
-						val radAns = RadioButton(context)
+						val radAns = RadioEx(context)
 						radAns.text = ""
 						radAns.layoutParams = LinearLayout.LayoutParams(
 								LinearLayout.LayoutParams.WRAP_CONTENT,
 								LinearLayout.LayoutParams.WRAP_CONTENT).also { it.setMargins(0, 23, 0, 20) }
+						radAns.answerID = i //holds the index since RadioGroup's index consists of lies and empty promises
+
+						//set listener
+						radAns.setOnCheckedChangeListener { _, isChecked ->
+							if (isChecked){
+								App.currentQuiz.questionList[currentPosition].correctAnswer = radAns.answerID
+							}
+						}
 
 						//check correct answer
 						if (i == this.currentQuestion!!.correctAnswer) radAns.isChecked = true
 						itemView.radGrpQuestionPanelAns.addView(radAns, i)
+
+
 
 						//create editTexts and fill them in if the answer exists
 						val editAns = EditText(context)
@@ -110,10 +121,11 @@ class QuestionListAdapter(
 						itemView.QuestionPanelAnsContainer.addView(editAns, i)
 					}
 
-					//radio button listener
-					itemView.radGrpQuestionPanelAns.setOnCheckedChangeListener { _, i ->
-						App.currentQuiz.questionList[currentPosition].correctAnswer = i
-					}
+					//radio button listener	//todo remove?
+//					itemView.radGrpQuestionPanelAns.setOnCheckedChangeListener { _, i ->
+//						App.currentQuiz.questionList[currentPosition].correctAnswer =
+//							App.currentQuiz.questionList[currentPosition].optionIds.indexOf(i)
+//					}
 
 				}
 				else {
@@ -134,12 +146,19 @@ class QuestionListAdapter(
 							radAns.text = currAns
 							itemView.radGrpQuestionPanelAns.addView(radAns, i)
 						}
-
 					}
 
-					//radio button listener
-					itemView.radGrpQuestionPanelAns.setOnCheckedChangeListener { _, i ->
-						App.currentQuizAttempt[currentPosition] = i
+					itemView.radGrpQuestionPanelAns.setOnCheckedChangeListener { _, radioID ->
+						val checkedRadio = (context as AppCompatActivity).findViewById<RadioEx>(radioID)
+						if (checkedRadio.isChecked) {
+							if (checkedRadio.answerID == null){
+								App.showLog("radiobutton with null ansID checked")
+							}
+							else {
+								App.currentQuizAttempt[currentPosition] = checkedRadio.answerID!!
+							}
+						}
+
 					}
 
 				}

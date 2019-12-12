@@ -167,6 +167,12 @@ class App {
 					question.answers.add("")
 				}
 				showLog("maxOptionsToQuestions: after adding: ${question.answers.count()}")
+
+				showLog("maxOptionsToQuestions: before add: ${question.optionIds.count()}")
+				while (question.optionIds.count() < quiz.maxOptions){
+					question.optionIds.add(-1)
+				}
+				showLog("maxOptionsToQuestions: after add: ${question.optionIds.count()}")
 			}
 			return quiz
 		}
@@ -495,7 +501,8 @@ class App {
 			val answers = mutableListOf<String>()
 			for (i in 0 until (maxOptions - 1)){
 				//get answer in the ith column
-				answers.add(cursor.getString(cursor.getColumnIndex(QuizDB.COL_ANS_N + i.toString())))
+				val ansString: String? =cursor.getString(cursor.getColumnIndex(QuizDB.COL_ANS_N + i.toString()))
+				answers.add(ansString ?: "")
 			}
 			val correctAnswer: Int = cursor.getInt(cursor.getColumnIndex(QuizDB.COL_CORRECTANS))
 			return Question(id, question, answers, correctAnswer)
