@@ -31,7 +31,9 @@ class FragScoresMain : Fragment() {
 		val valTxtScoresMainScore = (context!! as AppCompatActivity).findViewById<TextView>(R.id.txtScoresMainScore)
 
 		val valBtnScoresMainClose = (context!! as AppCompatActivity).findViewById<Button>(R.id.btnScoresMainClose)
-		valBtnScoresMainClose.setOnClickListener { (context!! as AppCompatActivity).onBackPressed() }
+		if (valBtnScoresMainClose == null)
+		App.showLog("is null")
+		valBtnScoresMainClose.setOnClickListener { (context!! as AppCompatActivity).onBackPressed() }	//todo crash here
 
 		when (App.scoreViewMode){
 			ViewMode.User -> {
@@ -42,7 +44,7 @@ class FragScoresMain : Fragment() {
 			ViewMode.Quiz -> {
 				//when viewing all users' scores for CurrentQuiz
 				valTxtScoresMainHeader.text = getString(R.string.Username_prefix)
-				App.userScoresToTextView(context!!, valTxtScoresMainUsername, valTxtScoresMainScore)
+				App.userScoresToTextView(context!!, valTxtScoresMainUsername, valTxtScoresMainScore)		//todo another crash here
 			}
 		}
         return view
