@@ -83,11 +83,10 @@ class QuestionListAdapter(
 							}
 						}
 
-						//check correct answer
-						if (i == this.currentQuestion!!.correctAnswer) radAns.isChecked = true
+						//check correct answer	//todo fix this
 						itemView.radGrpQuestionPanelAns.addView(radAns, i)
-
-
+						if (i == this.currentQuestion!!.correctAnswer) radAns.isChecked = true	//old. can't uncheck
+						//itemView.radGrpQuestionPanelAns.check(radAns.id)	//new. test later?
 
 						//create editTexts and fill them in if the answer exists
 						val editAns = EditText(context)
@@ -98,19 +97,12 @@ class QuestionListAdapter(
 							override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 							override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
-								App.showLog("questionlistadapter: txt changed listener starting")
-								App.showLog("questionlistadapter: curr pos $currentPosition")
-								App.showLog("questionlistadapter: question count ${App.currentQuiz.questionList.count()}")
-								App.showLog("questionlistadapter: index $i, ")
-								App.showLog("questionlistadapter: quiz title count ${App.currentQuiz.title}")
-								App.showLog("questionlistadapter: answer count ${App.currentQuiz.questionList[currentPosition].answers.count()}")
+								App.showLog("QLA: curr pos $currentPosition | questionL count ${App.currentQuiz.questionList.count()} |" +
+										"i $i | answer count ${App.currentQuiz.questionList[currentPosition].answers.count()}")
 
 								if (i < App.currentQuiz.questionList[currentPosition].answers.count()){
 									App.currentQuiz.questionList[currentPosition].answers[i] = p0.toString()
-									App.showLog("questionlistadapter: quiz ans at index $i edited, string $p0 ")
 								}
-
-
 							}
 						})
 
@@ -120,13 +112,6 @@ class QuestionListAdapter(
 						}
 						itemView.QuestionPanelAnsContainer.addView(editAns, i)
 					}
-
-					//radio button listener	//todo remove?
-//					itemView.radGrpQuestionPanelAns.setOnCheckedChangeListener { _, i ->
-//						App.currentQuiz.questionList[currentPosition].correctAnswer =
-//							App.currentQuiz.questionList[currentPosition].optionIds.indexOf(i)
-//					}
-
 				}
 				else {
 					//do mode
