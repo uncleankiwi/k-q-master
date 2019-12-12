@@ -34,6 +34,8 @@ class FragParticularsMain : Fragment() {
 			val valEditEditParticularsLastname = view.findViewById<EditText>(R.id.editEditParticularsLastname)
 			val valEditEditParticularsEmail = view.findViewById<EditText>(R.id.editEditParticularsEmail)
 
+			var newStatus = User.UserStatus.STUDENT
+
 			//populate with currentEditUser's particulars
 			valTxtEditParticularsUsername.text = App.currentEditUser!!.name
 			valEditEditParticularsPassword.setText(App.currentEditUser!!.password)
@@ -54,6 +56,16 @@ class FragParticularsMain : Fragment() {
 			val valBtnEditParticularsSave = view.findViewById<Button>(R.id.btnEditParticularsSave)
 			//save button listener
 			valBtnEditParticularsSave.setOnClickListener {
+				//first, change user status
+				when {
+					valRadEditParticularsAdmin.isChecked -> newStatus = User.UserStatus.ADMIN
+					valRadEditParticularsStudent.isChecked -> User.UserStatus.STUDENT
+				}
+				App.changeUserStatus(context!!,
+					App.currentEditUser!!.name!!,
+					newStatus)
+
+				//then change other particulars. auto-closes frag on success.
 				App.changeParticulars(context!!,
 					App.currentEditUser!!.name!!,
 					valEditEditParticularsPassword.text.toString(),

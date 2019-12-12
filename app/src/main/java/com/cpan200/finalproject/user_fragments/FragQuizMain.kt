@@ -136,6 +136,7 @@ class FragQuizMain : Fragment() {
 						App.currentQuiz.title = valEditQuizMainTitle.text.toString()
 						App.editQuiz(context!!, App.currentQuiz.id!!, App.currentQuiz)
 						App.showToast(context!!, "Changes saved.")
+						(context as AppCompatActivity).onBackPressed()
 					}
 
 				}

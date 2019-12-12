@@ -7,6 +7,7 @@ import android.database.Cursor
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.cpan200.dbclasses.QuizDB
 import com.cpan200.dbclasses.QuizzesDB
 import com.cpan200.dbclasses.UserDB
@@ -207,6 +208,8 @@ class App {
 
 			userDB.close()
 			userCursor?.close()
+
+			(context as AppCompatActivity).onBackPressed()
 		}
 
 		fun getScore(context: Context, id: Int): Double {
@@ -374,6 +377,10 @@ class App {
 
 					userDB.addRow(usernameE, passwordE, statusE, emailE, firstNameE, lastNameE)
 					userDB.close()
+
+					showToast(context, "User $usernameE created.")
+
+					(context as AppCompatActivity).onBackPressed()
 				}
 
 			}
@@ -434,7 +441,7 @@ class App {
 					userCursor.close()
 
 					//press back button
-					if (context is Activity) context.onBackPressed()
+					//if (context is Activity) context.onBackPressed()
 				}
 			}
 
@@ -565,9 +572,9 @@ class App {
 			Toast.makeText(context, msg, length).show()
 		}
 
-		fun showLog(msg: String){
-			Log.i(LOG, msg)
-		}
+//		fun showLog(msg: String){
+//			Log.i(LOG, msg)
+//		}
 
 //		fun showusercols(context: Context){
 //			val userDB = UserDB(context, null)

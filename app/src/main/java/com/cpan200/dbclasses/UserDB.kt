@@ -106,14 +106,14 @@ class UserDB(
 		row.put(COL_EMAIL, email)
 		row.put(COL_FIRSTNAME, firstName)
 		row.put(COL_LASTNAME, lastName)
-		db.update(TABLE_NAME, row, "$COL_USERNAME = $username", null)
+		db.update(TABLE_NAME, row, "$COL_USERNAME = \"$username\"", null)
 		db.close()
 	}
 
 	fun updateUserStatus(username: String, status: User.UserStatus){
 		val row = ContentValues()
 		row.put(COL_STATUS, status.toString())
-		this.writableDatabase.update(TABLE_NAME, row, "$COL_USERNAME = $username", null)
+		this.writableDatabase.update(TABLE_NAME, row, "$COL_USERNAME = \"$username\"", null)
 	}
 
 	fun deleteQuizCol(id: Int){
