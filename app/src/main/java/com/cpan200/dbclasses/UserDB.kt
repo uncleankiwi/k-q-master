@@ -172,7 +172,6 @@ class UserDB(
 		val colCheckMap = colSetExistsCheck(setOf(COL_QUIZN + id.toString(), COL_ATTEMPTN + id.toString()))
 		if (colCheckMap.containsValue(false)){
 			//for some reason the userDB doesn't have columns for this quiz's scores and attempts already
-			App.showLog("user DB doesn't have a userdb quiz cols")
 			createQuizCol(id)
 		}
 		return db.rawQuery("SELECT $COL_QUIZN${id}, $COL_ATTEMPTN${id} FROM $TABLE_NAME WHERE $COL_USERNAME = \"$username\"", null)
