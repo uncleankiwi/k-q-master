@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="8sp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -66,7 +67,8 @@
         <TextView
             android:id="@+id/txtPanelQuizStats"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="18sp" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

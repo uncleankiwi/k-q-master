@@ -66,6 +66,15 @@ class QuestionListAdapter(
 					itemView.txtQuestionPanelQuestion.isGone = true
 					itemView.editQuestionPanelQuestion.isGone = false
 
+					//question listener
+					itemView.editQuestionPanelQuestion.addTextChangedListener(object : TextWatcher {
+						override fun afterTextChanged(p0: Editable?) {}
+						override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+						override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+							App.currentQuiz.questionList[currentPosition].question = p0.toString()
+						}
+					})
+
 					//fill options with answer options
 					for (i in 0 until (quiz.maxOptions)){
 						//create maxOptions number of options
@@ -116,7 +125,7 @@ class QuestionListAdapter(
 					itemView.editQuestionPanelQuestion.isGone = true
 
 					//create options only if they aren't null/blank. fill options
-					for (i in 0 until (quiz.maxOptions - 1)){
+					for (i in 0 until (quiz.maxOptions)){		//todo hmm?
 						var currAns: String? = null
 						if (this.currentQuestion != null){
 							currAns = this.currentQuestion!!.answers[i]

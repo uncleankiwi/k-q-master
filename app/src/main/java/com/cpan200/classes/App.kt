@@ -591,8 +591,9 @@ class App {
 		private fun cursorToQuestion(cursor: Cursor, maxOptions: Int): Question {
 			val id: Int = cursor.getInt(cursor.getColumnIndex(QuizDB.COL_ID))
 			val question: String = cursor.getString(cursor.getColumnIndex(QuizDB.COL_QUESTION))
+
 			val answers = mutableListOf<String>()
-			for (i in 0 until (maxOptions - 1)){
+			for (i in 0 until (maxOptions)){
 				//get answer in the ith column
 				val ansString: String? =cursor.getString(cursor.getColumnIndex(QuizDB.COL_ANS_N + i.toString()))
 				answers.add(ansString ?: "")

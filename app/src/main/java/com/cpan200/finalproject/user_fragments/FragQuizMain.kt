@@ -102,12 +102,10 @@ class FragQuizMain : Fragment() {
 						App.showToast(context!!, "Please enter a quiz title.")
 						fail = true
 
-						App.showLog("fragquizmain: no quiz title entered")
 					} else if (App.currentQuiz.questionList.count() == 0) {
 						App.showToast(context!!, "Please create at least 1 question.")
 						fail = true
 
-						App.showLog("fragquizmain: no questions in quiz")
 					} else {
 						for (question in App.currentQuiz.questionList){
 
@@ -115,20 +113,17 @@ class FragQuizMain : Fragment() {
 							if (question.answers.count() == 0){
 								fail = true
 								App.showToast(context!!, "Please create at least 1 answer for every question.")
-								App.showLog("fragquizmain: question without answers")
+
 								break
 							} else if (question.correctAnswer == null){
 								//make sure every question has 1 correct answer
 								App.showToast(context!!, "Please select a correct answer for every question.")
-								App.showLog("fragquizmain: question without correct ans")
+
 								fail = true
 								break
 							} else if (question.correctAnswer!! > question.answers.count()){
 								//make sure that correct answer matches index of one of the answers
 								App.showToast(context!!, "Please select a correct answer that matches a valid option for every question.")
-								App.showLog("fragquizmain: question with OOB correct ans")
-								App.showLog("fragquizmain: correct ans " + question.correctAnswer!!.toString())
-								App.showLog("fragquizmain: ans list count" + question.answers.count().toString())
 
 								fail = true
 								break
