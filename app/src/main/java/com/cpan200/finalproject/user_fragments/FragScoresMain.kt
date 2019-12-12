@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.cpan200.classes.App
 import com.cpan200.dbclasses.UserDB
 import com.cpan200.finalproject.R
@@ -23,30 +26,17 @@ class FragScoresMain : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_scores_main, container, false)
 
-        val userDB = UserDB(context, null)
-        val userCursor = userDB.getAllScores(App.currentQuiz.id!!)
+		val valTxtScoresMainUsername = (context!! as AppCompatActivity).findViewById<TextView>(R.id.txtScoresMainUsername)
+		val valTxtScoresMainScore = (context!! as AppCompatActivity).findViewById<TextView>(R.id.txtScoresMainScore)
 
-        if (userCursor.count != 0){
-            userCursor.moveToFirst()
-            populateScoreRow(userCursor, App.currentQuiz.id!!)
 
-            while (userCursor.moveToNext()){
-                populateScoreRow(userCursor, App.currentQuiz.id!!)
-            }
-        }
-
-        userDB.close()
-        userCursor.close()
+		val valBtnScoresMainClose = (context!! as AppCompatActivity).findViewById<Button>(R.id.btnScoresMainClose)
+		valBtnScoresMainClose.setOnClickListener { (context!! as AppCompatActivity).onBackPressed() }
 
         return view
     }
 
-    private fun populateScoreRow(cursor: Cursor, id: Int){
-        txtScoresMainUsername.append(cursor.getString(cursor.getColumnIndex(UserDB.COL_USERNAME)))
-        txtScoresMainUsername.append("\n")
-        txtScoresMainScore.append(cursor.getDouble(cursor.getColumnIndex(UserDB.COL_QUIZN + id.toString())).toString())
-        txtScoresMainScore.append("\n")
-    }
-
-
+	enum class viewMode{
+		//todo fragscores viewmode
+	}
 }

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import com.cpan200.dbclasses.QuizDB
 import com.cpan200.dbclasses.QuizzesDB
@@ -480,6 +481,52 @@ class App {
 			return userList
 		}
 
+		fun userScoresToTextView(context: Context, txtUsernames: TextView, txtScores: TextView){
+			val userDB = UserDB(context, null)
+			val userCursor = userDB.getAllScores(currentQuiz.id!!)
+
+			if (userCursor.count != 0){
+				userCursor.moveToFirst()
+				populateScoreRow(userCursor, currentQuiz.id!!, txtUsernames, txtScores)
+
+				while (userCursor.moveToNext()){
+					populateScoreRow(userCursor, currentQuiz.id!!, txtUsernames, txtScores)
+				}
+			}
+			userCursor.close()
+			userDB.close()
+		}
+
+		fun quizScoresToTextView(context: Context, user: User, txtQuizzes: TextView, txtScores: TextView){
+			//todo findExistingUser
+			val userDB = UserDB(context, null)
+			val userCursor = userDB.findExistingUser(user.name!!)
+			if (userCursor != null && userCursor.count != 0) {
+				val quizDB = QuizzesDB(context, null)
+				val quizCursor = quizDB.getAllRows()
+
+				if (quizCursor != null && quizCursor.count != 0){
+					//getting list of quiz IDs in the database
+					val quizIDs = mutableListOf<Int>()
+
+
+
+					userCursor.moveToFirst()
+
+				}
+
+
+
+				quizCursor?.close()
+				quizDB.close()
+			}
+			else {
+				showToast(context, "Error fetching this user's scores.")
+			}
+			userCursor?.close()
+			userDB.close()
+		}
+
 		fun showToast(context: Context, msg: String, length: Int = Toast.LENGTH_LONG) {
 			Toast.makeText(context, msg, length).show()
 		}
@@ -495,6 +542,13 @@ class App {
 //				showLog(string)
 //			}
 //		}
+
+		private fun populateScoreRow(cursor: Cursor, id: Int, txtUsernames: TextView, txtScores: TextView){
+			txtUsernames.append(cursor.getString(cursor.getColumnIndex(UserDB.COL_USERNAME)))
+			txtUsernames.append("\n")
+			txtScores.append(cursor.getDouble(cursor.getColumnIndex(UserDB.COL_QUIZN + id.toString())).toString())
+			txtScores.append("\n")
+		}
 
 		private fun cursorToQuestion(cursor: Cursor, maxOptions: Int): Question {
 			val id: Int = cursor.getInt(cursor.getColumnIndex(QuizDB.COL_ID))

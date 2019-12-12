@@ -83,10 +83,9 @@ class QuestionListAdapter(
 							}
 						}
 
-						//check correct answer	//todo fix this
+						//check correct answer
 						itemView.radGrpQuestionPanelAns.addView(radAns, i)
-						if (i == this.currentQuestion!!.correctAnswer) radAns.isChecked = true	//old. can't uncheck
-						//itemView.radGrpQuestionPanelAns.check(radAns.id)	//new. test later?
+						if (i == this.currentQuestion!!.correctAnswer) radAns.isChecked = true
 
 						//create editTexts and fill them in if the answer exists
 						val editAns = EditText(context)

@@ -65,7 +65,9 @@ class FragParticularsMain : Fragment() {
 		}
 		//cancel button listener
 		val valBtnEditParticularsCancel = (context as AppCompatActivity).findViewById<Button>(R.id.btnEditParticularsCancel)
-
+		valBtnEditParticularsCancel.setOnClickListener {
+			(context as AppCompatActivity).onBackPressed()
+		}
 
 		return view
 	}
