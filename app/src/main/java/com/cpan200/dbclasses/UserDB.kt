@@ -5,7 +5,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.cpan200.classes.App
 import com.cpan200.classes.User
 
 class UserDB(
@@ -163,7 +162,7 @@ class UserDB(
 		val row = ContentValues()
 		row.put(COL_QUIZN + id.toString(), score)
 		row.put(COL_ATTEMPTN + id.toString(), attempt)
-		db.update(TABLE_NAME, row, "$COL_USERNAME = $username", null)
+		db.update(TABLE_NAME, row, "$COL_USERNAME = \"$username\"", null)
 		db.close()
 	}
 

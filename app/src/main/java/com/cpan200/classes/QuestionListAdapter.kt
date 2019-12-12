@@ -95,10 +95,6 @@ class QuestionListAdapter(
 							override fun afterTextChanged(p0: Editable?) {}
 							override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 							override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-								App.showLog("QLA: curr pos $currentPosition | questionL count ${App.currentQuiz.questionList.count()} |" +
-										"i $i | answer count ${App.currentQuiz.questionList[currentPosition].answers.count()}")
-
 								if (i < App.currentQuiz.questionList[currentPosition].answers.count()){
 									App.currentQuiz.questionList[currentPosition].answers[i] = p0.toString()
 								}
@@ -123,9 +119,6 @@ class QuestionListAdapter(
 					for (i in 0 until (quiz.maxOptions - 1)){
 						var currAns: String? = null
 						if (this.currentQuestion != null){
-
-							App.showLog("QLA i $i | answers count: ${this.currentQuestion!!.answers.count()}")
-
 							currAns = this.currentQuestion!!.answers[i]
 						}
 						if (currAns != null && currAns != ""){

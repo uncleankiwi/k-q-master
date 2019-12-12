@@ -13,6 +13,9 @@ class AdminActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin)
+        actionBar?.title = getString(R.string.ActionBarUsername,
+            App.currentUser!!.name,
+            App.currentUser!!.status)
 
         //show admin main frag when logged in as admin
         if (savedInstanceState == null){

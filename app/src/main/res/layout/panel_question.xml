@@ -14,7 +14,8 @@
             android:id="@+id/txtQuestionPanelQuestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Question" />
+            android:text="@string/Question"
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/editQuestionPanelQuestion"

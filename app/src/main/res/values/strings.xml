@@ -4,8 +4,9 @@
     <!-- <string name=""></string> -->
     <!-- -->
 
-    <!-- MENU -->
+    <!-- MENU AND MISC-->
     <string name="Log_out">Log out</string>
+    <string name="ActionBarUsername">Logged in as %1$s (%2$s)</string>
 
     <!-- LOGIN -->
     <!-- login frag -->

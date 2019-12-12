@@ -113,11 +113,18 @@ class App {
 			//getting the difference. hopefully exactly 1 result.
 			val newIDSet = quizzesDB.getIDSet()
 			val newID = newIDSet.minus(oldIDSet).first()
+			quizzesDB.close()
 
 			//now create columns for the new quiz's scores and attempts in the user table
 			val userDB = UserDB(context, null)
 			userDB.createQuizCol(newID)
-			quizzesDB.close()
+			userDB.close()
+
+			//create a db for this quiz's questions
+			val quizDB = QuizDB(context, newID, null)
+			quizDB.addQuiz()
+			quizDB.close()
+
 		}
 
 		fun editQuiz(context: Context, id: Int, quiz: Quiz) {
@@ -154,6 +161,10 @@ class App {
 			quizzesDB.deleteRow(id)
 			quizzesDB.close()
 
+			val quizDB = QuizDB(context, id, null)
+			quizDB.deleteQuiz()
+			quizDB.close()
+
 			val userDB = UserDB(context, null)
 			userDB.deleteQuizCol(id)
 			userDB.close()
@@ -184,7 +195,8 @@ class App {
 			val userCursor = userDB.getScoreAttempt(currentUser!!.name!!, id)
 
 			if (userCursor != null){
-				var savedScore: Double? = userCursor.getDouble(userCursor.getColumnIndex(UserDB.COL_QUIZN + id.toString()))	//todo crash here!
+				userCursor.moveToFirst()
+				var savedScore: Double? = userCursor.getDouble(userCursor.getColumnIndex(UserDB.COL_QUIZN + id.toString()))
 				var savedAttempts: Int? = userCursor.getInt(userCursor.getColumnIndex(UserDB.COL_ATTEMPTN + id.toString()))
 				if (savedScore == null) savedScore = 0.0
 				if (savedAttempts == null) savedAttempts = 0
@@ -207,6 +219,7 @@ class App {
 				savedScore = userCursor.getDouble(userCursor.getColumnIndex(UserDB.COL_QUIZN + id.toString()))
 			}
 			userCursor?.close()
+			userDB.close()
 			return savedScore ?: 0.0
 		}
 
@@ -219,6 +232,8 @@ class App {
 				userCursor.moveToFirst()
 				attempts = userCursor.getInt(userCursor.getColumnIndex(UserDB.COL_ATTEMPTN + id.toString()))
 			}
+			userCursor?.close()
+			userDB.close()
 			return attempts ?: 0
 		}
 
@@ -284,8 +299,8 @@ class App {
 						return
 					}
 				}
-
-
+				cursor.close()
+				userDB.close()
 			}
 
 		}
@@ -461,6 +476,8 @@ class App {
 					showToast(context, "Password changed. Please sign in with the new password.")
 					logout(context, false)
 				}
+				userCursor.close()
+				userDB.close()
 			}
 		}
 
@@ -555,9 +572,13 @@ class App {
 //		fun showusercols(context: Context){
 //			val userDB = UserDB(context, null)
 //			val usertest = userDB.getAllRows()
+//			val tempList = mutableListOf<String>()
 //			for (string in usertest!!.columnNames){
-//				showLog(string)
+//				tempList.add(string)
 //			}
+//			showLog(tempList.toString())
+//			usertest.close()
+//			userDB.close()
 //		}
 
 		private fun populateScoreRow(cursor: Cursor, id: Int, txtUsernames: TextView, txtScores: TextView){

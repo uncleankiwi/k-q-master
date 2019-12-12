@@ -22,14 +22,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/Username_prefix" />
+            android:text="@string/Username_prefix"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/textView7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/Score_prefix" />
+            android:text="@string/Score_prefix"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <ScrollView
@@ -46,13 +48,15 @@
                 android:id="@+id/txtScoresMainUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/txtScoresMainScore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="18sp" />
         </LinearLayout>
     </ScrollView>
 
