@@ -633,7 +633,7 @@ class App {
 					imgArray = inputStream.readBytes()
 					inputStream.close()
 
-					showLog(imgArray.toString())
+					showLog("array size ${imgArray.size}")
 				}
 				else {
 					showToast(context, "HTTP connection to image failed.")
@@ -644,6 +644,7 @@ class App {
 			}
 			//save into quiz
 			currentQuiz.questionList[questionIndex].image = imgArray
+			showLog("saved img size ${currentQuiz.questionList[questionIndex].image?.size}")
 
 		}
 

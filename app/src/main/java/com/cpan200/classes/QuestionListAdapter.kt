@@ -124,7 +124,9 @@ class QuestionListAdapter(
 					}
 
 					//if currentQuiz image is not null, display image
+					App.showLog("image is null? : ${App.currentQuiz.questionList[currentPosition].image == null}")
 					if (App.currentQuiz.questionList[currentPosition].image != null){
+						App.showLog("image here, trying to display. size: ${App.currentQuiz.questionList[currentPosition].image!!.size}")
 						val imageArray = App.currentQuiz.questionList[currentPosition].image!!
 						val imageBmp = BitmapFactory.decodeByteArray(App.currentQuiz.questionList[currentPosition].image, 0, imageArray.size)
 						itemView.imgQuestionPanel.setImageBitmap(imageBmp)
