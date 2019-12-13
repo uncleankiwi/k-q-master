@@ -87,7 +87,7 @@ class QuestionListAdapter(
 
 						//set delete button listener
 						itemView.btnQuestionPanelDelete.setOnClickListener {
-							App.currentQuiz.questionList.removeAt(currentPosition)	//todo test
+							App.currentQuiz.questionList.removeAt(currentPosition)
 							refreshData()
 						}
 

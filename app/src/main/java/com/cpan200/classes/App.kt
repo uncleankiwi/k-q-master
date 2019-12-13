@@ -98,6 +98,7 @@ class App {
 
 			//put questionList into the quiz
 			quiz.questionList = questionList
+			quizzesCursor.close()
 			return quiz
 
 		}
@@ -238,6 +239,20 @@ class App {
 			userCursor?.close()
 			userDB.close()
 			return attempts ?: 0
+		}
+
+		fun refreshCurrentUser(context: Context){
+			val userDB = UserDB(context, null)
+			val userCursor = userDB.findExistingUser(currentUser!!.name!!)
+			if (userCursor != null && userCursor.count > 0){
+				userCursor.moveToFirst()
+				val freshUser = cursorToUser(userCursor)
+				if (freshUser.name == currentUser!!.name!!){
+					currentUser = freshUser
+				}
+			}
+			userCursor?.close()
+			userDB.close()
 		}
 
 		fun login(context: Context, tryUsername: String?, tryPassword: String?, verbose: Boolean = true) {
@@ -466,12 +481,17 @@ class App {
 				val userCursor = userDB.findExistingUser(username)
 				userCursor!!.moveToFirst()
 				val oldPassword = userCursor.getString(userCursor.getColumnIndex(UserDB.COL_PASSWORD))
-				val passwordChanged = (oldPassword == newPasswordE)
+				val passwordChanged = (oldPassword != newPasswordE)
 
 				//update user info
 				userDB.updateUserInfo(username, newPasswordE, newEmailE, newFirstNameE, newLastNameE)
 				userCursor.close()
 				userDB.close()
+
+				//update currentUser global variable if current user was edited
+				if (currentUser!!.name == username) {
+					refreshCurrentUser(context)
+				}
 
 				//finishing
 				if (!passwordChanged || currentUser!!.name != username){
@@ -482,6 +502,9 @@ class App {
 					if (context is Activity) context.onBackPressed()
 				}
 				else {
+
+					showLog("old pass: $oldPassword, new pass: $newPasswordE")
+
 					showToast(context, "Password changed. Please sign in with the new password.")
 					logout(context, false)
 				}

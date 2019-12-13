@@ -154,7 +154,7 @@ class UserDB(
 	}
 
 	fun getAllScores(id: Int): Cursor{
-		return this.readableDatabase.rawQuery("SELECT $COL_USERNAME, $COL_QUIZN${id}, $COL_ATTEMPTN${id} FROM $TABLE_NAME ORDER BY $COL_QUIZN${id}", null)
+		return this.readableDatabase.rawQuery("SELECT $COL_USERNAME, $COL_QUIZN${id}, $COL_ATTEMPTN${id} FROM $TABLE_NAME ORDER BY $COL_QUIZN${id} DESC", null)
 	}
 
 	fun updateScoreAttempt(username: String, id: Int, score: Double, attempt: Int){

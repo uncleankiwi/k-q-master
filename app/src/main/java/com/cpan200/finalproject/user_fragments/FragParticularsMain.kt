@@ -24,8 +24,6 @@ class FragParticularsMain : Fragment() {
 		// Inflate the layout for this fragment
 		val view = inflater.inflate(R.layout.fragment_particulars_main, container, false)
 
-		App.showLog("in frag part")
-
 		if (App.currentEditUser != null){
 			val valTxtEditParticularsUsername = view.findViewById<TextView>(R.id.txtEditParticularsUsername)
 			val valEditEditParticularsPassword = view.findViewById<EditText>(R.id.editEditParticularsPassword)

@@ -90,6 +90,7 @@ class QuizzesDB(
 		val row = ContentValues()
 		row.put(COL_FINALIZED, true)
 		db.update(TABLE_NAME, row, "$COL_ID = $id", null)
+		db.close()
 	}
 
 
