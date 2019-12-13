@@ -16,7 +16,9 @@ import com.cpan200.finalproject.LoginActivity
 import com.cpan200.finalproject.StudentActivity
 import com.cpan200.finalproject.user_fragments.FragAdminMain
 import com.cpan200.finalproject.user_fragments.FragScoresMain
+import java.net.HttpURLConnection
 import java.net.URL
+import java.net.URLConnection
 import java.util.*
 
 class App {
@@ -246,7 +248,7 @@ class App {
 			return attempts ?: 0
 		}
 
-		fun refreshCurrentUser(context: Context){
+		private fun refreshCurrentUser(context: Context){
 			val userDB = UserDB(context, null)
 			val userCursor = userDB.findExistingUser(currentUser!!.name!!)
 			if (userCursor != null && userCursor.count > 0){
@@ -594,18 +596,54 @@ class App {
 			userDB.close()
 		}
 
-		fun openImageUriAndSave (questionIndex: Int) {
+		fun openImageUriAndSave (context: Context, questionIndex: Int) {
+
+			showLog("uri func called")
+
 			//specify uri
 			//todo
 			val url = URL("https://i.imgur.com/kt2cYyF.png")
 
-			//convert to byteArray
-			val imgArray: ByteArray? = null
+			var imgArray: ByteArray? = null
 
+			try{
+
+				showLog("starting getting image")
+
+				//getting the image...
+				val httpConnection = url.openConnection() as HttpURLConnection
+
+				showLog("connection opened")
+
+				httpConnection.doInput = true
+				httpConnection.connect()
+
+				showLog("connected")
+
+				showLog(httpConnection.toString())
+
+				val responseCode = httpConnection.responseCode
+				showLog("response code $responseCode")
+
+				if (responseCode == HttpURLConnection.HTTP_OK){
+
+					showLog("http ok")
+
+					val inputStream = (httpConnection as URLConnection).getInputStream()
+					imgArray = inputStream.readBytes()
+					inputStream.close()
+
+					showLog(imgArray.toString())
+				}
+				else {
+					showToast(context, "HTTP connection to image failed.")
+				}
+			}
+			catch (e: Exception){
+				showLog(e.message.toString())
+			}
 			//save into quiz
 			currentQuiz.questionList[questionIndex].image = imgArray
-
-
 
 		}
 

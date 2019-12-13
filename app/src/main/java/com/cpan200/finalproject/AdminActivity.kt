@@ -2,6 +2,7 @@ package com.cpan200.finalproject
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.StrictMode
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -17,6 +18,10 @@ class AdminActivity : AppCompatActivity() {
 		supportActionBar?.title = getString(R.string.ActionBarUsername,
 			App.currentUser!!.name,
 			App.currentUser!!.status)
+
+		//enable http stuff for loading images
+		val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+		StrictMode.setThreadPolicy(policy)
 
 		//show admin main frag when logged in as admin
 		if (savedInstanceState == null){

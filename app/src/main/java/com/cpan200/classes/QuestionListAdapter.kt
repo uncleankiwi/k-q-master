@@ -133,7 +133,7 @@ class QuestionListAdapter(
 					//btnQuestionPanelSetImage listener
 					itemView.btnQuestionPanelSetImage.setOnClickListener {
 						//add image to currentQuiz then refresh
-						App.openImageUriAndSave(currentPosition)
+						App.openImageUriAndSave(context, currentPosition)
 						refreshData()
 					}
 
@@ -197,7 +197,7 @@ class QuestionListAdapter(
 				itemView.txtQuestionPanelQuestion.isGone = false
 				itemView.editQuestionPanelQuestion.isGone = true
 				itemView.llQuestionPanelEditControls.isGone = true
-				itemView.imgQuestionPanel.isGone = this.currentQuestion!!.image == null
+				//itemView.imgQuestionPanel.isGone = this.currentQuestion!!.image == null
 			} else {
 				//edit mode
 				itemView.editQuestionPanelQuestion.setText(currentQuestion!!.question)
