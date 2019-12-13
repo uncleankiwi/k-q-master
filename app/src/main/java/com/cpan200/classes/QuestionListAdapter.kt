@@ -85,7 +85,13 @@ class QuestionListAdapter(
 								LinearLayout.LayoutParams.WRAP_CONTENT).also { it.setMargins(0, 23, 0, 20) }
 						radAns.answerID = i //holds the index since RadioGroup's index consists of lies and empty promises
 
-						//set listener
+						//set delete button listener
+						itemView.btnQuestionPanelDelete.setOnClickListener {
+							App.currentQuiz.questionList.removeAt(currentPosition)	//todo test
+							refreshData()
+						}
+
+						//set radioEx listener
 						radAns.setOnCheckedChangeListener { _, isChecked ->
 							if (isChecked){
 								App.currentQuiz.questionList[currentPosition].correctAnswer = radAns.answerID
