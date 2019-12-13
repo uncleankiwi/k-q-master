@@ -36,7 +36,7 @@ class StudentActivity : AppCompatActivity() {
 	fun studentEditParticulars(item: MenuItem){
 		App.currentEditUser = App.currentUser
 		supportFragmentManager.beginTransaction()
-			.add(R.id.AdminContainer, FragParticularsMain(), "FragParticularsMain")
+			.replace(R.id.StudentContainer, FragParticularsMain(), "FragParticularsMain")
 			.addToBackStack(null)
 			.commit()
 	}

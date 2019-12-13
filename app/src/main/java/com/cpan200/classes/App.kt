@@ -427,7 +427,7 @@ class App {
 					return
 				}
 
-				username == currentUser!!.name -> {
+				oldStatus != newStatus.toString() && username == currentUser!!.name -> {
 					showToast(context, "Can't change the status of a user currently logged in.")
 					userDB.close()
 					userCursor.close()
@@ -573,9 +573,9 @@ class App {
 			Toast.makeText(context, msg, length).show()
 		}
 
-//		fun showLog(msg: String){
-//			Log.i(LOG, msg)
-//		}
+		fun showLog(msg: String){
+			Log.i(LOG, msg)
+		}
 
 //		fun showusercols(context: Context){
 //			val userDB = UserDB(context, null)

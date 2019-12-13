@@ -24,6 +24,8 @@ class FragParticularsMain : Fragment() {
 		// Inflate the layout for this fragment
 		val view = inflater.inflate(R.layout.fragment_particulars_main, container, false)
 
+		App.showLog("in frag part")
+
 		if (App.currentEditUser != null){
 			val valTxtEditParticularsUsername = view.findViewById<TextView>(R.id.txtEditParticularsUsername)
 			val valEditEditParticularsPassword = view.findViewById<EditText>(R.id.editEditParticularsPassword)
@@ -42,8 +44,8 @@ class FragParticularsMain : Fragment() {
 			when (App.currentEditUser!!.status){
 				User.UserStatus.SUPERUSER -> {
 					valRadEditParticularsSuperuser.isChecked = true
-					val valRadgrpEditParticularsStatus =view.findViewById<RadioGroup>(R.id.radgrpEditParticularsStatus)
-					valRadgrpEditParticularsStatus.isEnabled = false
+					valRadEditParticularsAdmin.isEnabled = false
+					valRadEditParticularsStudent.isEnabled = false
 				}
 				User.UserStatus.ADMIN -> valRadEditParticularsAdmin.isChecked = true
 				User.UserStatus.STUDENT -> valRadEditParticularsStudent.isChecked = true
