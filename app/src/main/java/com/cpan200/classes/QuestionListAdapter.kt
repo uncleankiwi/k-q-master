@@ -125,7 +125,7 @@ class QuestionListAdapter(
 					itemView.editQuestionPanelQuestion.isGone = true
 
 					//create options only if they aren't null/blank. fill options
-					for (i in 0 until (quiz.maxOptions)){		//todo hmm?
+					for (i in 0 until (quiz.maxOptions)){
 						var currAns: String? = null
 						if (this.currentQuestion != null){
 							currAns = this.currentQuestion!!.answers[i]

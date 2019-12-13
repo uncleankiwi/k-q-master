@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import com.cpan200.classes.App
+import com.cpan200.finalproject.user_fragments.FragParticularsMain
 import com.cpan200.finalproject.user_fragments.FragQuizList
 
 class StudentActivity : AppCompatActivity() {
@@ -30,5 +31,13 @@ class StudentActivity : AppCompatActivity() {
 
 	fun studentLogout(item: MenuItem) {
 		App.logout(this)
+	}
+
+	fun studentEditParticulars(item: MenuItem){
+		App.currentEditUser = App.currentUser
+		supportFragmentManager.beginTransaction()
+			.add(R.id.AdminContainer, FragParticularsMain(), "FragParticularsMain")
+			.addToBackStack(null)
+			.commit()
 	}
 }

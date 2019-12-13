@@ -3,4 +3,8 @@
     <item android:id="@+id/mnu_student_logout"
         android:title="@string/Log_out"
         android:onClick="studentLogout"/>
+
+    <item android:id="@+id/mnu_student_particulars"
+        android:title="@string/Edit_particulars"
+        android:onClick="studentEditParticulars"/>
 </menu>

@@ -3,4 +3,8 @@
     <item android:id="@+id/mnu_admin_logout"
         android:title="@string/Log_out"
         android:onClick="adminLogout" />
+
+    <item android:id="@+id/mnu_admin_particulars"
+        android:title="@string/Edit_particulars"
+        android:onClick="adminEditParticulars"/>
 </menu>

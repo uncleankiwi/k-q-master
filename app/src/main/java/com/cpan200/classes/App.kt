@@ -470,9 +470,11 @@ class App {
 
 				//update user info
 				userDB.updateUserInfo(username, newPasswordE, newEmailE, newFirstNameE, newLastNameE)
+				userCursor.close()
+				userDB.close()
 
 				//finishing
-				if (!passwordChanged && currentUser!!.name == username){
+				if (!passwordChanged || currentUser!!.name != username){
 					//if user specified is current user and password was changed, log out
 					showToast(context, "User information changed.")
 
@@ -483,8 +485,7 @@ class App {
 					showToast(context, "Password changed. Please sign in with the new password.")
 					logout(context, false)
 				}
-				userCursor.close()
-				userDB.close()
+
 			}
 		}
 

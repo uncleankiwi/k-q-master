@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import com.cpan200.classes.App
 import com.cpan200.finalproject.user_fragments.FragAdminMain
+import com.cpan200.finalproject.user_fragments.FragParticularsMain
 
 class AdminActivity : AppCompatActivity() {
 
@@ -35,5 +36,13 @@ class AdminActivity : AppCompatActivity() {
 
     fun adminLogout(item: MenuItem) {
         App.logout(this)
+    }
+
+    fun adminEditParticulars(item: MenuItem){
+        App.currentEditUser = App.currentUser
+        supportFragmentManager.beginTransaction()
+            .add(R.id.AdminContainer, FragParticularsMain(), "FragParticularsMain")
+            .addToBackStack(null)
+            .commit()
     }
 }
