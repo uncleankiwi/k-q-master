@@ -136,8 +136,7 @@ class QuestionListAdapter(
 					//btnQuestionPanelSetImage listener
 					itemView.btnQuestionPanelSetImage.setOnClickListener {
 						//add image to currentQuiz then refresh
-						App.openImageUriAndSave(context, currentPosition)
-						refreshData()
+						App.openImageUriAndSave(context, currentPosition, this@QuestionListAdapter)		//todo
 					}
 
 					//imgQuestionPanel listener - removes image from currentQuiz if there's one

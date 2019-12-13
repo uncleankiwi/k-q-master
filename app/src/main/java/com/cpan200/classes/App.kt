@@ -601,9 +601,8 @@ class App {
 			userDB.close()
 		}
 
-		fun openImageUriAndSave (context: Context, questionIndex: Int) {
+		fun openImageUriAndSave (context: Context, questionIndex: Int, recyclerAdapter: QuestionListAdapter) {
 			//specify uri
-			//todo
 			var link: String? = null
 			var imgArray: ByteArray? = null
 
@@ -613,39 +612,41 @@ class App {
 			val urlInput = EditText(context)
 			dialogue.setView(urlInput)
 			dialogue.setPositiveButton(context.getString(R.string.Add)
-			) { _, _ -> link = urlInput.text.toString() }
+			) { _, _ ->
+				link = urlInput.text.toString()
+
+				if (link != null && link != ""){
+					val url = URL(link) //"https://i.imgur.com/kt2cYyF.png"
+
+					try{
+						//getting the image...
+						val httpConnection = url.openConnection() as HttpURLConnection
+						httpConnection.doInput = true
+						httpConnection.connect()
+						val responseCode = httpConnection.responseCode
+
+						if (responseCode == HttpURLConnection.HTTP_OK){
+
+							val inputStream = (httpConnection as URLConnection).getInputStream()
+							imgArray = inputStream.readBytes()
+							inputStream.close()
+
+							//save into quiz whether image is null or not
+							currentQuiz.questionList[questionIndex].image = imgArray
+							recyclerAdapter.refreshData()
+						}
+						else {
+							showToast(context, "HTTP connection to image failed.")
+						}
+					}
+					catch (e: Exception){
+						showToast(context, "Exception fetching image: ${e.message.toString()}")
+					}
+				}
+			}
 			dialogue.setNegativeButton((context).getString(R.string.Cancel)
 			) { thisDialogue, _ -> thisDialogue.cancel() }
 			dialogue.create().show()
-
-			if (link != null && link != ""){
-				val url = URL("https://i.imgur.com/kt2cYyF.png")
-
-				try{
-					//getting the image...
-					val httpConnection = url.openConnection() as HttpURLConnection
-					httpConnection.doInput = true
-					httpConnection.connect()
-					val responseCode = httpConnection.responseCode
-
-					if (responseCode == HttpURLConnection.HTTP_OK){
-
-						val inputStream = (httpConnection as URLConnection).getInputStream()
-						imgArray = inputStream.readBytes()
-						inputStream.close()
-					}
-					else {
-						showToast(context, "HTTP connection to image failed.")
-					}
-				}
-				catch (e: Exception){
-					showToast(context, "Exception fetching image: ${e.message.toString()}")
-					showLog(e.message.toString())
-				}
-			}
-
-			//save into quiz whether image is null or not
-			currentQuiz.questionList[questionIndex].image = imgArray
 
 		}
 
@@ -653,9 +654,9 @@ class App {
 			Toast.makeText(context, msg, length).show()
 		}
 
-		fun showLog(msg: String){
-			Log.i(LOG, msg)
-		}
+//		fun showLog(msg: String){
+//			Log.i(LOG, msg)
+//		}
 
 //		fun showusercols(context: Context){
 //			val userDB = UserDB(context, null)
