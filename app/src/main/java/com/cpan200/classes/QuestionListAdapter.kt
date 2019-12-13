@@ -1,6 +1,7 @@
 package com.cpan200.classes
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -121,6 +122,29 @@ class QuestionListAdapter(
 						}
 						itemView.QuestionPanelAnsContainer.addView(editAns, i)
 					}
+
+					//if currentQuiz image is not null, display image
+					if (App.currentQuiz.questionList[currentPosition].image != null){
+						val imageArray = App.currentQuiz.questionList[currentPosition].image!!
+						val imageBmp = BitmapFactory.decodeByteArray(App.currentQuiz.questionList[currentPosition].image, 0, imageArray.size)
+						itemView.imgQuestionPanel.setImageBitmap(imageBmp)
+					}
+
+					//btnQuestionPanelSetImage listener
+					itemView.btnQuestionPanelSetImage.setOnClickListener {
+						//add image to currentQuiz then refresh
+						App.openImageUriAndSave(currentPosition)
+						refreshData()
+					}
+
+					//imgQuestionPanel listener - removes image from currentQuiz if there's one
+					itemView.imgQuestionPanel.setOnClickListener {
+						//remove image from currentQuiz question, then refresh
+						App.currentQuiz.questionList[currentPosition].image = null
+						refreshData()
+					}
+
+
 				}
 				else {
 					//do mode
@@ -144,9 +168,6 @@ class QuestionListAdapter(
 
 							//also checking them if they're in the current currentQuizAttempt
 							//so that answer selections survive rotation
-
-							App.showLog("pos: $currentPosition, saved ans: ${App.currentQuizAttempt[currentPosition]}, " +
-									"index $i")
 							if (App.currentQuizAttempt[currentPosition] >= 0){
 								if (i == App.currentQuizAttempt[currentPosition]) radAns.isChecked = true
 							}

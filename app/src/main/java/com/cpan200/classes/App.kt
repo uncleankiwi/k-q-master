@@ -16,6 +16,7 @@ import com.cpan200.finalproject.LoginActivity
 import com.cpan200.finalproject.StudentActivity
 import com.cpan200.finalproject.user_fragments.FragAdminMain
 import com.cpan200.finalproject.user_fragments.FragScoresMain
+import java.net.URL
 import java.util.*
 
 class App {
@@ -593,6 +594,21 @@ class App {
 			userDB.close()
 		}
 
+		fun openImageUriAndSave (questionIndex: Int) {
+			//specify uri
+			//todo
+			val url = URL("https://i.imgur.com/kt2cYyF.png")
+
+			//convert to byteArray
+			val imgArray: ByteArray? = null
+
+			//save into quiz
+			currentQuiz.questionList[questionIndex].image = imgArray
+
+
+
+		}
+
 		fun showToast(context: Context, msg: String, length: Int = Toast.LENGTH_LONG) {
 			Toast.makeText(context, msg, length).show()
 		}
@@ -631,7 +647,8 @@ class App {
 				answers.add(ansString ?: "")
 			}
 			val correctAnswer: Int = cursor.getInt(cursor.getColumnIndex(QuizDB.COL_CORRECTANS))
-			return Question(id, question, answers, correctAnswer)
+			val image: ByteArray? = cursor.getBlob(cursor.getColumnIndex(QuizDB.COL_IMAGE))
+			return Question(id, question, answers, correctAnswer, image = image)
 		}
 
 		private fun cursorToQuiz(cursor: Cursor): Quiz{
