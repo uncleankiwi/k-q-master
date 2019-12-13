@@ -1,10 +1,14 @@
 package com.cpan200.classes
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.database.Cursor
 import android.util.Log
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +17,7 @@ import com.cpan200.dbclasses.QuizzesDB
 import com.cpan200.dbclasses.UserDB
 import com.cpan200.finalproject.AdminActivity
 import com.cpan200.finalproject.LoginActivity
+import com.cpan200.finalproject.R
 import com.cpan200.finalproject.StudentActivity
 import com.cpan200.finalproject.user_fragments.FragAdminMain
 import com.cpan200.finalproject.user_fragments.FragScoresMain
@@ -597,54 +602,50 @@ class App {
 		}
 
 		fun openImageUriAndSave (context: Context, questionIndex: Int) {
-
-			showLog("uri func called")
-
 			//specify uri
 			//todo
-			val url = URL("https://i.imgur.com/kt2cYyF.png")
-
+			var link: String? = null
 			var imgArray: ByteArray? = null
 
-			try{
+			val dialogue = AlertDialog.Builder(context)
+			dialogue.setMessage((context as AppCompatActivity).getString(R.string.Enter_link_of_image_to_add))
+			dialogue.setCancelable(true)
+			val urlInput = EditText(context)
+			dialogue.setView(urlInput)
+			dialogue.setPositiveButton(context.getString(R.string.Add)
+			) { _, _ -> link = urlInput.text.toString() }
+			dialogue.setNegativeButton((context).getString(R.string.Cancel)
+			) { thisDialogue, _ -> thisDialogue.cancel() }
+			dialogue.create().show()
 
-				showLog("starting getting image")
+			if (link != null && link != ""){
+				val url = URL("https://i.imgur.com/kt2cYyF.png")
 
-				//getting the image...
-				val httpConnection = url.openConnection() as HttpURLConnection
+				try{
+					//getting the image...
+					val httpConnection = url.openConnection() as HttpURLConnection
+					httpConnection.doInput = true
+					httpConnection.connect()
+					val responseCode = httpConnection.responseCode
 
-				showLog("connection opened")
+					if (responseCode == HttpURLConnection.HTTP_OK){
 
-				httpConnection.doInput = true
-				httpConnection.connect()
-
-				showLog("connected")
-
-				showLog(httpConnection.toString())
-
-				val responseCode = httpConnection.responseCode
-				showLog("response code $responseCode")
-
-				if (responseCode == HttpURLConnection.HTTP_OK){
-
-					showLog("http ok")
-
-					val inputStream = (httpConnection as URLConnection).getInputStream()
-					imgArray = inputStream.readBytes()
-					inputStream.close()
-
-					showLog("array size ${imgArray.size}")
+						val inputStream = (httpConnection as URLConnection).getInputStream()
+						imgArray = inputStream.readBytes()
+						inputStream.close()
+					}
+					else {
+						showToast(context, "HTTP connection to image failed.")
+					}
 				}
-				else {
-					showToast(context, "HTTP connection to image failed.")
+				catch (e: Exception){
+					showToast(context, "Exception fetching image: ${e.message.toString()}")
+					showLog(e.message.toString())
 				}
 			}
-			catch (e: Exception){
-				showLog(e.message.toString())
-			}
-			//save into quiz
+
+			//save into quiz whether image is null or not
 			currentQuiz.questionList[questionIndex].image = imgArray
-			showLog("saved img size ${currentQuiz.questionList[questionIndex].image?.size}")
 
 		}
 

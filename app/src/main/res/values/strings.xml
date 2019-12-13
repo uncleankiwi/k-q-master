@@ -61,6 +61,7 @@
         Number of questions: %2$s\n
         Attempts: %3$s\n
         Current high score: %4$s</string>
+    <string name="Enter_link_of_image_to_add">Enter link of image to add: </string>
 
     <!-- student panel -->
     <string name="Username_temp">(Username)</string>

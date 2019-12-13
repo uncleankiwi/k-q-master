@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
@@ -57,6 +56,17 @@ class QuestionListAdapter(
 
 			//hiding it since it's a static 5 options for now
 			itemView.btnQuestionPanelAddAns.isGone = true
+
+			//if currentQuiz image is not null, display image
+			if (App.currentQuiz.questionList[currentPosition].image != null){
+				val imageArray = App.currentQuiz.questionList[currentPosition].image!!
+				val imageBmp = BitmapFactory.decodeByteArray(App.currentQuiz.questionList[currentPosition].image, 0, imageArray.size)
+				itemView.imgQuestionPanel.setImageBitmap(imageBmp)
+			}
+			else {
+				//clear imageView image
+				itemView.imgQuestionPanel.setImageDrawable(null)
+			}
 
 			if (!ansPopulated){
 				if (isEditMode){
@@ -121,15 +131,6 @@ class QuestionListAdapter(
 								editAns.setText(this.currentQuestion!!.answers[i])
 						}
 						itemView.QuestionPanelAnsContainer.addView(editAns, i)
-					}
-
-					//if currentQuiz image is not null, display image
-					App.showLog("image is null? : ${App.currentQuiz.questionList[currentPosition].image == null}")
-					if (App.currentQuiz.questionList[currentPosition].image != null){
-						App.showLog("image here, trying to display. size: ${App.currentQuiz.questionList[currentPosition].image!!.size}")
-						val imageArray = App.currentQuiz.questionList[currentPosition].image!!
-						val imageBmp = BitmapFactory.decodeByteArray(App.currentQuiz.questionList[currentPosition].image, 0, imageArray.size)
-						itemView.imgQuestionPanel.setImageBitmap(imageBmp)
 					}
 
 					//btnQuestionPanelSetImage listener

@@ -38,7 +38,6 @@ class AdminActivity : AppCompatActivity() {
 		return true
 	}
 
-
 	fun adminLogout(item: MenuItem) {
 		App.logout(this)
 	}
