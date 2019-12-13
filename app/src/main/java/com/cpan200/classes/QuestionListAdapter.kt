@@ -143,7 +143,7 @@ class QuestionListAdapter(
 							itemView.radGrpQuestionPanelAns.addView(radAns)
 
 							//also checking them if they're in the current currentQuizAttempt
-							//so that answer selections survive rotation	//todo doesn't work
+							//so that answer selections survive rotation
 
 							App.showLog("pos: $currentPosition, saved ans: ${App.currentQuizAttempt[currentPosition]}, " +
 									"index $i")

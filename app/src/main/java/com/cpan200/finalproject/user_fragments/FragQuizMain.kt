@@ -36,7 +36,7 @@ class FragQuizMain : Fragment() {
 		valRcyQuizMain.layoutManager = layoutManager
 		valRcyQuizMain.adapter = QuestionListAdapter(context!!, App.currentQuiz)
 
-		//try to refresh the options to load saved answers, if any //todo
+		//try to refresh the options to load saved answers, if any
 		(valRcyQuizMain.adapter as QuestionListAdapter).refreshData()
 
 		val valBtnQuizMainClose = view.findViewById<Button>(R.id.btnQuizMainClose)
@@ -63,11 +63,6 @@ class FragQuizMain : Fragment() {
 		when (App.currentQuiz.finalized){
 			true ->{
 				//do mode
-//				App.currentQuizAttempt = mutableListOf()		//todo fix #3?
-//				for (question in App.currentQuiz.questionList){
-//					App.currentQuizAttempt.add(0)
-//				}
-
 				valTxtQuizMainTitle.text = App.currentQuiz.title
 				valTxtQuizMainTitle.isGone = false
 				valEditQuizMainTitle.isGone = true
