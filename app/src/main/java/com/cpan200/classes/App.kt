@@ -14,6 +14,7 @@ import com.cpan200.dbclasses.UserDB
 import com.cpan200.finalproject.AdminActivity
 import com.cpan200.finalproject.LoginActivity
 import com.cpan200.finalproject.StudentActivity
+import com.cpan200.finalproject.user_fragments.FragAdminMain
 import com.cpan200.finalproject.user_fragments.FragScoresMain
 import java.util.*
 
@@ -45,6 +46,9 @@ class App {
 				else
 					QuizListAdapter.ViewMode.STUDENT
 			}
+
+		var fragAdminMainViewMode: FragAdminMain.ViewMode = FragAdminMain.ViewMode.Quizzes
+
 
 		fun getQuizList(context: Context): MutableList<Quiz> {
 			val quizList = mutableListOf<Quiz>()

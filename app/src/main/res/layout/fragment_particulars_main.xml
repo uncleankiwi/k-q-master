@@ -5,84 +5,99 @@
     android:orientation="vertical"
     tools:context="com.cpan200.finalproject.user_fragments.FragParticularsMain">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Edit_particulars"
-        android:textSize="24sp" />
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/txtEditParticularsUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Username" />
-
-    <EditText
-        android:id="@+id/editEditParticularsPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/Password"
-        android:inputType="textPassword"
-        android:importantForAutofill="no" />
-
-    <TextView
-        android:id="@+id/txtEditParticularsStatus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Status" />
-
-    <RadioGroup
-        android:id="@+id/radgrpEditParticularsStatus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <RadioButton
-            android:id="@+id/radEditParticularsSuperuser"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Superuser" />
+            android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/radEditParticularsAdmin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Admin" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Edit_particulars"
+                android:textSize="24sp" />
 
-        <RadioButton
-            android:id="@+id/radEditParticularsStudent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Student" />
-    </RadioGroup>
+            <TextView
+                android:id="@+id/txtEditParticularsUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Username" />
 
-    <EditText
-        android:id="@+id/editEditParticularsFirstname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/First_name"
-        android:inputType="textPersonName"
-        android:importantForAutofill="no" />
+            <EditText
+                android:id="@+id/editEditParticularsPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/Password"
+                android:importantForAutofill="no"
+                android:inputType="textPassword" />
 
-    <EditText
-        android:id="@+id/editEditParticularsLastname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/Last_name"
-        android:inputType="textPersonName"
-        android:importantForAutofill="no" />
+            <TextView
+                android:id="@+id/txtEditParticularsStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Status" />
 
-    <EditText
-        android:id="@+id/editEditParticularsEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/Email"
-        android:inputType="text"
-        android:importantForAutofill="no"
-        tools:ignore="TextFields" />
+            <RadioGroup
+                android:id="@+id/radgrpEditParticularsStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/radEditParticularsSuperuser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Superuser" />
+
+                <RadioButton
+                    android:id="@+id/radEditParticularsAdmin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Admin" />
+
+                <RadioButton
+                    android:id="@+id/radEditParticularsStudent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Student" />
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/editEditParticularsFirstname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/First_name"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/editEditParticularsLastname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/Last_name"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/editEditParticularsEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/Email"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                tools:ignore="TextFields" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
