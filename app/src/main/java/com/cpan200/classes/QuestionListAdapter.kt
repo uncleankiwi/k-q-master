@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.panel_question.view.*
 class QuestionListAdapter(
 		val context: Context,
 		private var quiz: Quiz
-		//private val viewMode: ViewMode
 ) : RecyclerView.Adapter<QuestionListAdapter.QuestionPanelViewHolder>()  {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionPanelViewHolder {
@@ -140,7 +139,17 @@ class QuestionListAdapter(
 							val radAns = RadioEx(context)
 							radAns.text = currAns
 							radAns.answerID = i
+
 							itemView.radGrpQuestionPanelAns.addView(radAns)
+
+							//also checking them if they're in the current currentQuizAttempt
+							//so that answer selections survive rotation	//todo doesn't work
+
+							App.showLog("pos: $currentPosition, saved ans: ${App.currentQuizAttempt[currentPosition]}, " +
+									"index $i")
+							if (App.currentQuizAttempt[currentPosition] >= 0){
+								if (i == App.currentQuizAttempt[currentPosition]) radAns.isChecked = true
+							}
 						}
 					}
 

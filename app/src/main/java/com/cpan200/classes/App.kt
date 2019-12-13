@@ -506,9 +506,6 @@ class App {
 					if (context is Activity) context.onBackPressed()
 				}
 				else {
-
-					showLog("old pass: $oldPassword, new pass: $newPasswordE")
-
 					showToast(context, "Password changed. Please sign in with the new password.")
 					logout(context, false)
 				}
